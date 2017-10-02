@@ -1,0 +1,312 @@
+html, body {
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+.main-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+}
+.main-layout .mdl-layout__header .mdl-layout__drawer-button {
+    color: rgba(0, 0, 0, 0.54);
+}
+.mdl-layout__drawer .avatar {
+    margin-bottom: 16px;
+}
+.main-drawer {
+    border: none;
+}
+/* iOS Safari specific workaround */
+.main-drawer .mdl-menu__container {
+    z-index: -1;
+}
+.main-drawer .main-navigation {
+    z-index: -2;
+}
+/* END iOS Safari specific workaround */
+.main-drawer .mdl-menu .mdl-menu__item {
+    display: flex;
+    align-items: center;
+}
+.main-drawer-header {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    height: 151px;
+}
+.main-avatar-dropdown {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.main-navigation {
+    flex-grow: 1;
+}
+.main-layout .main-navigation .mdl-navigation__link {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    color: #53a567;
+    font-weight: 500;
+}
+.main-layout .main-navigation .mdl-navigation__link:hover {
+    background-color: rgba(255, 255, 255, 0.56);
+
+}
+.main-navigation .mdl-navigation__link .material-icons {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.56);
+    margin-right: 32px;
+}
+.main-content {
+    max-width: 1080px;
+}
+.selected{
+    background-color: #ffffff;
+}
+
+/********************************************/
+/****************   Cards   ****************/
+.intro-card-wide.mdl-card {
+    width: 412px;
+}
+.intro-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 276px;
+}
+.intro-title{
+    background: url('../Assets/brainstorm.jpg') center / cover;
+}
+.video-title{
+    background: url('../Assets/play.gif') center / cover;
+}
+.social-title{
+    background: url('../Assets/collaboration.jpg') center / cover;
+}
+.me-title{
+    background: url('../Assets/success.jpg') center / cover;
+}
+.social-title-text{
+    color: #ff2121;
+}
+.card-share{
+    color: #ffffff;
+}
+.cards{
+    margin-top: 2%;
+    margin-left: 27%;
+}
+.carousel{
+    padding-top: 10%;
+    margin-left: 25%;
+    width: 50%;
+}
+#video-card{
+    margin-top: -33.7%;
+    margin-left: 50%
+}
+#social-card{
+    margin-top: 3%;
+}
+#me-card{
+    margin-top: -33.85%;
+    margin-left: 50%;
+}
+/**********************************************************/
+/****************   Profile Information   ****************/
+.profile-content{
+    margin-top: 5%;
+    margin-left: 15%;
+}
+#profile-checkbox{
+    margin-left:45%;
+    margin-top: -5%;
+    position: relative;
+}
+.profile-name {
+    font-size: 23px;
+    display: table;
+    margin: 5px auto;
+}
+
+.profile-email {
+    font-size: 13px;
+    font-style: italic;
+    display: table;
+    margin: -10px auto;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 50px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload {
+    height: 180px;
+    width: 100%;
+}
+
+.profile-pic:hover .edit {
+    display: block;
+}
+
+.profile-pic:hover {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    /* msie */
+}
+
+.edit {
+    position: relative;
+    left: 70px;
+    bottom: 110px;
+    display: none;
+}
+
+.profile-pic {
+    display: block;
+    max-height: 180px;
+    max-width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%
+}
+
+.img-thumbnail {
+    border-color:  #53a567;
+    background-color: #53a567;
+}
+
+.user-info-container {
+    display: table;
+    border: 2px solid #3b474f;
+    margin: 0px auto;
+    width: 50em;
+    text-align: center;
+    background-color: white;
+    padding-top: 15px;
+}
+
+.row {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h4 {
+    padding-bottom: 10px;
+    color: #4679b2;
+}
+
+.btn-container{
+    margin-top: -20px;
+    margin-left: 70%;
+}
+
+#add-branch-button{
+    padding-top: 3px;
+}
+
+#btn-save-info{
+    background-color: #3B5998;
+}
+
+
+.collection {
+    margin: 0.5rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.collection .collection-item {
+    background-color: #fff;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.collection .collection-item:last-child {
+    border-bottom: none;
+}
+
+.collection .collection-item.active {
+    background-color: #1dd3c7;
+    color: white;
+}
+
+.collection .collection-item {
+    display: block;
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    -o-transition: 0.25s;
+    -ms-transition: 0.25s;
+    transition: 0.25s;
+    color: black;
+}
+
+.collection .collection-item:not(.active):hover {
+    background-color: #1dd3c7;
+    text-decoration: none;
+    color: white;
+}
+
+.header{
+    color:black;
+}
+
+.header:hover{
+    color:white;
+}
+
+.collection-divider{
+    height: 2px;
+}
+
+.item-divider{
+    height:7px;
+}
+
+.item-divider-lr{
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+.collection-icon{
+    margin-left: -16px;
+}
+
+.gi-2x{font-size: 1.5em;}
+
+.collection-list{
+    margin-top: -30px;
+    margin-left: -3px;
+}
+
+.profile-summary{
+    display: none;
+    padding-top: 5%;
+    padding-left: 35%;
+}
+/******************************************/

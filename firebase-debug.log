@@ -1,0 +1,23 @@
+[debug] [2017-09-08T02:26:25.905Z] ----------------------------------------------------------------------
+[debug] [2017-09-08T02:26:25.907Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-09-08T02:26:25.908Z] CLI Version:   3.9.2
+[debug] [2017-09-08T02:26:25.908Z] Platform:      darwin
+[debug] [2017-09-08T02:26:25.908Z] Node Version:  v6.11.0
+[debug] [2017-09-08T02:26:25.908Z] Time:          Thu Sep 07 2017 19:26:25 GMT-0700 (MST)
+[debug] [2017-09-08T02:26:25.908Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-08T02:26:25.923Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-08T02:26:25.923Z] > authorizing via signed-in user
+[debug] [2017-09-08T02:26:25.925Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-08T02:26:25.925Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/78KSkik2FFLcjOE1x3o7BPH8JM-ibbHJA8pcqFbS9n0',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Sep 07 2017 19:26:25 GMT-0700 (MST)
+[debug] [2017-09-08T02:26:26.177Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-08T02:26:26.199Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/cse591-f2761  
+ Thu Sep 07 2017 19:26:26 GMT-0700 (MST)
+[debug] [2017-09-08T02:26:26.776Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-08T02:26:26.777Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/cse591-f2761/tokens  
+ Thu Sep 07 2017 19:26:26 GMT-0700 (MST)
