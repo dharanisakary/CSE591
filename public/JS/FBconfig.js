@@ -23,8 +23,14 @@ $(document).ready(function(){
             var token = result.credential.accessToken;
             var user = result.user;
 
-            window.location.href = "/WebApp/public/home.html";
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    $.cookie("user", user.displayName);
+                    $.cookie("uuid", user.uid);
 
+                    window.location.href = "/WebApp/public/home.html";
+                }
+            });
         }).catch(function(error) {
             console.log(error);
             var errorCode = error.code;
