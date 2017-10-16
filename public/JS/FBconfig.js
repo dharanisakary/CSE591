@@ -21,15 +21,35 @@ $(document).ready(function(){
 
         firebase.auth().signInWithPopup(provider).then(function(result) {
             var token = result.credential.accessToken;
-            var user = result.user;
+            var user = result.user
+
+            console.log(result);
 
             firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    $.cookie("user", user.displayName);
-                    $.cookie("uuid", user.uid);
-
-                    window.location.href = "/WebApp/public/home.html";
-                }
+                firebase.database().ref('users/' + user.displayName).once('value', function(snapshot) {
+                    var exists = (snapshot.val() !== null);
+                    if (user) {
+                        $.cookie("user", user.displayName);
+                        $.cookie("uuid", user.uid);
+                        if(exists){
+                            console.log("user exists");
+                            window.location.href = "/WebApp/public/home.html";
+                        }
+                        else{
+                            console.log("creating user");
+                            firebase.database().ref('users/' + user.displayName).set({
+                                name: user.displayName,
+                                hometown: "",
+                                email: result.user.email,
+                                age: "",
+                                university: "",
+                                highest_education: "",
+                                job_title: ""
+                            });
+                            window.location.href = "/WebApp/public/home.html";
+                        };
+                    }
+                });
             });
         }).catch(function(error) {
             console.log(error);
@@ -67,7 +87,6 @@ $(document).ready(function(){
                 $('#welcome-introduction').text('Sorry but the email, "'+ email + '" is already in use by a different account!');
             }
         });
-
     }
 });
 
