@@ -375,53 +375,132 @@
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                         <h3 class="modal-title" id="lineModalLabel">Welcome to the Branch Creator!</h3>
                     </div>
-                    <div class="modal-body">
-                        <div class="dropdown" id="topic-dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header">Select an topic from the ones available below</li>
-                                <li class="divider"></li>
-                                <li><a href="#">Chemistry</a></li>
-                                <li><a href="#">C++</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">Java</a></li>
-                                <li><a href="#">NodeJS</a></li>
-                            </ul>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
-                            <input class="mdl-textfield__input" type="text" id="topic-name">
-                            <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
-                            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
-                            <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
-                            <span class="mdl-textfield__error">Input is not a number!</span>
-                        </div>
+                    <div class="modal-body container col-sm-12">
+                        <div id="branch-info">
+                            <div class="dropdown" id="topic-dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">Select an topic from the ones available below</li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Chemistry</a></li>
+                                    <li><a href="#">C++</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <li><a href="#">Java</a></li>
+                                    <li><a href="#">NodeJS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
+                                <input class="mdl-textfield__input" type="text" id="topic-name">
+                                <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
+                                <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="range range-warning">
-                                    <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
-                                    <output id="rangeWarning">3</output>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="range range-warning">
+                                        <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
+                                        <output id="rangeWarning">3</output>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="range range-danger">
+                                        <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
+                                        <output id="rangeDanger">60</output>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="range range-danger">
-                                    <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
-                                    <output id="rangeDanger">60</output>
+
+                            <div id="contributors-label">
+                                <h6>Number of Contributors</h6>
+                            </div>
+
+                            <div id="contributors-time">
+                                <h6>Time per Contributor (in seconds)</h6>
+                            </div>
+
+                        </div>
+                        <div id="pre-screening" class="container col-sm-12" style="display: none;">
+                            <div id="pre-screening-questions" class="carousel slide" >
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <h4>Question 1 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q11" name="radio" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q12" name="radio" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q13" name="radio" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Question 2 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q21" name="radio" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q22" name="radio" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q23" name="radio" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Question 3 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q31" name="radio" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q32" name="radio" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q33" name="radio" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <!--
+                                    <a class="carousel-control-prev" href="#pre-screening-questions" role="button" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>-->
+                                    <a class="carousel-control-next" href="#pre-screening-questions" role="button" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
-                        <div id="contributors-label">
-                            <h6>Number of Contributors</h6>
+                        <div id="pre-screening-result" style="display: none;">
+                            <p></p>
                         </div>
-
-                        <div id="contributors-time">
-                            <h6>Time per Contributor (in seconds)</h6>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <div class="btn-group btn-group-justified" role="group" aria-label="group button">
@@ -433,6 +512,9 @@
                             </div>
                             <div class="btn-group" role="group">
                                 <button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Next</button>
+                            </div>
+                            <div class="btn-group hidden" role="group">
+                                <button type="button" id="finishPreScreen" class="btn btn-default btn-hover-green" data-action="save" role="button" >Finish</button>
                             </div>
                         </div>
                     </div>
