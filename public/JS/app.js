@@ -128,4 +128,60 @@ function menuChoiceHndler(){
             $('#profile-content').hide();
         }
     });
+
+    $('#pre-screening-questions').carousel({
+        wrap:false,
+        ride:false
+    });
+
+    $('#saveImage').on('click', function() {
+        $('#saveImage').attr('disabled', true);
+        $('#branch-info').hide();
+        $('#pre-screening').show();
+        $('#modal-branches .modal-title').text('Pre Screening');
+    });
+
+    $('#finishPreScreen').on('click', function(){
+        // TODO : Check answers
+        var answers = 0;
+        $('#modal-branches .modal-title').text('Pre Screening Result');
+        $('#pre-screening-questions .item').each(function(index, element){
+            answers += $(element).has('input:checked').length;
+        });
+        $('#branch-info').hide();
+        $('#pre-screening').hide();
+        $('#pre-screening-result').show();
+        var content = "";
+        if(answers > 1){
+            content = "Congratulations! "
+        }else{
+            content = "Oops!";
+        }
+        content += '<br/> Closing ..';
+        $('#pre-screening-result p').html(content);
+        setTimeout("$('#modal-branches').modal('hide');",3000);
+    });
+
+    $('#pre-screening-questions').on('slid.bs.carousel', function(){ 
+        if ($('.carousel-inner .item:last').hasClass('active')){
+            $(this).find(".carousel-control-next").hide();
+            //$('#saveImage').attr('disabled', false);
+            $('#saveImage').parent().addClass('hidden');
+            $('#finishPreScreen').parent().removeClass('hidden');
+        }
+    });
+
+    $('#modal-branches').on('show.bs.modal', function (e) {
+        // Reset Model
+        $('#branch-info').show();
+        $('#pre-screening').hide();
+        $('#pre-screening-result').hide();
+        $('#pre-screening-questions').carousel(0);
+        $('#saveImage').parent().removeClass('hidden');
+        $('#saveImage').attr('disabled', false);
+        $('#finishPreScreen').parent().addClass('hidden');
+        $('#pre-screening-result p').empty();
+        $(this).find(".carousel-control-next").show();
+        $('#modal-branches .modal-title').text('Welcome to the Branch Creator!');
+    });
 }
