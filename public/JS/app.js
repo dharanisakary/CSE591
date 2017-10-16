@@ -131,7 +131,8 @@ function menuChoiceHndler(){
 
     $('#pre-screening-questions').carousel({
         wrap:false,
-        ride:false
+        ride:false,
+        interval: false
     });
 
     $('#preScreen').on('click', function() {
@@ -159,6 +160,8 @@ function menuChoiceHndler(){
         $('#brainstorm-format').hide();
         $('#pre-screening').hide();
         $('#pre-screening-result').show();
+        var answers = $("#pre-screening-questions .item input[type=radio]:checked").length;
+
         var content = "";
         if(answers > 1){
             content = "Congratulations! "
@@ -169,11 +172,6 @@ function menuChoiceHndler(){
         $('#pre-screening-result p').html(content);
         setTimeout("$('#modal-branches').modal('hide');",3000);
         $(this).attr('disabled', true);
-    });
-
-    var answers = 0;
-    $("input[name='radio']").change(function(){
-        answers++;
     });
 
     $('#pre-screening-questions').on('slid.bs.carousel', function(){ 
@@ -196,9 +194,12 @@ function menuChoiceHndler(){
         $('#saveImage').parent().removeClass('hidden');
         $('#preScreen').parent().addClass('hidden');
         $('#preScreen').attr('disabled', false);
+        $('#finishPreScreen').attr('disabled', false);
         $('#finishPreScreen').parent().addClass('hidden');
         $('#pre-screening-result p').empty();
         $(this).find(".carousel-control-next").show();
         $('#modal-branches .modal-title').text('Welcome to the Branch Creator!');
+        $('input[type=radio]').prop('checked', false);
+
     });
 }
