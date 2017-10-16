@@ -182,12 +182,12 @@
                                 <h4> Personal Information </h4>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="first-name">
-                                <label class="mdl-textfield__label" for="first-name">First Name</label>
+                                <input class="mdl-textfield__input" type="text" id="full-name">
+                                <label class="mdl-textfield__label" for="full-name">Full Name</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="last-name">
-                                <label class="mdl-textfield__label" for="last-name">Last Name</label>
+                                <input class="mdl-textfield__input" type="text" id="hometown">
+                                <label class="mdl-textfield__label" for="hometown">Hometown</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <input class="mdl-textfield__input" type="text" id="email">
@@ -207,8 +207,8 @@
                                 <label class="mdl-textfield__label" for="job-title">Job Title</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="college-name">
-                                <label class="mdl-textfield__label" for="college-name">College</label>
+                                <input class="mdl-textfield__input" type="text" id="university-name">
+                                <label class="mdl-textfield__label" for="university-name">University</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <input class="mdl-textfield__input" type="text" id="highest-education">
@@ -377,8 +377,52 @@
                     </div>
                     <div class="modal-body container col-sm-12">
                         <div id="branch-info">
-                            <input class="mdl-textfield__input" type="text" id="job">
-                            <label class="mdl-textfield__label" for="job">Job Title</label>
+                            <div class="dropdown" id="topic-dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">Select an topic from the ones available below</li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Chemistry</a></li>
+                                    <li><a href="#">C++</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <li><a href="#">Java</a></li>
+                                    <li><a href="#">NodeJS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
+                                <input class="mdl-textfield__input" type="text" id="topic-name">
+                                <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
+                                <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="range range-warning">
+                                        <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
+                                        <output id="rangeWarning">3</output>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="range range-danger">
+                                        <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
+                                        <output id="rangeDanger">60</output>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="contributors-label">
+                                <h6>Number of Contributors</h6>
+                            </div>
+
+                            <div id="contributors-time">
+                                <h6>Time per Contributor (in seconds)</h6>
+                            </div>
+
                         </div>
                         <div id="pre-screening" class="container col-sm-12" style="display: none;">
                             <div id="pre-screening-questions" class="carousel slide" >
