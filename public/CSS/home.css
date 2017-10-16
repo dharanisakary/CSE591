@@ -914,3 +914,9 @@ button:focus {
 /******************************************/
 /******************************************/
 
+#catalog-body{
+    background-color: #EEE;
+}
+#go-back{
+    cursor: pointer;
+}

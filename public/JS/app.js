@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('#social-search').hide();
 
     menuChoiceHndler();
+    branchCreationModelhandler();
     profileToggleHandler();
     retrieveInfo();
     brainTableFunctionality();
@@ -35,6 +36,16 @@ function brainTableFunctionality(){
         } else {
             $('.table tr').css('display', 'none').fadeIn('slow');
         }
+    });
+
+    $('#brain-feed .media').on('click', function(e){
+        $('#brain-feed #catalog').addClass('hidden');
+        $('#brain-feed #catalog-body').removeClass('hidden');
+    });
+
+    $('#go-back').on('click', function(){
+        $('#brain-feed #catalog').removeClass('hidden');
+        $('#brain-feed #catalog-body').addClass('hidden');
     });
 }
 
@@ -128,7 +139,9 @@ function menuChoiceHndler(){
             $('#profile-content').hide();
         }
     });
+}
 
+function branchCreationModelhandler(){
     $('#pre-screening-questions').carousel({
         wrap:false,
         ride:false,
