@@ -255,7 +255,7 @@
         </div>
 
         <div id="brain-feed">
-            <div class="container">
+            <div class="col-sm-12">
                 <div class="row">
                     <section class="content">
                         <h1>Branch Feed</h1>
@@ -424,8 +424,35 @@
                             </div>
 
                         </div>
+                        <div id="brainstorm-format" style="display: none;">
+                            <div class="row">
+                                <div class="">Choose Structures</div>
+                                <div class="">Choose Input Range</div>
+                            </div>
+                            <div class="row">
+                                <div class="">
+                                    <form>
+                                        <div class="form-group">
+                                            <select>
+                                                <option value="blank"></option>
+                                                <option value="list">List</option>
+                                                <option value="q&a">Q &amp; A</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="">
+                                    <input class="mdl-slider mdl-js-slider" type="range" min="0" max="10"
+                                           value="1" tabindex="0" onchange="rangeWarning.value=value">
+                                    <output id="rangeWarning">1</output>
+
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="pre-screening" class="container col-sm-12" style="display: none;">
-                            <div id="pre-screening-questions" class="carousel slide" >
+                            <div id="pre-screening-questions" class="carousel slide" data-ride="false">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="item active">
                                         <h4>Question 1 : Lorum Ipsum</h4>
@@ -512,6 +539,9 @@
                             </div>
                             <div class="btn-group" role="group">
                                 <button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Next</button>
+                            </div>
+                            <div class="btn-group hidden" role="group">
+                                <button type="button" id="preScreen" class="btn btn-default btn-hover-green" data-action="save" role="button">Pre-screen</button>
                             </div>
                             <div class="btn-group hidden" role="group">
                                 <button type="button" id="finishPreScreen" class="btn btn-default btn-hover-green" data-action="save" role="button" >Finish</button>
