@@ -3,6 +3,7 @@ $(document).ready(function(){
     $('#profile-content').hide();
     $('#brain-feed').hide();
     $('#social-search').hide();
+    $('#assess-knowledge').hide();
 
     menuChoiceHndler();
     branchCreationModelhandler();
@@ -10,6 +11,7 @@ $(document).ready(function(){
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
+    assessmentHandler();
 });
 
 
@@ -81,6 +83,10 @@ function menuChoiceHndler(){
            $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
     });
 
     $('#brainfeed-choice').on('click',function(){
@@ -99,6 +105,10 @@ function menuChoiceHndler(){
         if($('#social-choice').hasClass('selected')){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
+        }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
         }
     });
 
@@ -119,12 +129,43 @@ function menuChoiceHndler(){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
     });
 
     $('#social-choice').on('click',function(){
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
         if(!$('#social-choice').hasClass('selected')){
             $('#social-choice').addClass('selected');
             $('#social-search').show();
+        }
+        if($('#brainfeed-choice').hasClass('selected')){
+            $('#brainfeed-choice').removeClass('selected');
+            $('#brain-feed').hide();
+        }
+        if($('#home-choice').hasClass('selected')){
+            $('#home-choice').removeClass('selected');
+            $('#cards').hide();
+        }
+        if($('#profile-choice').hasClass('selected')){
+            $('#profile-choice').removeClass('selected');
+            $('#profile-content').hide();
+        }
+    });
+
+    $('#assess-choice').on('click',function(){
+        if(!$('#assess-choice').hasClass('selected')){
+            $('#assess-choice').addClass('selected');
+            $('#assess-knowledge').show();
+        }
+        if($('#social-choice').hasClass('selected')){
+            $('#social-choice').removeClass('selected');
+            $('#social-search').hide();
         }
         if($('#brainfeed-choice').hasClass('selected')){
             $('#brainfeed-choice').removeClass('selected');
@@ -215,4 +256,15 @@ function branchCreationModelhandler(){
         $('input[type=radio]').prop('checked', false);
 
     });
+
+    $('#input-range').change(function(){
+        $('output#rangeWarning-input').text(this.value);
+    });
+}
+
+function assessmentHandler(){
+    $('#add-mcq-option').on('click', function(){
+        var html = '<input class="mdl-textfield__input" type="text" >';
+        $('#mcq-options').append(html);
+    })
 }
