@@ -47,7 +47,7 @@ $(document).ready(function(){
                                 job_title: ""
                             });
                             window.location.href = "/WebApp/public/home.html";
-                        };
+                        }
                     }
                 });
             });

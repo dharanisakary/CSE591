@@ -11,8 +11,77 @@ $(document).ready(function(){
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
+    retrieveProfileInformation();
+
+    $('#btn-save-info').on('click', function() {
+        saveProfileInformation();
+    });
+
     assessmentHandler();
 });
+
+function saveProfileInformation() {
+    var user = $.cookie("user");
+    var ref = firebase.database().ref('users/' + user);
+
+    var name = $('#full-name').val();
+    var hometown = $('#hometown').val();
+    var email = $('#email').val();
+    var age = $('#age').val();
+    var university = $('#university').val();
+    var highest_education = $('#highest-education').val();
+    var job_title = $('#job-title').val();
+
+    ref.update({
+        name: name,
+        hometown: hometown,
+        email: email,
+        age: age,
+        university: university,
+        highest_education: highest_education,
+        job_title: job_title
+    });
+
+    var count = 0;
+    var count1 = 0;
+    $('#user-info >div').each(function() {
+        count += 1;
+        if (count > 1) {
+            $(this).remove();
+        }
+    });
+    $('#profile-info >div').each(function() {
+        count1 += 1;
+        if (count1 > 2) {
+            $(this).remove();
+        }
+    });
+}
+
+function retrieveProfileInformation(){
+    var user = $.cookie('user');
+    if(user){
+        var ref = firebase.database().ref('users/' + user);
+        ref.on('value', function(snapshot) {
+            var data = snapshot.val();
+            $("#user-email").text(data.email);
+
+            var template = $('#profile-information').html();
+            var html = Mustache.render(template, data);
+            var output = $('#profile-info');
+            output.append(html);
+
+
+            var template = $('#user-information').html();
+            var html = Mustache.render(template, data);
+            var output = $('#user-info');
+            output.append(html);
+        });
+    }
+    else{
+        alert('Error in retrieving user info!');
+    }
+}
 
 
 function searchBtnHandler(){
