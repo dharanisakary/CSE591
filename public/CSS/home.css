@@ -133,11 +133,6 @@ body.modal-open .background-container {
     margin-top: 2%;
     margin-left: 27%;
 }
-.carousel{
-    padding-top: 10%;
-    margin-left: 25%;
-    width: 50%;
-}
 #video-card{
     margin-top: -33.7%;
     margin-left: 50%
@@ -926,3 +921,74 @@ button:focus {
 /******************************************/
 /******************************************/
 
+#catalog-body{
+    background-color: #EEE;
+}
+#go-back{
+    cursor: pointer;
+}
+
+/******************************************/
+/******************************************/
+
+#assess-knowledge{
+    margin-left: 25%;
+}
+.assess-knowledge-element, .create-assess-knowledge-element{
+    margin: 30px 0;
+}
+
+.assess-knowledge-element div:hover:not(.triangle),.create-assess-knowledge-element div:hover:not(.triangle){
+    background-color: #ddd;
+}
+.assess-knowledge-element p,.create-assess-knowledge-element p{
+    font-size: 15px;
+    padding-top: 10px;
+}
+.assess-knowledge-element p {
+    margin-top: 25px !important;
+}
+#add-mcq-option{
+    margin-top: 20px;
+}
+.circle{
+    width: 100px;
+    height: 100px;
+    background: #ccc;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    margin-right: 30px;
+    display: inline-block;
+}
+
+.square{
+    width: 100px;
+    height: 100px;
+    background: #ccc;
+    margin-right: 30px;
+    display: inline-block;
+}
+
+.triangle{
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid #ccc;
+    margin-right: 30px;
+    display: inline-block;
+}
+
+.triangle p{
+    text-align: center;
+    top: 11px;
+    left: -25px;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 0px;
+}
+.triangle:hover{
+    border-bottom: 100px solid #ddd;
+}

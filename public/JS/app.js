@@ -3,8 +3,10 @@ $(document).ready(function(){
     $('#profile-content').hide();
     $('#brain-feed').hide();
     $('#social-search').hide();
+    $('#assess-knowledge').hide();
 
     menuChoiceHndler();
+    branchCreationModelhandler();
     profileToggleHandler();
     retrieveInfo();
     brainTableFunctionality();
@@ -15,6 +17,7 @@ $(document).ready(function(){
         saveProfileInformation();
     });
 
+    assessmentHandler();
 });
 
 function saveProfileInformation() {
@@ -105,6 +108,16 @@ function brainTableFunctionality(){
             $('.table tr').css('display', 'none').fadeIn('slow');
         }
     });
+
+    $('#brain-feed .media').on('click', function(e){
+        $('#brain-feed #catalog').addClass('hidden');
+        $('#brain-feed #catalog-body').removeClass('hidden');
+    });
+
+    $('#go-back').on('click', function(){
+        $('#brain-feed #catalog').removeClass('hidden');
+        $('#brain-feed #catalog-body').addClass('hidden');
+    });
 }
 
 function retrieveInfo(){
@@ -139,6 +152,10 @@ function menuChoiceHndler(){
            $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
     });
 
     $('#brainfeed-choice').on('click',function(){
@@ -157,6 +174,10 @@ function menuChoiceHndler(){
         if($('#social-choice').hasClass('selected')){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
+        }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
         }
     });
 
@@ -177,9 +198,17 @@ function menuChoiceHndler(){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
     });
 
     $('#social-choice').on('click',function(){
+        if($('#assess-choice').hasClass('selected')){
+           $('#assess-choice').removeClass('selected');
+            $('#assess-knowledge').hide();
+        }
         if(!$('#social-choice').hasClass('selected')){
             $('#social-choice').addClass('selected');
             $('#social-search').show();
@@ -197,4 +226,114 @@ function menuChoiceHndler(){
             $('#profile-content').hide();
         }
     });
+
+    $('#assess-choice').on('click',function(){
+        if(!$('#assess-choice').hasClass('selected')){
+            $('#assess-choice').addClass('selected');
+            $('#assess-knowledge').show();
+        }
+        if($('#social-choice').hasClass('selected')){
+            $('#social-choice').removeClass('selected');
+            $('#social-search').hide();
+        }
+        if($('#brainfeed-choice').hasClass('selected')){
+            $('#brainfeed-choice').removeClass('selected');
+            $('#brain-feed').hide();
+        }
+        if($('#home-choice').hasClass('selected')){
+            $('#home-choice').removeClass('selected');
+            $('#cards').hide();
+        }
+        if($('#profile-choice').hasClass('selected')){
+            $('#profile-choice').removeClass('selected');
+            $('#profile-content').hide();
+        }
+    });
+}
+
+function branchCreationModelhandler(){
+    $('#pre-screening-questions').carousel({
+        wrap:false,
+        ride:false,
+        interval: false
+    });
+
+    $('#preScreen').on('click', function() {
+        $('#modal-branches .modal-title').text('Pre Screening');
+        $('#saveImage').parent().addClass('hidden');
+        $('#preScreen').attr('disabled', true);
+        $('#branch-info').hide();
+        $('#brainstorm-format').hide();
+        $('#pre-screening').show();
+    });
+
+    $('#saveImage').on('click', function(){
+        $('#modal-branches .modal-title').text('Set Up Brainstorm Branch');
+        $('#preScreen').parent().removeClass('hidden');
+        $('#branch-info').hide();
+        $('#brainstorm-format').show();
+        $('#pre-screening').hide();
+        $(this).parent().addClass('hidden');
+    });
+
+    $('#finishPreScreen').on('click', function(){
+        // TODO : Check answers
+        $('#modal-branches .modal-title').text('Pre Screening Result');
+        $('#branch-info').hide();
+        $('#brainstorm-format').hide();
+        $('#pre-screening').hide();
+        $('#pre-screening-result').show();
+        var answers = $("#pre-screening-questions .item input[type=radio]:checked").length;
+
+        var content = "";
+        if(answers > 1){
+            content = "Congratulations! "
+        }else{
+            content = "Oops!";
+        }
+        content += '<br/> Closing ..';
+        $('#pre-screening-result p').html(content);
+        setTimeout("$('#modal-branches').modal('hide');",3000);
+        $(this).attr('disabled', true);
+    });
+
+    $('#pre-screening-questions').on('slid.bs.carousel', function(){ 
+        if ($('.carousel-inner .item:last').hasClass('active')){
+            $(this).find(".carousel-control-next").hide();
+            //$('#preScreen').attr('disabled', false);
+            $('#preScreen').parent().addClass('hidden');
+            $('#finishPreScreen').parent().removeClass('hidden');
+        }
+    });
+
+    $('#modal-branches').on('show.bs.modal', function (e) {
+        // Reset Model
+        answers = 0;
+        $('#branch-info').show();
+        $('#brainstorm-format').hide();
+        $('#pre-screening').hide();
+        $('#pre-screening-result').hide();
+        $('#pre-screening-questions').carousel(0);
+        $('#saveImage').parent().removeClass('hidden');
+        $('#preScreen').parent().addClass('hidden');
+        $('#preScreen').attr('disabled', false);
+        $('#finishPreScreen').attr('disabled', false);
+        $('#finishPreScreen').parent().addClass('hidden');
+        $('#pre-screening-result p').empty();
+        $(this).find(".carousel-control-next").show();
+        $('#modal-branches .modal-title').text('Welcome to the Branch Creator!');
+        $('input[type=radio]').prop('checked', false);
+
+    });
+
+    $('#input-range').change(function(){
+        $('output#rangeWarning-input').text(this.value);
+    });
+}
+
+function assessmentHandler(){
+    $('#add-mcq-option').on('click', function(){
+        var html = '<input class="mdl-textfield__input" type="text" >';
+        $('#mcq-options').append(html);
+    })
 }

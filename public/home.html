@@ -65,6 +65,7 @@
                 <a id= "profile-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Profile</a>
                 <a id= "brainfeed-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Brainfeed</a>
                 <a id= "social-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
+                <a id= "assess-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">school</i>Assess</a>
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span>© Webstorming</a>
             </nav>
@@ -257,114 +258,164 @@
         </div>
 
         <div id="brain-feed">
-            <div class="container">
+            <div class="col-sm-12">
                 <div class="row">
                     <section class="content">
                         <h1>Branch Feed</h1>
                         <div class="col-md-8 col-md-offset-2">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success btn-filter" data-target="completed">Completed</button>
-                                            <button type="button" class="btn btn-warning btn-filter" data-target="pending">Pending</button>
-                                            <button type="button" class="btn btn-danger btn-filter" data-target="not_started">Not Started</button>
-                                            <button type="button" class="btn btn-default btn-filter" data-target="all">All</button>
+                                    <div id="catalog">
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-success btn-filter" data-target="completed">Completed</button>
+                                                <button type="button" class="btn btn-warning btn-filter" data-target="pending">Pending</button>
+                                                <button type="button" class="btn btn-danger btn-filter" data-target="not_started">Not Started</button>
+                                                <button type="button" class="btn btn-default btn-filter" data-target="all">All</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-container">
+                                            <table class="table table-filter">
+                                                <tbody>
+                                                <!--<tr data-status="not_started" id="no-branches-tr">-->
+                                                    <!--<td>-->
+                                                        <!--<div class="media">-->
+                                                            <!--<a href="#" class="pull-left">-->
+                                                                <!--<img src="Assets/tree.gif" class="media-gif">-->
+                                                            <!--</a>-->
+                                                            <!--<div class="media-body">-->
+                                                                <!--<h4 class="title">-->
+                                                                    <!--No Branches, use the button to the rght hand side to create one-->
+                                                                    <!--<span class="pull-right not_started">(Not Started)</span>-->
+                                                                <!--</h4>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
+                                                <!--</tr>-->
+                                                <tr data-status="completed">
+                                                    <td>
+                                                        <div class="ckbox">
+                                                            <input type="checkbox" id="checkbox1">
+                                                            <label for="checkbox1"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <h4 class="title">
+                                                                    Chemistry Branch
+                                                                    <span class="pull-right completed">(Completed)</span>
+                                                                </h4>
+                                                                <p class="summary">Branch created to study in depth chemistry...</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr data-status="pending">
+                                                    <td>
+                                                        <div class="ckbox">
+                                                            <input type="checkbox" id="checkbox3">
+                                                            <label for="checkbox3"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <h4 class="title">
+                                                                    Biology
+                                                                    <span class="pull-right pending">(Pending)</span>
+                                                                </h4>
+                                                                <p class="summary">Branch created to study biology...</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr data-status="not_started">
+                                                    <td>
+                                                        <div class="ckbox">
+                                                            <input type="checkbox" id="checkbox2">
+                                                            <label for="checkbox2"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <h4 class="title">
+                                                                    C++
+                                                                    <span class="pull-right not_started">(Not Started)</span>
+                                                                </h4>
+                                                                <p class="summary">Branch created to study C++ concepts...</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="table-container">
-                                        <table class="table table-filter">
-                                            <tbody>
-                                            <!--<tr data-status="not_started" id="no-branches-tr">-->
-                                                <!--<td>-->
-                                                    <!--<div class="media">-->
-                                                        <!--<a href="#" class="pull-left">-->
-                                                            <!--<img src="Assets/tree.gif" class="media-gif">-->
-                                                        <!--</a>-->
-                                                        <!--<div class="media-body">-->
-                                                            <!--<h4 class="title">-->
-                                                                <!--No Branches, use the button to the rght hand side to create one-->
-                                                                <!--<span class="pull-right not_started">(Not Started)</span>-->
-                                                            <!--</h4>-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
-                                                <!--</td>-->
-                                            <!--</tr>-->
-                                            <tr data-status="completed">
-                                                <td>
-                                                    <div class="ckbox">
-                                                        <input type="checkbox" id="checkbox1">
-                                                        <label for="checkbox1"></label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="media">
-                                                        <a href="#" class="pull-left">
-                                                            <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="title">
-                                                                Chemistry Branch
-                                                                <span class="pull-right completed">(Completed)</span>
-                                                            </h4>
-                                                            <p class="summary">Branch created to study in depth chemistry...</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr data-status="pending">
-                                                <td>
-                                                    <div class="ckbox">
-                                                        <input type="checkbox" id="checkbox3">
-                                                        <label for="checkbox3"></label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="media">
-                                                        <a href="#" class="pull-left">
-                                                            <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="title">
-                                                                Biology
-                                                                <span class="pull-right pending">(Pending)</span>
-                                                            </h4>
-                                                            <p class="summary">Branch created to study biology...</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr data-status="not_started">
-                                                <td>
-                                                    <div class="ckbox">
-                                                        <input type="checkbox" id="checkbox2">
-                                                        <label for="checkbox2"></label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="media">
-                                                        <a href="#" class="pull-left">
-                                                            <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h4 class="title">
-                                                                C++
-                                                                <span class="pull-right not_started">(Not Started)</span>
-                                                            </h4>
-                                                            <p class="summary">Branch created to study C++ concepts...</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div id="catalog-body" class="hidden col-sm-12" >
+                                        <div class="col-sm-12">
+                                            <div class="pull-left">
+                                            <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="form-group">
+                                                <h4> Branch Information </h4>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry">
+                                                <label class="mdl-textfield__label" for="branch-feed-name">Branch Name</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript">
+                                                <label class="mdl-textfield__label" for="branch-feed-type">Branch Type</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List">
+                                                <label class="mdl-textfield__label" for="branch-feed-structure">Branch Structure</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5">
+                                                <label class="mdl-textfield__label" for="branch-feed-sub">Branch Inputs</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" value="Lorum Ipsum"></textarea>
+                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3">
+                                                <label class="mdl-textfield__label" for="branch-contributors">Number of Contributors</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120">
+                                                <label class="mdl-textfield__label" for="branch-feed-time">Time (in seconds)</label>
+                                            </div>
+                                            <div id="btn-container" class="btn-container row">
+                                                <div class="row">
+                                                    <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!--End of Panel body-->
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
+            <div class="clearfix"></div>
             <div class="brainfeed-menu">
                 <button id="btn-create-branch" class="btn btn-md btn-default" data-toggle="modal" data-target="#modal-branches"><i class="fa fa-plus fa-5x"></i>New Branch</button>
             </div>
@@ -377,53 +428,159 @@
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                         <h3 class="modal-title" id="lineModalLabel">Welcome to the Branch Creator!</h3>
                     </div>
-                    <div class="modal-body">
-                        <div class="dropdown" id="topic-dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header">Select an topic from the ones available below</li>
-                                <li class="divider"></li>
-                                <li><a href="#">Chemistry</a></li>
-                                <li><a href="#">C++</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">Java</a></li>
-                                <li><a href="#">NodeJS</a></li>
-                            </ul>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
-                            <input class="mdl-textfield__input" type="text" id="topic-name">
-                            <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
-                            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
-                            <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
-                            <span class="mdl-textfield__error">Input is not a number!</span>
-                        </div>
+                    <div class="modal-body container col-sm-12">
+                        <div id="branch-info">
+                            <div class="dropdown" id="topic-dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">Select an topic from the ones available below</li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Chemistry</a></li>
+                                    <li><a href="#">C++</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <li><a href="#">Java</a></li>
+                                    <li><a href="#">NodeJS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
+                                <input class="mdl-textfield__input" type="text" id="topic-name">
+                                <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
+                                <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="range range-warning">
-                                    <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
-                                    <output id="rangeWarning">3</output>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="range range-warning">
+                                        <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
+                                        <output id="rangeWarning">3</output>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="range range-danger">
+                                        <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
+                                        <output id="rangeDanger">60</output>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="range range-danger">
-                                    <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
-                                    <output id="rangeDanger">60</output>
+
+                            <div id="contributors-label">
+                                <h6>Number of Contributors</h6>
+                            </div>
+
+                            <div id="contributors-time">
+                                <h6>Time per Contributor (in seconds)</h6>
+                            </div>
+
+                        </div>
+                        <div id="brainstorm-format" style="display: none;">
+                            <div class="row">
+                                <div class="">Choose Structures</div>
+                                <div class="">Choose Input Range</div>
+                            </div>
+                            <div class="row">
+                                <div class="">
+                                    <form>
+                                        <div class="form-group">
+                                            <select>
+                                                <option value="blank"></option>
+                                                <option value="list">List</option>
+                                                <option value="q&a">Q &amp; A</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="">
+                                    <input id="input-range" class="mdl-slider mdl-js-slider" type="range" min="0" max="10"
+                                           value="1" tabindex="0">
+                                    <output id="rangeWarning-input">1</output>
+
+                                    <div class=""></div>
                                 </div>
                             </div>
                         </div>
-
-                        <div id="contributors-label">
-                            <h6>Number of Contributors</h6>
+                        <div id="pre-screening" class="container col-sm-12" style="display: none;">
+                            <div id="pre-screening-questions" class="carousel slide" data-ride="false">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <h4>Question 1 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q11" name="q1" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q12" name="q1" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q13" name="q1" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Question 2 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q21" name="q2" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q22" name="q2" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q23" name="q2" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                    <div class="item">
+                                        <h4>Question 3 : Lorum Ipsum</h4>
+                                        <p>
+                                            <label class="pre-screening-question">
+                                                <input id="q31" name="q3" type="radio" class="">
+                                                <span class="">Option 1</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q32" name="q3" type="radio" class="">
+                                                <span class="">Option 2</span>
+                                            </label>
+                                            <br/>
+                                            <label class="pre-screening-question">
+                                                <input id="q33" name="q3" type="radio" class="">
+                                                <span class="">Option 3</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <!--
+                                    <a class="carousel-control-prev" href="#pre-screening-questions" role="button" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>-->
+                                    <a class="carousel-control-next" href="#pre-screening-questions" role="button" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
-                        <div id="contributors-time">
-                            <h6>Time per Contributor (in seconds)</h6>
+                        <div id="pre-screening-result" style="display: none;">
+                            <p></p>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <div class="btn-group btn-group-justified" role="group" aria-label="group button">
@@ -435,6 +592,12 @@
                             </div>
                             <div class="btn-group" role="group">
                                 <button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Next</button>
+                            </div>
+                            <div class="btn-group hidden" role="group">
+                                <button type="button" id="preScreen" class="btn btn-default btn-hover-green" data-action="save" role="button">Pre-screen</button>
+                            </div>
+                            <div class="btn-group hidden" role="group">
+                                <button type="button" id="finishPreScreen" class="btn btn-default btn-hover-green" data-action="save" role="button" >Finish</button>
                             </div>
                         </div>
                     </div>
@@ -544,6 +707,205 @@
                 </form>
             </div>
 
+        </div>
+
+        <div id="assess-knowledge">
+            <div class="col-sm-8">
+                <h3>Exisiting Quizzes</h3>
+                <div class="mcq assess-knowledge-element">
+                    <div class="circle text-center" id="mcq1" data-toggle="modal" data-target="#view-quiz" ><p>1323</p></div>
+                    <div class="circle text-center" id="mcq2" data-toggle="modal" data-target="#view-quiz" ><p>3434</p></div>
+                    <div class="circle text-center" id="mcq3" data-toggle="modal" data-target="#view-quiz" ><p>456456</p></div>
+                </div>
+                <hr/>
+                <div class="short-ans assess-knowledge-element">
+                    <div class="square text-center" id="short-ans1" data-toggle="modal" data-target="#view-quiz2" ><p>3w45</p></div>
+                    <div class="square text-center" id="short-ans2" data-toggle="modal" data-target="#view-quiz2" ><p>45</p></div>
+                </div>
+                <hr/>
+                <div class="tf assess-knowledge-element">
+                    <div class="triangle text-center" id="tf1" data-toggle="modal" data-target="#view-quiz3" ><p>4556</p></div>
+                    <div class="triangle text-center" id="tf2" data-toggle="modal" data-target="#view-quiz3" ><p>5e656</p></div>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center">
+                <h3>Create Quiz</h3>
+                <div class="mcq create-assess-knowledge-element">
+                    <div class="circle" id="c_mcq" data-toggle="modal" data-target="#add-quiz" ><p><i class="large material-icons">add</i><br/> Multiple<br/>Choice</p></div>
+                </div>
+                <hr/>
+                <div class="short-ans create-assess-knowledge-element">
+                    <div class="square" id="c_short-ans" data-toggle="modal" data-target="#add-quiz2" ><p><i class="large material-icons">add</i><br/>Short<br/>Answer</p></div>
+                </div>
+                <hr/>
+                <div class="tf create-assess-knowledge-element">
+                    <div class="triangle" id="c_tf" data-toggle="modal" data-target="#add-quiz3"><p><i class="large material-icons">add</i><br/>True <br/>False</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="add-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="mcqQuizModal">Add New Multiple Choice Question</h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                        <div id="mcq-options"></div>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-mcq-option" >
+                            Add Option
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="add-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="shortAnsModal">Add New Short Answer Question</h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="add-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="tfModal">Add New True False Question </h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="view-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModalView" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="mcqQuizModalView">Multiple Choice Question</h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                        <div id="mcq-options">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                                <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
+                              <span class="mdl-radio__label">Option 1</span>
+                            </label>
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                                <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2" checked>
+                              <span class="mdl-radio__label">Option 2</span>
+                            </label>
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                                <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="3" checked>
+                              <span class="mdl-radio__label">Option 3</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="view-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModalView" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="shortAnsModalView">Short Answer Question </h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <textarea class="mdl-textfield__input" type="text" id="q-answer" value="Lorum Ipsum"></textarea>
+                            <label class="mdl-textfield__label" for="q-answer">Answer</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="view-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModalView" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left" id="tfModalView">True False Question </h5>
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                        </div>
+                        <div class="tf-options">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="true">
+                                <input type="radio" id="true" class="mdl-radio__button" name="options" value="true" checked>
+                              <span class="mdl-radio__label">True</span>
+                            </label>
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="false">
+                                <input type="radio" id="false" class="mdl-radio__button" name="options" value="false" checked>
+                              <span class="mdl-radio__label">False</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
