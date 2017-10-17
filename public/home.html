@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script type="text/javascript" src="JS/config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -17,6 +18,7 @@
     <link type="text/css" rel="stylesheet" href="CSS/home.css">
     <script type="text/javascript" src="JS/cookie.js"></script>
     <script type="text/javascript" src="JS/app.js"></script>
+    <script type="text/javascript" src="JS/mustache.js"></script>
 </head>
 <body>
     <div class="main-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -48,7 +50,7 @@
             <header class="main-drawer-header">
                 <img src="Assets/emptyuser.png" class="main-avatar">
                 <div class="main-avatar-dropdown">
-                    <span>hello@example.com</span>
+                    <span id="user-email"></span>
                     <div class="mdl-layout-spacer"></div>
                     <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                         <i class="material-icons" role="presentation">arrow_drop_down</i>
@@ -153,6 +155,79 @@
             </div>
         </div>
 
+
+        <script id="profile-information" type="x-tmpl-mustache">
+            <div class="profile-name">
+                <span id="profile-name">{{name}}</span>
+            </div>
+            <div class="profile-email">
+                <span id="profile-email">{{email}}</span>
+            </div>
+        </script>
+
+        <script id="user-information" type="x-tmpl-mustache">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h4> Personal Information </h4>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="full-name" placeholder="Full Name" value="{{name}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="hometown" placeholder="Hometown" value="{{hometown}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="email" placeholder="Email" value="{{email}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="age" placeholder="Age">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h4> Professional Information </h4>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="job-title" placeholder="Job Title" value="{{job_title}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="university" placeholder="University" value="{{university}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="highest-education" placeholder="Highest Education" value="{{highest_education}}">
+                        </div>
+                    </div>
+
+                    <div id="travel-info" class="col-md-6">
+                        <div class="form-group">
+                            <h4 class="address-info">Branch Tags</h4>
+                        </div>
+                        <div class="form-group">
+                                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+                                    <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
+                                    <span class="mdl-chip__text">Add a new branch</span>
+                                    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">CH</span>
+                                    <span class="mdl-chip__text">Chemistry</span>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">PR</span>
+                                    <span class="mdl-chip__text">Programming</span>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">BI</span>
+                                    <span class="mdl-chip__text">Biology</span>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+
+
         <div id="profile-content" class="profile-content">
             <!--<div id="profile-checkbox">-->
                 <!--<input id="profile-info-toggle" type="checkbox" data-toggle="toggle" data-on="Recent Activity" data-off="Profile Info">-->
@@ -165,85 +240,12 @@
                 </span>
                 </div>
             </div>
-            <div id="profile-info">
-                <div class="profile-name">
-                    <span id="profile-name">Hello Example</span>
-                </div>
-                <div class="profile-email">
-                    <span id="profile-email">hello@example.com</span>
-                </div>
-            </div>
+
+            <div id="profile-info"></div>
 
             <div id="user-info-wrapper">
                 <div id="user-info" class="user-info-container row">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4> Personal Information </h4>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="full-name">
-                                <label class="mdl-textfield__label" for="full-name">Full Name</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="hometown">
-                                <label class="mdl-textfield__label" for="hometown">Hometown</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="email">
-                                <label class="mdl-textfield__label" for="email">Email</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="age">
-                                <label class="mdl-textfield__label" for="age">Age</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4> Professional Information </h4>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="job-title">
-                                <label class="mdl-textfield__label" for="job-title">Job Title</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="university-name">
-                                <label class="mdl-textfield__label" for="university-name">University</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="highest-education">
-                                <label class="mdl-textfield__label" for="highest-education">Highest Education</label>
-                            </div>
-
-                        </div>
-
-                        <div id="travel-info" class="col-md-6">
-                            <div class="form-group">
-                                <h4 class="address-info">Branch Tags</h4>
-                            </div>
-                            <div class="form-group">
-                                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
-                                    <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
-                                    <span class="mdl-chip__text">Add a new branch</span>
-                                    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">CH</span>
-                                    <span class="mdl-chip__text">Chemistry</span>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">PR</span>
-                                    <span class="mdl-chip__text">Programming</span>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">BI</span>
-                                    <span class="mdl-chip__text">Biology</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
                 <div id="btn-container" class="btn-container row">
                     <div class="row">
                         <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">

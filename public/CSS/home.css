@@ -151,6 +151,18 @@ body.modal-open .background-container {
 }
 /**********************************************************/
 /****************   Profile Information   ****************/
+.info {
+    background-color: transparent;
+    color: black;
+    outline: 0;
+    border-width: 0 0 1px 0;
+    border-color: grey;
+}
+
+.info:focus {
+    border-color: #0a003b;
+}
+
 .profile-content{
     margin-left: 15%;
 }
@@ -668,11 +680,6 @@ h4 {
 .range.range-danger input[type="range"] {
     outline-color: rgb(217, 83, 79);
 }
-
-
-
-
-/******************************************/
 
 /**********************************************************/
 /*****************   Social Information   ****************/
