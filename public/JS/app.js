@@ -12,12 +12,11 @@ $(document).ready(function(){
     brainTableFunctionality();
     searchBtnHandler();
     retrieveProfileInformation();
+    assessmentHandler();
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
     });
-
-    assessmentHandler();
 });
 
 function saveProfileInformation() {
@@ -268,7 +267,7 @@ function branchCreationModelhandler(){
     });
 
     $('#saveImage').on('click', function(){
-        $('#modal-branches .modal-title').text('Set Up Brainstorm Branch');
+        $('#modal-branches .modal-title').text('Brainstorm Branch Structure');
         $('#preScreen').parent().removeClass('hidden');
         $('#branch-info').hide();
         $('#brainstorm-format').show();

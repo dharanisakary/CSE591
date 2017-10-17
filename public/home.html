@@ -247,7 +247,7 @@
             <div id="user-info-wrapper">
                 <div id="user-info" class="user-info-container row">
                 </div>
-                <div id="btn-container" class="btn-container row">
+                <div class="btn-container row">
                     <div class="row">
                         <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                             Save
@@ -365,8 +365,12 @@
                                     <div id="catalog-body" class="hidden col-sm-12" >
                                         <div class="col-sm-12">
                                             <div class="pull-left">
-                                            <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
+                                                <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
                                             </div>
+                                            <div id="delete-branch">
+                                                <h3 class="glyphicon glyphicon-trash"></h3>
+                                            </div>
+
                                             <div class="clearfix"></div>
                                             <div class="form-group">
                                                 <h4> Branch Information </h4>
@@ -375,7 +379,7 @@
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry">
                                                 <label class="mdl-textfield__label" for="branch-feed-name">Branch Name</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript">
                                                 <label class="mdl-textfield__label" for="branch-feed-type">Branch Type</label>
                                             </div>
@@ -383,33 +387,26 @@
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List">
                                                 <label class="mdl-textfield__label" for="branch-feed-structure">Branch Structure</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5">
                                                 <label class="mdl-textfield__label" for="branch-feed-sub">Branch Inputs</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" value="Lorum Ipsum"></textarea>
-                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3">
                                                 <label class="mdl-textfield__label" for="branch-contributors">Number of Contributors</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch" >
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120">
                                                 <label class="mdl-textfield__label" for="branch-feed-time">Time (in seconds)</label>
                                             </div>
-                                            <div id="btn-container" class="btn-container row">
-                                                <div class="row">
-                                                    <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                                                        Save
-                                                    </button>
-                                                </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" value="Lorum Ipsum"></textarea>
+                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
                                             </div>
+                                            <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>Start</button>
                                         </div>
                                     </div>
                                 </div>
-                                <!--End of Panel body-->
                             </div>
                         </div>
                     </section>
@@ -474,6 +471,11 @@
 
                             <div id="contributors-time">
                                 <h6>Time per Contributor (in seconds)</h6>
+                            </div>
+
+                            <div id="new-branch-description-box" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <textarea class="mdl-textfield__input" type="text" id="new-branch-description" value="Lorum Ipsum"></textarea>
+                                <label class="mdl-textfield__label" for="new-branch-description">Description</label>
                             </div>
 
                         </div>
@@ -862,7 +864,7 @@
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                            <label class="mdl-textfield__label" for="quiz-question">Question</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <textarea class="mdl-textfield__input" type="text" id="q-answer" value="Lorum Ipsum"></textarea>
@@ -887,7 +889,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question-contributors" value="">
                             <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
                         </div>
                         <div class="tf-options">

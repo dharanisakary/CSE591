@@ -348,7 +348,6 @@ h4 {
     padding-top: 5%;
     padding-left: 35%;
 }
-/******************************************/
 
 /*****************************************/
 /******   Brainfeed Information   *******/
@@ -675,6 +674,29 @@ h4 {
 .range.range-danger input[type="range"] {
     outline-color: rgb(217, 83, 79);
 }
+.left-panel-branch{
+    margin-left: 10%;
+}
+#new-branch-description-box{
+    margin-left: 25%;
+}
+
+#catalog-body{
+    background-color: #EEE;
+}
+#go-back{
+    cursor: pointer;
+    color: rgb(217, 199, 33);
+}
+#btn-start-branch{
+    margin-left: 86%;
+    margin-bottom: 20px;
+}
+#delete-branch{
+    cursor: pointer;
+    color: rgb(217, 83, 79);
+    margin-left: 91%;
+}
 
 /**********************************************************/
 /*****************   Social Information   ****************/
@@ -793,7 +815,6 @@ h4 {
     padding: 10px 17px;
     font-size: 27px;
 }
-/******************************************/
 
 /*****************************************/
 /*********  Material Buttons   **********/
@@ -918,18 +939,9 @@ button:focus {
     background-color: transparent;
     color: #000;
 }
-/******************************************/
-/******************************************/
 
-#catalog-body{
-    background-color: #EEE;
-}
-#go-back{
-    cursor: pointer;
-}
-
-/******************************************/
-/******************************************/
+/*****************************************/
+/********  Assessing Knowledge   ********/
 
 #assess-knowledge{
     margin-left: 25%;
