@@ -697,6 +697,24 @@ h4 {
     color: rgb(217, 83, 79);
     margin-left: 91%;
 }
+#input-range-right{
+    margin-top: -40px;
+    margin-left: 65%;
+}
+
+#structure-left{
+    margin-left: 10%;
+}
+
+#structure-dropdown{
+    margin-left: 3%;
+}
+
+#structure-range{
+    margin-top: -55px;
+    margin-left: 55%;
+}
+
 
 /**********************************************************/
 /*****************   Social Information   ****************/

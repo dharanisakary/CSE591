@@ -15,6 +15,8 @@ $(document).ready(function(){
     searchBtnHandler();
     retrieveProfileInformation();
     assessmentHandler();
+    getBranchStructure();
+    getBranchTopic();
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
@@ -53,6 +55,49 @@ $(document).ready(function(){
         });
     });
 });
+
+function resetDropdownMenus(){
+    $('#structure-button').text('Brainstorming Structure');
+    $('#structure-button').append(' <span class="caret"></span>').html();
+    $('#structure-dropdown').css('margin-left', '3%');
+
+    $('#topic-button').text('Type of Branch');
+    $('#topic-button').append(' <span class="caret"></span>').html();
+    $('#topic-dropdown').css('margin-left', '35%');
+
+}
+
+function getBranchTopic() {
+    var currentText = $('#topic-button').text().trim();
+
+
+    $('#dropdown-topic li a').click(function () {
+        var selected = $(this).text();
+
+        $('#topic-button').text(selected);
+        $('#topic-button').append('<span class="caret"></span>').html();
+
+        if(currentText === 'Type of Branch'){
+            $('#topic-dropdown').css('margin-left', '43%');
+        }
+    });
+}
+
+
+function getBranchStructure(){
+    var currentText = $('#structure-button').text().trim();
+
+    $("#dropdown-structure li a").click(function(){
+        var selected = $(this).text();
+
+        $('#structure-button').text(selected);
+        $('#structure-button').append('<span class="caret"></span>').html();
+
+        if(currentText === "Brainstorming Structure"){
+            $('#structure-dropdown').css('margin-left', '15%');
+        }
+    });
+}
 
 
 function profilePictureRetrieval(){
@@ -210,6 +255,7 @@ function menuChoiceHndler(){
         if(!$('#brainfeed-choice').hasClass('selected')){
             $('#brainfeed-choice').addClass('selected');
             $('#brain-feed').show();
+            resetDropdownMenus();
         }
         if($('#home-choice').hasClass('selected')){
             $('#home-choice').removeClass('selected');

@@ -185,7 +185,7 @@
                             <input class="mdl-textfield__input info" type="text" id="email" placeholder="Email" value="{{email}}">
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input info" type="text" id="age" placeholder="Age">
+                            <input class="mdl-textfield__input info" type="text" id="age" placeholder="Age" value="{{age}}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -392,7 +392,7 @@
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-sub">Branch Inputs</label>
+                                                <label class="mdl-textfield__label" for="branch-feed-sub">Branch Leaves</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3" readonly>
@@ -400,7 +400,7 @@
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch" >
                                                 <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-time">Time (in seconds)</label>
+                                                <label class="mdl-textfield__label" for="branch-feed-time">Time per leaf (in seconds)</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly></textarea>
@@ -431,9 +431,9 @@
                     <div class="modal-body container col-sm-12">
                         <div id="branch-info">
                             <div class="dropdown" id="topic-dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
+                                <button id="topic-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
                                     <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
+                                <ul id="dropdown-topic" class="dropdown-menu">
                                     <li class="dropdown-header">Select an topic from the ones available below</li>
                                     <li class="divider"></li>
                                     <li><a href="#">Chemistry</a></li>
@@ -455,11 +455,11 @@
 
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <div class="range range-warning">
-                                        <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
-                                        <output id="rangeWarning">3</output>
-                                    </div>
+                                <div class="range range-warning">
+                                    <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
+                                    <output id="rangeWarning">3</output>
                                 </div>
+                            </div>
                                 <div class="col-xs-6">
                                     <div class="range range-danger">
                                         <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
@@ -484,28 +484,26 @@
                         </div>
                         <div id="brainstorm-format" style="display: none;">
                             <div class="row">
-                                <div class="">Choose Structures</div>
-                                <div class="">Choose Input Range</div>
+                                <h6 id="structure-left">Choose Structures</h6>
+                                <h6 id="input-range-right">Choose Input Range</h6>
                             </div>
                             <div class="row">
-                                <div class="">
-                                    <form>
-                                        <div class="form-group">
-                                            <select>
-                                                <option value="blank"></option>
-                                                <option value="list">List</option>
-                                                <option value="q&a">Q &amp; A</option>
-                                            </select>
-                                        </div>
-                                    </form>
+                                <div class="dropdown" id="structure-dropdown">
+                                    <button id="structure-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Brainstorming Structure
+                                        <span class="caret"></span></button>
+                                    <ul id="dropdown-structure" class="dropdown-menu">
+                                        <li class="dropdown-header">Select a structure from the ones available below</li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">List</a></li>
+                                        <li><a href="#">Q&A</a></li>
+                                    </ul>
                                 </div>
 
-                                <div class="">
-                                    <input id="input-range" class="mdl-slider mdl-js-slider" type="range" min="0" max="10"
-                                           value="1" tabindex="0">
-                                    <output id="rangeWarning-input">1</output>
-
-                                    <div class=""></div>
+                                <div class="col-xs-6" id="structure-range">
+                                    <div class="range range-primary">
+                                        <input type="range" name="range" min="0" max="5" value="0" onchange="structureRange.value=value">
+                                        <output id="structureRange">0</output>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -707,7 +705,7 @@
             <div id="search">
                 <button type="button" class="close">×</button>
                 <form>
-                    <input type="search" value="" placeholder="type keyword(s) here" />
+                    <input type="search" value="" placeholder="Type username(s) here" />
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
