@@ -709,7 +709,6 @@ h4 {
 #structure-dropdown{
     margin-left: 3%;
 }
-
 #structure-range{
     margin-top: -55px;
     margin-left: 55%;
@@ -724,6 +723,19 @@ h4 {
 #subtopics{
     display: none;
 }
+.correct{
+    color: green;
+}
+.yellow{
+    color: yellow;
+}
+.large{
+    font-size: 27px;
+}
+.br-feedback{
+    color:#4679b2;
+}
+
 /**********************************************************/
 /*****************   Social Information   ****************/
 #social-search h3{

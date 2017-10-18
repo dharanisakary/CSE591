@@ -484,11 +484,11 @@ function branchCreationModelhandler(){
 
         var content = "";
         if(answers > 1){
-            content = "Congratulations! "
+            content = '<h3 class="correct"><i class="material-icons large">grade</i>Congratulations!</h3> <h5 class="br-feedback">You can now start Brain storming!</h5>';
         }else{
-            content = "Oops!";
+            content = '<h3 class="yellow"><i class="material-icons large">error</i>Oops! </h3><h5 class="br-feedback">You did not qualify for Brain Storming!</h5>';
         }
-        content += '<br/> Closing ..';
+        content += '<br/><h5> Closing ..</h5>';
         $('#pre-screening-result p').html(content);
         setTimeout("$('#modal-branches').modal('hide');",3000);
         $(this).attr('disabled', true);
@@ -542,6 +542,7 @@ function timer(){
         timeleft--;
         if(timeleft==0){
             document.getElementById("countdowntimer").textContent = timeout;
+
 
         }
         else{
