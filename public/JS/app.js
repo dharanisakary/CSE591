@@ -5,6 +5,8 @@ $(document).ready(function(){
     $('#social-search').hide();
     $('#assess-knowledge').hide();
 
+
+    profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
     profileToggleHandler();
@@ -17,7 +19,54 @@ $(document).ready(function(){
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
     });
+
+    $(document).on('change', '.btn-file :file', function() {
+        var input = $(this),
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [label]);
+    });
+
+    $('.btn-file :file').on('fileselect', function(event, label) {
+        var input = $(this).parents('.input-group').find(':text'),
+            log = label;
+
+        if (input.length) {
+            input.val(log);
+        }
+    });
+
+
+    $("#imgInp").change(function() {
+        var user = $.cookie("user");
+        var inputFile = this;
+        var reader = new FileReader();
+        var file = inputFile.files[0];
+        var storageRef = firebase.storage().ref();
+        var imagesRef = storageRef.child('images/' + user + 'ProfImage');
+        imagesRef.put(file).then(function(snapshot) {
+            reader.onload = function(e) {
+                $('#img-upload').attr('src', reader.result);
+                $('#sm-imgInp').attr('src', reader.result);
+
+            }
+            reader.readAsDataURL(inputFile.files[0]);
+        });
+    });
 });
+
+
+function profilePictureRetrieval(){
+    var user = $.cookie("user");
+
+    //Picture data retrieval
+    var storageRef = firebase.storage().ref();
+    storageRef.child('images/' + user + 'ProfImage').getDownloadURL().then(function(url) {
+        $('#img-upload').attr('src', url);
+        $('#sm-imgInp').attr('src', url);
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
 
 function saveProfileInformation() {
     var user = $.cookie("user");
@@ -157,7 +206,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#brainfeed-choice').on('click',function(){
+    $('#brainfeed-choice, #get-started').on('click',function(){
         if(!$('#brainfeed-choice').hasClass('selected')){
             $('#brainfeed-choice').addClass('selected');
             $('#brain-feed').show();
@@ -180,7 +229,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#profile-choice').on('click',function(){
+    $('#profile-choice, #find-out-now').on('click',function(){
         if(!$('#profile-choice').hasClass('selected')){
             $('#profile-choice').addClass('selected');
             $('#profile-content').show();
@@ -203,7 +252,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#social-choice').on('click',function(){
+    $('#social-choice, #make-friends').on('click',function(){
         if($('#assess-choice').hasClass('selected')){
            $('#assess-choice').removeClass('selected');
             $('#assess-knowledge').hide();
