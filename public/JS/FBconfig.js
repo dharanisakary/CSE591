@@ -47,6 +47,89 @@ $(document).ready(function(){
                                 highest_education: "",
                                 job_title: ""
                             });
+
+                            // firebase.database().ref('pre_screening/').set({
+                            //     C_plus_plus: {
+                            //         questions: [
+                            //             "Do we have a String primitive data type in C++",
+                            //             "Are there pointers in C++?",
+                            //             "What is the acronym that C++ uses for standard input?",
+                            //             "What is cout?",
+                            //             "What is cin?"
+                            //         ],
+                            //         answers: {
+                            //             question_1: [
+                            //                 "Yes",
+                            //                 "No",
+                            //                 "1"
+                            //             ],
+                            //             question_2: [
+                            //                 "Yes",
+                            //                 "No",
+                            //                 "0"
+                            //             ],
+                            //             question_3: [
+                            //                 "cout",
+                            //                 "cin",
+                            //                 "stdin",
+                            //                 "console.log",
+                            //                 "2"
+                            //             ],
+                            //             question_4: [
+                            //                 "Standard output",
+                            //                 "Output Device",
+                            //                 "1"
+                            //             ],
+                            //             question_5: [
+                            //                 "Standard Input",
+                            //                 "Input Device",
+                            //                 "1"
+                            //             ]
+                            //         }
+                            //     },
+                            //     JavaScript:  {
+                            //         questions: [
+                            //             "Is JavaScript an Object-Orientated Programming Language?+",
+                            //             "Are there any data types in Javascript?",
+                            //             "What is the Javascript method for printing to the console?",
+                            //             "Javascript does not have primitives.",
+                            //             "Which method for emptying an array in Javascript is incorrect?"
+                            //         ],
+                            //         answers: {
+                            //             question_1: [
+                            //                 "Yes",
+                            //                 "No",
+                            //                 "1"
+                            //             ],
+                            //             question_2: [
+                            //                 "Yes",
+                            //                 "No",
+                            //                 "1"
+                            //             ],
+                            //             question_3: [
+                            //                 "cout << Hello World;",
+                            //                 "print(Hello World)",
+                            //                 "System.out.println(Hello World)",
+                            //                 "console.log(Hello World)",
+                            //                 "3"
+                            //             ],
+                            //             question_4: [
+                            //                 "True",
+                            //                 "False",
+                            //                 "1"
+                            //             ],
+                            //             question_5: [
+                            //                 "arrayList = []",
+                            //                 "arrayList.length = 0",
+                            //                 "arrayList.splice(0, arrayList.length)",
+                            //                 "arrayList = null",
+                            //                 "3"
+                            //             ]
+                            //         }
+                            //     },
+                            // });
+
+
                             window.location.href = "/WebApp/public/home.html";
                         }
                     }
