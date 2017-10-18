@@ -158,13 +158,49 @@ function brainTableFunctionality(){
     });
 
     $('#brain-feed .media').on('click', function(e){
-        $('#brain-feed #catalog').addClass('hidden');
-        $('#brain-feed #catalog-body').removeClass('hidden');
+         $('#brain-feed #catalog-body').removeClass('hidden');
+        if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+            $('#brain-feed #brain-feed-branch').addClass('hidden');
+        }
+        if(!$('#brain-feed #catalog').hasClass('hidden')){
+            $('#brain-feed #catalog').addClass('hidden');
+        }
+
     });
 
     $('#go-back').on('click', function(){
         $('#brain-feed #catalog').removeClass('hidden');
-        $('#brain-feed #catalog-body').addClass('hidden');
+        if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+            $('#brain-feed #brain-feed-branch').addClass('hidden');
+        }
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+    });
+
+    $('#go-back2').on('click', function(){
+        $('#brain-feed #catalog-body').removeClass('hidden');
+        if(!$('#brain-feed #catalog').hasClass('hidden')){
+            $('#brain-feed #catalog').addClass('hidden');
+        }
+        if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+            $('#brain-feed #brain-feed-branch').addClass('hidden');
+        }
+     });
+
+     $('#btn-start-branch').on('click', function(){
+        $('#brain-feed #brain-feed-branch').removeClass('hidden');
+        if(!$('#brain-feed #catalog').hasClass('hidden')){
+            $('#brain-feed #catalog').addClass('hidden');
+        }
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+        timer();
+    });
+
+    $('#btn-done-brainstorm').on('click', function(){
+        // Handle post Brainstorm action
     });
 }
 
@@ -385,3 +421,20 @@ function assessmentHandler(){
         $('#mcq-options').append(html);
     })
 }
+
+function timer(){
+    var timeleft = 4;
+    var timeout='Time over';
+    var downloadTimer = setInterval(function(){
+        timeleft--;
+        if(timeleft==0){
+            document.getElementById("countdowntimer").textContent = timeout;
+
+        }
+        else{
+            document.getElementById("countdowntimer").textContent = timeleft;
+        }
+        if(timeleft <= 0)
+            clearInterval(downloadTimer);
+    },1000);
+ }
