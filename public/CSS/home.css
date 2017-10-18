@@ -714,8 +714,16 @@ h4 {
     margin-top: -55px;
     margin-left: 55%;
 }
-
-
+#subtopics-middle{
+    text-decoration: underline;
+    margin-left: 20%;
+}
+.subtopic{
+    margin-left: 25%;
+}
+#subtopics{
+    display: none;
+}
 /**********************************************************/
 /*****************   Social Information   ****************/
 #social-search h3{

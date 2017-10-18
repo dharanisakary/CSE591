@@ -17,6 +17,7 @@ $(document).ready(function(){
     assessmentHandler();
     getBranchStructure();
     getBranchTopic();
+    getBranchStructure();
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
@@ -37,7 +38,6 @@ $(document).ready(function(){
         }
     });
 
-
     $("#imgInp").change(function() {
         var user = $.cookie("user");
         var inputFile = this;
@@ -50,11 +50,77 @@ $(document).ready(function(){
                 $('#img-upload').attr('src', reader.result);
                 $('#sm-imgInp').attr('src', reader.result);
 
-            }
+            };
             reader.readAsDataURL(inputFile.files[0]);
         });
     });
+
+    $("#dropdown-structure li a").click(function(){
+        $('#subtopics').empty();
+        $('#subtopics').append('<div class="row"><h6 id="subtopics-middle"></h6></div>');
+        var currentText = $('#structure-button').text().trim();
+        var noSubTopics = $('#input-range').val().trim();
+
+        if(noSubTopics != 0){
+            if(currentText === "List"){
+                $('#subtopics').show();
+                $('#subtopics-middle').text('Choose your list-items based on your selections');
+                var i = 0;
+
+                for(i; i<noSubTopics; i++){
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic'+i+'"></div>').html();
+                }
+            }
+            if(currentText === "Q&A"){
+                $('#subtopics').show();
+                $('#subtopics-middle').text('Choose your questions based on your selections');
+
+                var i = 0;
+
+                for(i; i<noSubTopics; i++){
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question'+i+'"></div>').html();
+                }
+            }
+        }
+        else{
+            $('#subtopics').hide();
+        }
+    });
+
+    $('#input-range').on('change',function(){
+        $('#subtopics').empty();
+        $('#subtopics').append('<div class="row"><h6 id="subtopics-middle"></h6></div>');
+        var currentText = $('#structure-button').text().trim();
+        var noSubTopics = $('#input-range').val().trim();
+        var difference = 0;
+
+        if(noSubTopics != 0){
+            if(currentText === "List"){
+                $('#subtopics').show();
+                $('#subtopics-middle').text('Choose your list-items based on your selections');
+                var i = 0;
+
+                for(i; i<noSubTopics; i++){
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic'+i+'"></div>').html();
+                }
+            }
+            if(currentText === "Q&A"){
+                $('#subtopics').show();
+                $('#subtopics-middle').text('Choose your questions based on your selections');
+                var i = 0;
+
+                for(i; i<noSubTopics; i++){
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question'+i+'"></div>').html();
+                }
+            }
+        }
+        else{
+            $('#subtopics').hide();
+        }
+    });
 });
+
+
 
 function resetDropdownMenus(){
     $('#structure-button').text('Brainstorming Structure');
@@ -65,11 +131,11 @@ function resetDropdownMenus(){
     $('#topic-button').append(' <span class="caret"></span>').html();
     $('#topic-dropdown').css('margin-left', '35%');
 
+    $('#subtopics').hide();
 }
 
 function getBranchTopic() {
     var currentText = $('#topic-button').text().trim();
-
 
     $('#dropdown-topic li a').click(function () {
         var selected = $(this).text();
@@ -86,6 +152,7 @@ function getBranchTopic() {
 
 function getBranchStructure(){
     var currentText = $('#structure-button').text().trim();
+    var title = $('#subtopics-middle').text().trim();
 
     $("#dropdown-structure li a").click(function(){
         var selected = $(this).text();
