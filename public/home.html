@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Webstorming</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,6 +20,7 @@
     <link type="text/css" rel="stylesheet" href="CSS/home.css">
     <script type="text/javascript" src="JS/cookie.js"></script>
     <script type="text/javascript" src="JS/app.js"></script>
+    <script type="text/javascript" src="JS/FBconfig.js"></script>
     <script type="text/javascript" src="JS/mustache.js"></script>
 </head>
 <body>
@@ -48,7 +51,7 @@
         </header>
         <div id="main-drawer" class="main-drawer mdl-layout__drawer mdl-color--green-500 mdl-color-text--blue-grey-50">
             <header class="main-drawer-header">
-                <img src="Assets/emptyuser.png" class="main-avatar">
+                <img id="sm-imgInp" src="Assets/emptyuser.png" class="main-avatar">
                 <div class="main-avatar-dropdown">
                     <span id="user-email"></span>
                     <div class="mdl-layout-spacer"></div>
@@ -56,7 +59,7 @@
                         <i class="material-icons" role="presentation">arrow_drop_down</i>
                     </button>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                        <li class="mdl-menu__item">Sign out</li>
+                        <li id="user-sign-out" class="mdl-menu__item">Sign out</li>
                     </ul>
                 </div>
             </header>
@@ -80,7 +83,7 @@
                     Have a new curiosity?:(. Thoroughly think about topics that you wish to brainstorm about, and then start learning by inviting your friends to your branches!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id = "get-started" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Get Started
                     </a>
                 </div>
@@ -101,7 +104,7 @@
                     We can walk you through the basic steps of using our tool, during our short and awesome tutorial, that you can access at any time, for your convenience!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="watch-video" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Watch video
                     </a>
                 </div>
@@ -121,7 +124,7 @@
                     Looking for Contributors? Now you can easily find who is on Webstorming, by using our new social matching tool!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="make-friends" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Make Friends
                     </a>
                 </div>
@@ -141,7 +144,7 @@
                     Go to your own personal space where you can see all your brainstorming sessions alongside your individual information!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="find-out-now" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Find out now!
                     </a>
                 </div>
@@ -376,31 +379,31 @@
                                                 <h4> Branch Information </h4>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-name">Branch Name</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-type">Branch Type</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-structure">Branch Structure</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-sub">Branch Inputs</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3">
+                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3" readonly>
                                                 <label class="mdl-textfield__label" for="branch-contributors">Number of Contributors</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch" >
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-time">Time (in seconds)</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" value="Lorum Ipsum"></textarea>
+                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly></textarea>
                                                 <label class="mdl-textfield__label" for="branch-description">Description</label>
                                             </div>
                                             <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>Start</button>
