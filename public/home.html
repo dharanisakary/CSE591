@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Webstorming</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script type="text/javascript" src="JS/config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -17,6 +20,8 @@
     <link type="text/css" rel="stylesheet" href="CSS/home.css">
     <script type="text/javascript" src="JS/cookie.js"></script>
     <script type="text/javascript" src="JS/app.js"></script>
+    <script type="text/javascript" src="JS/FBconfig.js"></script>
+    <script type="text/javascript" src="JS/mustache.js"></script>
 </head>
 <body>
     <div class="main-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -46,15 +51,15 @@
         </header>
         <div id="main-drawer" class="main-drawer mdl-layout__drawer mdl-color--green-500 mdl-color-text--blue-grey-50">
             <header class="main-drawer-header">
-                <img src="Assets/emptyuser.png" class="main-avatar">
+                <img id="sm-imgInp" src="Assets/emptyuser.png" class="main-avatar">
                 <div class="main-avatar-dropdown">
-                    <span>hello@example.com</span>
+                    <span id="user-email"></span>
                     <div class="mdl-layout-spacer"></div>
                     <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                         <i class="material-icons" role="presentation">arrow_drop_down</i>
                     </button>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                        <li class="mdl-menu__item">Sign out</li>
+                        <li id="user-sign-out" class="mdl-menu__item">Sign out</li>
                     </ul>
                 </div>
             </header>
@@ -78,7 +83,7 @@
                     Have a new curiosity?:(. Thoroughly think about topics that you wish to brainstorm about, and then start learning by inviting your friends to your branches!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id = "get-started" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Get Started
                     </a>
                 </div>
@@ -99,7 +104,7 @@
                     We can walk you through the basic steps of using our tool, during our short and awesome tutorial, that you can access at any time, for your convenience!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="watch-video" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Watch video
                     </a>
                 </div>
@@ -119,7 +124,7 @@
                     Looking for Contributors? Now you can easily find who is on Webstorming, by using our new social matching tool!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="make-friends" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Make Friends
                     </a>
                 </div>
@@ -139,7 +144,7 @@
                     Go to your own personal space where you can see all your brainstorming sessions alongside your individual information!
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <a id="find-out-now" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                         Find out now!
                     </a>
                 </div>
@@ -154,6 +159,79 @@
             </div>
         </div>
 
+
+        <script id="profile-information" type="x-tmpl-mustache">
+            <div class="profile-name">
+                <span id="profile-name">{{name}}</span>
+            </div>
+            <div class="profile-email">
+                <span id="profile-email">{{email}}</span>
+            </div>
+        </script>
+
+        <script id="user-information" type="x-tmpl-mustache">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h4> Personal Information </h4>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="full-name" placeholder="Full Name" value="{{name}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="hometown" placeholder="Hometown" value="{{hometown}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="email" placeholder="Email" value="{{email}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="age" placeholder="Age">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h4> Professional Information </h4>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="job-title" placeholder="Job Title" value="{{job_title}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="university" placeholder="University" value="{{university}}">
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input info" type="text" id="highest-education" placeholder="Highest Education" value="{{highest_education}}">
+                        </div>
+                    </div>
+
+                    <div id="travel-info" class="col-md-6">
+                        <div class="form-group">
+                            <h4 class="address-info">Branch Tags</h4>
+                        </div>
+                        <div class="form-group">
+                                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+                                    <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
+                                    <span class="mdl-chip__text">Add a new branch</span>
+                                    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">CH</span>
+                                    <span class="mdl-chip__text">Chemistry</span>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">PR</span>
+                                    <span class="mdl-chip__text">Programming</span>
+                                </span>
+                            <span class="mdl-chip mdl-chip--contact">
+                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">BI</span>
+                                    <span class="mdl-chip__text">Biology</span>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+
+
         <div id="profile-content" class="profile-content">
             <!--<div id="profile-checkbox">-->
                 <!--<input id="profile-info-toggle" type="checkbox" data-toggle="toggle" data-on="Recent Activity" data-off="Profile Info">-->
@@ -166,86 +244,13 @@
                 </span>
                 </div>
             </div>
-            <div id="profile-info">
-                <div class="profile-name">
-                    <span id="profile-name">Hello Example</span>
-                </div>
-                <div class="profile-email">
-                    <span id="profile-email">hello@example.com</span>
-                </div>
-            </div>
+
+            <div id="profile-info"></div>
 
             <div id="user-info-wrapper">
                 <div id="user-info" class="user-info-container row">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4> Personal Information </h4>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="full-name">
-                                <label class="mdl-textfield__label" for="full-name">Full Name</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="hometown">
-                                <label class="mdl-textfield__label" for="hometown">Hometown</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="email">
-                                <label class="mdl-textfield__label" for="email">Email</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="age">
-                                <label class="mdl-textfield__label" for="age">Age</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4> Professional Information </h4>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="job-title">
-                                <label class="mdl-textfield__label" for="job-title">Job Title</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="university-name">
-                                <label class="mdl-textfield__label" for="university-name">University</label>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="highest-education">
-                                <label class="mdl-textfield__label" for="highest-education">Highest Education</label>
-                            </div>
-
-                        </div>
-
-                        <div id="travel-info" class="col-md-6">
-                            <div class="form-group">
-                                <h4 class="address-info">Branch Tags</h4>
-                            </div>
-                            <div class="form-group">
-                                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
-                                    <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
-                                    <span class="mdl-chip__text">Add a new branch</span>
-                                    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">CH</span>
-                                    <span class="mdl-chip__text">Chemistry</span>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">PR</span>
-                                    <span class="mdl-chip__text">Programming</span>
-                                </span>
-                                <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">BI</span>
-                                    <span class="mdl-chip__text">Biology</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <div id="btn-container" class="btn-container row">
+                <div class="btn-container row">
                     <div class="row">
                         <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                             Save
@@ -363,47 +368,45 @@
                                     <div id="catalog-body" class="hidden col-sm-12" >
                                         <div class="col-sm-12">
                                             <div class="pull-left">
-                                            <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
+                                                <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
                                             </div>
+                                            <div id="delete-branch">
+                                                <h3 class="glyphicon glyphicon-trash"></h3>
+                                            </div>
+
                                             <div class="clearfix"></div>
                                             <div class="form-group">
                                                 <h4> Branch Information </h4>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-name">Branch Name</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-type">Branch Type</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-structure">Branch Structure</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-sub">Branch Inputs</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" value="Lorum Ipsum"></textarea>
-                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3">
+                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3" readonly>
                                                 <label class="mdl-textfield__label" for="branch-contributors">Number of Contributors</label>
                                             </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch" >
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120" readonly>
                                                 <label class="mdl-textfield__label" for="branch-feed-time">Time (in seconds)</label>
                                             </div>
-                                            <div id="btn-container" class="btn-container row">
-                                                <div class="row">
-                                                    <button id="btn-save-info" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                                                        Save
-                                                    </button>
-                                                </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly></textarea>
+                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
                                             </div>
+                                            <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>Start</button>
                                         </div>
                                     </div>
                                     <div id="brain-feed-branch" class="hidden col-sm-12">
@@ -441,7 +444,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--End of Panel body-->
                             </div>
                         </div>
                     </section>
@@ -506,6 +508,11 @@
 
                             <div id="contributors-time">
                                 <h6>Time per Contributor (in seconds)</h6>
+                            </div>
+
+                            <div id="new-branch-description-box" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <textarea class="mdl-textfield__input" type="text" id="new-branch-description" value="Lorum Ipsum"></textarea>
+                                <label class="mdl-textfield__label" for="new-branch-description">Description</label>
                             </div>
 
                         </div>
@@ -894,7 +901,7 @@
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                            <label class="mdl-textfield__label" for="quiz-question">Question</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <textarea class="mdl-textfield__input" type="text" id="q-answer" value="Lorum Ipsum"></textarea>
@@ -919,7 +926,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                            <input class="mdl-textfield__input" type="text" id="quiz-question-contributors" value="">
                             <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
                         </div>
                         <div class="tf-options">

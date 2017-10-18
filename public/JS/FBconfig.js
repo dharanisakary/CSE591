@@ -1,10 +1,6 @@
 $(document).ready(function(){
 
-    firebase.auth().signOut().then(function() {
-        console.log("all users signed out");
-    }).catch(function(error) {
-        console.log(error);
-    });
+    logout();
 
     $('#fb-login-button').on('click', function(){
        FBlogin();
@@ -12,6 +8,11 @@ $(document).ready(function(){
 
     $('#gg-login-button').on('click', function(){
        GoogleLogin();
+    });
+
+    $('#user-sign-out').on('click', function(){
+       logout();
+       window.location.href = "/WebApp/public/index.html";
     });
 
     function FBlogin() {
@@ -47,7 +48,7 @@ $(document).ready(function(){
                                 job_title: ""
                             });
                             window.location.href = "/WebApp/public/home.html";
-                        };
+                        }
                     }
                 });
             });
@@ -63,6 +64,15 @@ $(document).ready(function(){
             }
         });
     }
+
+    function logout(){
+        firebase.auth().signOut().then(function() {
+            console.log("all users signed out");
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+
 
     function GoogleLogin() {
         var provider = new firebase.auth.GoogleAuthProvider();

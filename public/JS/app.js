@@ -5,14 +5,131 @@ $(document).ready(function(){
     $('#social-search').hide();
     $('#assess-knowledge').hide();
 
+
+    profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
     profileToggleHandler();
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
+    retrieveProfileInformation();
     assessmentHandler();
+
+    $('#btn-save-info').on('click', function() {
+        saveProfileInformation();
+    });
+
+    $(document).on('change', '.btn-file :file', function() {
+        var input = $(this),
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [label]);
+    });
+
+    $('.btn-file :file').on('fileselect', function(event, label) {
+        var input = $(this).parents('.input-group').find(':text'),
+            log = label;
+
+        if (input.length) {
+            input.val(log);
+        }
+    });
+
+
+    $("#imgInp").change(function() {
+        var user = $.cookie("user");
+        var inputFile = this;
+        var reader = new FileReader();
+        var file = inputFile.files[0];
+        var storageRef = firebase.storage().ref();
+        var imagesRef = storageRef.child('images/' + user + 'ProfImage');
+        imagesRef.put(file).then(function(snapshot) {
+            reader.onload = function(e) {
+                $('#img-upload').attr('src', reader.result);
+                $('#sm-imgInp').attr('src', reader.result);
+
+            }
+            reader.readAsDataURL(inputFile.files[0]);
+        });
+    });
 });
+
+
+function profilePictureRetrieval(){
+    var user = $.cookie("user");
+
+    //Picture data retrieval
+    var storageRef = firebase.storage().ref();
+    storageRef.child('images/' + user + 'ProfImage').getDownloadURL().then(function(url) {
+        $('#img-upload').attr('src', url);
+        $('#sm-imgInp').attr('src', url);
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+
+function saveProfileInformation() {
+    var user = $.cookie("user");
+    var ref = firebase.database().ref('users/' + user);
+
+    var name = $('#full-name').val();
+    var hometown = $('#hometown').val();
+    var email = $('#email').val();
+    var age = $('#age').val();
+    var university = $('#university').val();
+    var highest_education = $('#highest-education').val();
+    var job_title = $('#job-title').val();
+
+    ref.update({
+        name: name,
+        hometown: hometown,
+        email: email,
+        age: age,
+        university: university,
+        highest_education: highest_education,
+        job_title: job_title
+    });
+
+    var count = 0;
+    var count1 = 0;
+    $('#user-info >div').each(function() {
+        count += 1;
+        if (count > 1) {
+            $(this).remove();
+        }
+    });
+    $('#profile-info >div').each(function() {
+        count1 += 1;
+        if (count1 > 2) {
+            $(this).remove();
+        }
+    });
+}
+
+function retrieveProfileInformation(){
+    var user = $.cookie('user');
+    if(user){
+        var ref = firebase.database().ref('users/' + user);
+        ref.on('value', function(snapshot) {
+            var data = snapshot.val();
+            $("#user-email").text(data.email);
+
+            var template = $('#profile-information').html();
+            var html = Mustache.render(template, data);
+            var output = $('#profile-info');
+            output.append(html);
+
+
+            var template = $('#user-information').html();
+            var html = Mustache.render(template, data);
+            var output = $('#user-info');
+            output.append(html);
+        });
+    }
+    else{
+        alert('Error in retrieving user info!');
+    }
+}
 
 
 function searchBtnHandler(){
@@ -125,7 +242,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#brainfeed-choice').on('click',function(){
+    $('#brainfeed-choice, #get-started').on('click',function(){
         if(!$('#brainfeed-choice').hasClass('selected')){
             $('#brainfeed-choice').addClass('selected');
             $('#brain-feed').show();
@@ -148,7 +265,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#profile-choice').on('click',function(){
+    $('#profile-choice, #find-out-now').on('click',function(){
         if(!$('#profile-choice').hasClass('selected')){
             $('#profile-choice').addClass('selected');
             $('#profile-content').show();
@@ -171,7 +288,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#social-choice').on('click',function(){
+    $('#social-choice, #make-friends').on('click',function(){
         if($('#assess-choice').hasClass('selected')){
            $('#assess-choice').removeClass('selected');
             $('#assess-knowledge').hide();
@@ -235,7 +352,7 @@ function branchCreationModelhandler(){
     });
 
     $('#saveImage').on('click', function(){
-        $('#modal-branches .modal-title').text('Set Up Brainstorm Branch');
+        $('#modal-branches .modal-title').text('Brainstorm Branch Structure');
         $('#preScreen').parent().removeClass('hidden');
         $('#branch-info').hide();
         $('#brainstorm-format').show();
