@@ -68,7 +68,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic'+i+'"></div>').html();
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
                 }
             }
             if(currentText === "Q&A"){
@@ -78,7 +78,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question'+i+'"></div>').html();
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
                 }
             }
         }
@@ -101,7 +101,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic'+i+'"></div>').html();
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
                 }
             }
             if(currentText === "Q&A"){
@@ -110,7 +110,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question'+i+'"></div>').html();
+                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
                 }
             }
         }
