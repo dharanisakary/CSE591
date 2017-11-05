@@ -726,8 +726,8 @@ h4 {
 .correct{
     color: green;
 }
-.yellow{
-    color: yellow;
+.red{
+    color: red;
 }
 .large{
     font-size: 27px;

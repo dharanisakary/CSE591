@@ -5,11 +5,9 @@ $(document).ready(function(){
     $('#social-search').hide();
     $('#assess-knowledge').hide();
 
-
     profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
-    profileToggleHandler();
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
@@ -18,6 +16,8 @@ $(document).ready(function(){
     getBranchStructure();
     getBranchTopic();
     getBranchStructure();
+    btnNextHandler();
+    btnCreateBranchHandler();
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
@@ -68,7 +68,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
+                    $('#subtopics').append('<div id= "subtopic'+i + '-div'+'" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
                 }
             }
             if(currentText === "Q&A"){
@@ -78,7 +78,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
+                    $('#subtopics').append('<div id= "subtopic'+i + '-div'+'" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
                 }
             }
         }
@@ -101,7 +101,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
+                    $('#subtopics').append('<div id= "subtopic'+i + '-div'+'" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Subtopic '+i+'"></div>').html();
                 }
             }
             if(currentText === "Q&A"){
@@ -110,7 +110,7 @@ $(document).ready(function(){
                 var i = 0;
 
                 for(i; i<noSubTopics; i++){
-                    $('#subtopics').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
+                    $('#subtopics').append('<div id= "subtopic'+i + '-div'+'" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label subtopic"><input class="mdl-textfield__input info" type="text"id="subtopic'+i+'" placeholder="Question '+i+'"></div>').html();
                 }
             }
         }
@@ -119,6 +119,51 @@ $(document).ready(function(){
         }
     });
 });
+
+
+function btnNextHandler(){
+    $('#saveImage').on('click',function(){
+        if($('#topic-name').val() === '' || $('#topic-purpose').val() === '' || $('#new-branch-description').val() === '' || $('#topic-button').text().trim() === 'Type of Branch'){
+            alert('Please enter all the necessary information in order to continue!');
+        }
+        else{
+            $('#modal-branches .modal-title').text('Brainstorm Branch Structure');
+            $('#preScreen').parent().removeClass('hidden');
+            $('#branch-info').hide();
+            $('#brainstorm-format').show();
+            $('#pre-screening').hide();
+            $(this).parent().addClass('hidden');
+        }
+    });
+}
+
+
+function btnCreateBranchHandler(){
+    $('#btn-create-branch').on('click', function(){
+        $('#topic-name').val('');
+        $('#topic-purpose').val('');
+        $('#new-branch-description').val('');
+        var currentText = $('#topic-button').text().trim();
+        var currentText1 = $('#structure-button').text().trim();
+        var noSubTopics = $('#input-range').val().trim();
+
+        if(currentText !== 'Type of Branch'){
+            $('#topic-button').text('Type of Branch');
+            $('#topic-button').append(' <span class="caret"></span>').html();
+            $('#topic-dropdown').css('margin-left', '35%');
+        }
+        if(currentText1 !== 'Brainstorming Structure'){
+            $('#structure-button').text('Brainstorming Structure');
+            $('#structure-button').append(' <span class="caret"></span>').html();
+            $('#structure-dropdown').css('margin-left', '3%');
+        }
+        if(noSubTopics !=0){
+            $('#subtopics').hide();
+            $('#input-range').val(0);
+            $('#structureRange').val(0);
+        }
+    });
+}
 
 
 
@@ -152,7 +197,6 @@ function getBranchTopic() {
 
 function getBranchStructure(){
     var currentText = $('#structure-button').text().trim();
-    var title = $('#subtopics-middle').text().trim();
 
     $("#dropdown-structure li a").click(function(){
         var selected = $(this).text();
@@ -323,13 +367,6 @@ function retrieveInfo(){
     }
 }
 
-function profileToggleHandler(){
-    $('#profile-info-toggle').change(function() {
-        if($(this).prop('checked')=== true){
-        }
-    });
-}
-
 function menuChoiceHndler(){
     $('#home-choice').on('click',function(){
         if(!$('#home-choice').hasClass('selected')){
@@ -448,6 +485,164 @@ function menuChoiceHndler(){
     });
 }
 
+function randomization(random){
+    if(random == 0){
+        var random = Math.floor((Math.random() * 2) + 0);
+        return [random,3,4];
+    }
+    if(random == 1){
+        var random1 = Math.floor((Math.random() * 4) + 2);
+        return [random1, 0, 1];
+    }
+    if(random == 2){
+        var random2 = Math.floor((Math.random() * 3) + 1);
+        return [random2,0 ,4];
+    }
+}
+
+function preScreenRandomization(){
+    var currentTopic = $('#topic-button').text().trim();
+    if(currentTopic === 'C++'){
+        currentTopic = 'C_plus_plus';
+    }
+    firebase.database().ref('pre_screening/' + currentTopic).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        if(exists) {
+            $('#question1-container').empty();
+            $('#question2-container').empty();
+            $('#question3-container').empty();
+            var randomArray = randomization(Math.floor((Math.random() * 2) + 0));
+            var question1Object = snapshot.val()["question_" + randomArray[0]];
+            var question2Object = snapshot.val()["question_" + randomArray[1]];
+            var question3Object = snapshot.val()["question_" + randomArray[2]];
+
+            var template = $('#choices').html();
+            var html = Mustache.render(template, question1Object);
+            var output = $('#question1-container');
+            output.append(html);
+
+            var template = $('#choices').html();
+            var html = Mustache.render(template, question2Object);
+            var output = $('#question2-container');
+            output.append(html);
+
+            var template = $('#choices').html();
+            var html = Mustache.render(template, question3Object);
+            var output = $('#question3-container');
+            output.append(html);
+        }
+    });
+}
+
+function preScreenEval(){
+    var currentTopic = $('#topic-button').text().trim();
+    var question1 = "", question2 = "" , question3 = "";
+    var question1Answers = [],question2Answers = [], question3Answers = [];
+
+    if(currentTopic === 'C++'){
+        currentTopic = 'C_plus_plus';
+    }
+
+    $('#question1-container > p').each(function() {
+        question1Answers.push(this.id.split("-")[0]);
+    });
+    $('#question2-container > p').each(function() {
+        question2Answers.push(this.id.split("-")[0]);
+    });
+    $('#question3-container > p').each(function() {
+        question3Answers.push(this.id.split("-")[0]);
+    });
+    var temp1 = splitValue(question1Answers[0], "10");
+    question1 = temp1.split(',')[0];
+
+    var temp2 = splitValue(question2Answers[0], "10");
+    question2 = temp2.split(',')[0];
+
+    var temp3 = splitValue(question3Answers[0], "10");
+    question3 = temp3.split(',')[0];
+
+    firebase.database().ref('pre_screening/' + currentTopic).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var count = 0;
+        if (exists) {
+            for (var key in snapshot.val()) {
+                if(key == question1 || key == question2 || key == question3){
+                    var correctAnswer = snapshot.val()[key]["correct_answer"];
+                    for(var answerKey in snapshot.val()[key]["answers"]){
+                        if($("#"+key+"_"+answerKey).is(':checked')) {
+                            if(correctAnswer == $("#"+key+"_"+answerKey + "-text").text()){
+                                count+=1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            $('#modal-branches .modal-title').text('Pre Screening Result');
+            $('#branch-info').hide();
+            $('#brainstorm-format').hide();
+            $('#pre-screening').hide();
+            $('#pre-screening-result').show();
+            var answers = $("#pre-screening-questions .item input[type=radio]:checked").length;
+
+            var content = "";
+
+            if(count >= 2){
+                brainstormingBranchDbHandler();
+                content = '<h3 class="correct"><i class="material-icons large">grade</i>Congratulations!</h3> <h5 class="br-feedback">You can now start Brain storming!</h5>';
+            }else{
+                content = '<h3 class="red"><i class="material-icons large">error</i>Oops! </h3><h5 class="br-feedback">You did not qualify for Brain Storming!</h5>';
+            }
+
+            content += '<br/><h5> Closing ..</h5>';
+            $('#pre-screening-result p').html(content);
+            setTimeout("$('#modal-branches').modal('hide');",3000);
+            $(this).attr('disabled', true);
+        }
+    });
+}
+
+function brainstormingBranchDbHandler(){
+    var currentTopic = $('#topic-button').text().trim();
+    var topicPurpose = $('#topic-purpose').val();
+    var topicTitle = $('#topic-name').val();
+    var topicDescription = $('#topic-description').val();
+    var noContributors = $('#rangeContributors').val();
+    var timePerContributor = $('#rangeTimeContributor').val();
+    var brainstormingStructure = $('#structure-button').text().trim();
+    var subtopics = [];
+    var currentUser = $.cookie("user");
+    var currentTime = new Date();
+
+    var count = 0;
+    $('#subtopics').children().each(function() {
+        if (count >= 1) {
+            var divId = $(this).attr("id");
+            subtopics.push($("#" + divId.split('-')[0]).val());
+        }
+        count += 1;
+    });
+
+    firebase.database().ref('branches/' + currentTime).set({
+        "creator": currentUser,
+        "topic": currentTopic,
+        "title": topicTitle,
+        "purpose": topicPurpose,
+        "description": topicDescription,
+        "numberOfContributors": noContributors,
+        "timePerContributor": timePerContributor,
+        "structure": brainstormingStructure
+    });
+
+    var branchRef = firebase.database().ref('branches/' + currentTime).child('subtopics');
+    for (var index in subtopics){
+        branchRef.child("subtopic"+index).set({
+            "value": subtopics[index]
+        });
+    }
+}
+
+
 function branchCreationModelhandler(){
     $('#pre-screening-questions').carousel({
         wrap:false,
@@ -456,42 +651,27 @@ function branchCreationModelhandler(){
     });
 
     $('#preScreen').on('click', function() {
-        $('#modal-branches .modal-title').text('Pre Screening');
-        $('#saveImage').parent().addClass('hidden');
-        $('#preScreen').attr('disabled', true);
-        $('#branch-info').hide();
-        $('#brainstorm-format').hide();
-        $('#pre-screening').show();
+        var currentText = $('#structure-button').text().trim();
+        var noSubTopics = $('#input-range').val().trim();
+
+        if(currentText === "Brainstorming Structure" || noSubTopics == 0){
+            alert("Please enter all the necessary information in order to continue!");
+        }
+        else{
+            $('#modal-branches .modal-title').text('Pre Screening');
+            $('#saveImage').parent().addClass('hidden');
+            $('#preScreen').attr('disabled', true);
+            $('#branch-info').hide();
+            $('#brainstorm-format').hide();
+            $('#pre-screening').show();
+
+            preScreenRandomization();
+        }
     });
 
-    $('#saveImage').on('click', function(){
-        $('#modal-branches .modal-title').text('Brainstorm Branch Structure');
-        $('#preScreen').parent().removeClass('hidden');
-        $('#branch-info').hide();
-        $('#brainstorm-format').show();
-        $('#pre-screening').hide();
-        $(this).parent().addClass('hidden');
-    });
 
     $('#finishPreScreen').on('click', function(){
-        // TODO : Check answers
-        $('#modal-branches .modal-title').text('Pre Screening Result');
-        $('#branch-info').hide();
-        $('#brainstorm-format').hide();
-        $('#pre-screening').hide();
-        $('#pre-screening-result').show();
-        var answers = $("#pre-screening-questions .item input[type=radio]:checked").length;
-
-        var content = "";
-        if(answers > 1){
-            content = '<h3 class="correct"><i class="material-icons large">grade</i>Congratulations!</h3> <h5 class="br-feedback">You can now start Brain storming!</h5>';
-        }else{
-            content = '<h3 class="yellow"><i class="material-icons large">error</i>Oops! </h3><h5 class="br-feedback">You did not qualify for Brain Storming!</h5>';
-        }
-        content += '<br/><h5> Closing ..</h5>';
-        $('#pre-screening-result p').html(content);
-        setTimeout("$('#modal-branches').modal('hide');",3000);
-        $(this).attr('disabled', true);
+       preScreenEval();
     });
 
     $('#pre-screening-questions').on('slid.bs.carousel', function(){ 
@@ -552,3 +732,7 @@ function timer(){
             clearInterval(downloadTimer);
     },1000);
  }
+
+function splitValue(value, index) {
+    return value.substring(0, index) + "," + value.substring(index);
+}

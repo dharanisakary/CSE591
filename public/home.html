@@ -481,22 +481,21 @@
                                 <label class="mdl-textfield__label" for="topic-name">Branch Title...</label>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="number-contributors">
-                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="contributors-number">
-                                <label class="mdl-textfield__label" for="contributors-number">Number of Contributors...</label>
-                                <span class="mdl-textfield__error">Input is not a number!</span>
+                                <input class="mdl-textfield__input" type="text" id="topic-purpose">
+                                <label class="mdl-textfield__label" for="topic-purpose">Branch Purpose...</label>
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-6">
                                 <div class="range range-warning">
-                                    <input type="range" name="range" min="2" max="5" value="3" onchange="rangeWarning.value=value">
-                                    <output id="rangeWarning">3</output>
+                                    <input type="range" name="range" min="2" max="5" value="3" onchange="rangeContributors.value=value">
+                                    <output id="rangeContributors">3</output>
                                 </div>
                             </div>
                                 <div class="col-xs-6">
                                     <div class="range range-danger">
-                                        <input type="range" name="range" min="30" max="120" value="60" onchange="rangeDanger.value=value">
-                                        <output id="rangeDanger">60</output>
+                                        <input type="range" name="range" min="30" max="120" value="60" onchange="rangeTimeContributor.value=value">
+                                        <output id="rangeTimeContributor">60</output>
                                     </div>
                                 </div>
                             </div>
@@ -510,8 +509,8 @@
                             </div>
 
                             <div id="new-branch-description-box" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <textarea class="mdl-textfield__input" type="text" id="new-branch-description" value="Lorum Ipsum"></textarea>
-                                <label class="mdl-textfield__label" for="new-branch-description">Description</label>
+                                <textarea class="mdl-textfield__input" type="text" id="topic-description"></textarea>
+                                <label class="mdl-textfield__label" for="topic-description">Description</label>
                             </div>
 
                         </div>
@@ -544,70 +543,18 @@
                         <div id="pre-screening" class="container col-sm-12" style="display: none;">
                             <div id="pre-screening-questions" class="carousel slide" data-ride="false">
                                 <div class="carousel-inner" role="listbox">
-                                    <div class="item active">
-                                        <h4>Question 1 : Lorum Ipsum</h4>
-                                        <p>
-                                            <label class="pre-screening-question">
-                                                <input id="q11" name="q1" type="radio" class="">
-                                                <span class="">Option 1</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q12" name="q1" type="radio" class="">
-                                                <span class="">Option 2</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q13" name="q1" type="radio" class="">
-                                                <span class="">Option 3</span>
-                                            </label>
-                                        </p>
+                                    <div class="item active" id="question1-container">
                                     </div>
-                                    <div class="item">
-                                        <h4>Question 2 : Lorum Ipsum</h4>
-                                        <p>
-                                            <label class="pre-screening-question">
-                                                <input id="q21" name="q2" type="radio" class="">
-                                                <span class="">Option 1</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q22" name="q2" type="radio" class="">
-                                                <span class="">Option 2</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q23" name="q2" type="radio" class="">
-                                                <span class="">Option 3</span>
-                                            </label>
-                                        </p>
+                                    <div class="item" id="question2-container">
                                     </div>
-                                    <div class="item">
-                                        <h4>Question 3 : Lorum Ipsum</h4>
-                                        <p>
-                                            <label class="pre-screening-question">
-                                                <input id="q31" name="q3" type="radio" class="">
-                                                <span class="">Option 1</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q32" name="q3" type="radio" class="">
-                                                <span class="">Option 2</span>
-                                            </label>
-                                            <br/>
-                                            <label class="pre-screening-question">
-                                                <input id="q33" name="q3" type="radio" class="">
-                                                <span class="">Option 3</span>
-                                            </label>
-                                        </p>
+                                    <div class="item" id="question3-container">
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <!--
-                                    <a class="carousel-control-prev" href="#pre-screening-questions" role="button" data-slide="prev">
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>-->
+                                    <!--<a class="carousel-control-prev" href="#pre-screening-questions" role="button" data-slide="prev">-->
+                                        <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
+                                        <!--<span class="sr-only">Previous</span>-->
+                                    <!--</a>-->
                                     <a class="carousel-control-next" href="#pre-screening-questions" role="button" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
@@ -641,6 +588,20 @@
                 </div>
             </div>
         </div>
+
+        <script id="choices" type="x-tmpl-mustache">
+           <h4>{{text}}</h4>
+            {{#answers}}
+            <p id="{{answer_id}}-container">
+                <label class="pre-screening-question">
+                    <input type="radio" id="{{answer_id}}">
+                    <span id= "{{answer_id}}-text"class="">{{answer}}</span>
+                </label>
+                <br/>
+            </p>
+            {{/answers}}
+        </script>
+
 
         <div id="social-search">
             <div class="container stat-cards">
@@ -696,36 +657,36 @@
                             </label>
                             <div class="break"></div>
                         </li>
-                        <!--<li href="#" class="list-group-item text-left">-->
-                            <!--<img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">-->
-                            <!--<label class="name">-->
-                                <!--Juan guillermo cuadrado<br>-->
-                            <!--</label>-->
-                            <!--<label class="pull-right">-->
-                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
-                            <!--</label>-->
-                            <!--<div class="break"></div>-->
-                        <!--</li>-->
-                        <!--<li href="#" class="list-group-item text-left">-->
-                            <!--<img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_1.jpg">-->
-                            <!--<label class="name">-->
-                                <!--James Rodriguez (10)-->
-                            <!--</label>-->
-                            <!--<label class="pull-right">-->
-                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
-                            <!--</label>-->
-                            <!--<div class="break"></div>-->
-                        <!--</li>-->
-                        <!--<li href="#" class="list-group-item text-left">-->
-                            <!--<img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_2.jpg">-->
-                            <!--<label class="name">-->
-                                <!--Mariana pajon-->
-                            <!--</label>-->
-                            <!--<label class="pull-right">-->
-                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
-                            <!--</label>-->
-                            <!--<div class="break"></div>-->
-                        <!--</li>-->
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
+                            <label class="name">
+                                Juan guillermo cuadrado<br>
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_1.jpg">
+                            <label class="name">
+                                James Rodriguez (10)
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_2.jpg">
+                            <label class="name">
+                                Mariana pajon
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
                         <li href="#" class="list-group-item text-left">
                             <a a href="#search" class="btn btn-block btn-primary">
                                 <i class="glyphicon glyphicon-search"></i>
