@@ -50,86 +50,96 @@ $(document).ready(function(){
 
                             // firebase.database().ref('pre_screening/').set({
                             //     C_plus_plus: {
-                            //         questions: [
-                            //             "Do we have a String primitive data type in C++",
-                            //             "Are there pointers in C++?",
-                            //             "What is the acronym that C++ uses for standard input?",
-                            //             "What is cout?",
-                            //             "What is cin?"
-                            //         ],
-                            //         answers: {
-                            //             question_1: [
-                            //                 "Yes",
-                            //                 "No",
-                            //                 "1"
+                            //         question_0: {
+                            //             text: "Do we have a String primitive data type in C++",
+                            //             answers: [
+                            //                 {answer: "Yes"},
+                            //                 {answer: "No"}
                             //             ],
-                            //             question_2: [
-                            //                 "Yes",
-                            //                 "No",
-                            //                 "0"
+                            //             correct_answer: "No"
+                            //         },
+                            //         question_1: {
+                            //             text: "Are there pointers in C++?",
+                            //             answers:[
+                            //                 {answer: "Yes"},
+                            //                 {answer: "No"}
                             //             ],
-                            //             question_3: [
-                            //                 "cout",
-                            //                 "cin",
-                            //                 "stdin",
-                            //                 "console.log",
-                            //                 "2"
+                            //             correct_answer: "Yes"
+                            //         },
+                            //         question_2: {
+                            //             text:  "What is the acronym that C++ uses for standard input?",
+                            //             answers:[
+                            //                 {answer: "cout"},
+                            //                 {answer: "cin"},
+                            //                 {answer: "stdin"},
+                            //                 {answer: "console.log"}
                             //             ],
-                            //             question_4: [
-                            //                 "Standard output",
-                            //                 "Output Device",
-                            //                 "1"
+                            //             correct_answer: "stdin"
+                            //         },
+                            //         question_3: {
+                            //             text: "What is cout?",
+                            //             answers: [
+                            //                 {answer: "Standard output"},
+                            //                 {answer: "Output Device"}
                             //             ],
-                            //             question_5: [
-                            //                 "Standard Input",
-                            //                 "Input Device",
-                            //                 "1"
-                            //             ]
+                            //             correct_answer: "Output Device"
+                            //         },
+                            //         question_4: {
+                            //             text: "What is cin?",
+                            //             answers: [
+                            //                 {answer: "Standard Input"},
+                            //                 {answer: "Input Device"}
+                            //             ],
+                            //             correct_answer: "Input Device"
                             //         }
                             //     },
                             //     JavaScript:  {
-                            //         questions: [
-                            //             "Is JavaScript an Object-Orientated Programming Language?+",
-                            //             "Are there any data types in Javascript?",
-                            //             "What is the Javascript method for printing to the console?",
-                            //             "Javascript does not have primitives.",
-                            //             "Which method for emptying an array in Javascript is incorrect?"
-                            //         ],
-                            //         answers: {
-                            //             question_1: [
-                            //                 "Yes",
-                            //                 "No",
-                            //                 "1"
+                            //         question_0: {
+                            //             text: "Is JavaScript an Object-Orientated Programming Language?+",
+                            //             answers: [
+                            //                 {answer: "Yes"},
+                            //                 {answer: "No"}
                             //             ],
-                            //             question_2: [
-                            //                 "Yes",
-                            //                 "No",
-                            //                 "1"
+                            //             correct_answer: "No"
+                            //         },
+                            //         question_1: {
+                            //             text: "Are there any data types in Javascript?",
+                            //             answers:[
+                            //                 {answer: "Yes"},
+                            //                 {answer: "No"}
                             //             ],
-                            //             question_3: [
-                            //                 "cout << Hello World;",
-                            //                 "print(Hello World)",
-                            //                 "System.out.println(Hello World)",
-                            //                 "console.log(Hello World)",
-                            //                 "3"
+                            //             correct_answer: "No"
+                            //         },
+                            //         question_2: {
+                            //             text:  "What is the Javascript method for printing to the console?",
+                            //             answers:[
+                            //                 {answer: "cout << Hello World;"},
+                            //                 {answer: "print(Hello World)"},
+                            //                 {answer: "System.out.println(Hello World)"},
+                            //                 {answer: "console.log(Hello World)"}
                             //             ],
-                            //             question_4: [
-                            //                 "True",
-                            //                 "False",
-                            //                 "1"
+                            //             correct_answer: "console.log(Hello World)"
+                            //         },
+                            //         question_3: {
+                            //             text: "Javascript does not have primitives.",
+                            //             answers: [
+                            //                 {answer: "True"},
+                            //                 {answer: "False"}
                             //             ],
-                            //             question_5: [
-                            //                 "arrayList = []",
-                            //                 "arrayList.length = 0",
-                            //                 "arrayList.splice(0, arrayList.length)",
-                            //                 "arrayList = null",
-                            //                 "3"
-                            //             ]
+                            //             correct_answer: "False"
+                            //         },
+                            //         question_4: {
+                            //             text: "Which method for emptying an array in Javascript is incorrect?",
+                            //             answers: [
+                            //                 {answer: "arrayList = []"},
+                            //                 {answer: "arrayList.length = 0"},
+                            //                 {answer: "arrayList.splice(0, arrayList.length)"},
+                            //                 {answer: "arrayList = null"}
+                            //             ],
+                            //             correct_answer: "arrayList = null"
                             //         }
-                            //     },
+                            //     }
                             // });
-
-
                             window.location.href = "/WebApp/public/home.html";
                         }
                     }
