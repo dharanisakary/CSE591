@@ -279,93 +279,35 @@
                                         </div>
                                         <div class="table-container">
                                             <table class="table table-filter">
-                                                <tbody>
-                                                <!--<tr data-status="not_started" id="no-branches-tr">-->
-                                                    <!--<td>-->
-                                                        <!--<div class="media">-->
-                                                            <!--<a href="#" class="pull-left">-->
-                                                                <!--<img src="Assets/tree.gif" class="media-gif">-->
-                                                            <!--</a>-->
-                                                            <!--<div class="media-body">-->
-                                                                <!--<h4 class="title">-->
-                                                                    <!--No Branches, use the button to the rght hand side to create one-->
-                                                                    <!--<span class="pull-right not_started">(Not Started)</span>-->
-                                                                <!--</h4>-->
-                                                            <!--</div>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-                                                <!--</tr>-->
-                                                <tr data-status="completed">
-                                                    <td>
-                                                        <div class="ckbox">
-                                                            <input type="checkbox" id="checkbox1">
-                                                            <label for="checkbox1"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="media">
-                                                            <a href="#" class="pull-left">
-                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h4 class="title">
-                                                                    Chemistry Branch
-                                                                    <span class="pull-right completed">(Completed)</span>
-                                                                </h4>
-                                                                <p class="summary">Branch created to study in depth chemistry...</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr data-status="pending">
-                                                    <td>
-                                                        <div class="ckbox">
-                                                            <input type="checkbox" id="checkbox3">
-                                                            <label for="checkbox3"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="media">
-                                                            <a href="#" class="pull-left">
-                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h4 class="title">
-                                                                    Biology
-                                                                    <span class="pull-right pending">(Pending)</span>
-                                                                </h4>
-                                                                <p class="summary">Branch created to study biology...</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr data-status="not_started">
-                                                    <td>
-                                                        <div class="ckbox">
-                                                            <input type="checkbox" id="checkbox2">
-                                                            <label for="checkbox2"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="media">
-                                                            <a href="#" class="pull-left">
-                                                                <img src="Assets/brain_icon.jpg" class="media-photo">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h4 class="title">
-                                                                    C++
-                                                                    <span class="pull-right not_started">(Not Started)</span>
-                                                                </h4>
-                                                                <p class="summary">Branch created to study C++ concepts...</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <tbody id="branch-table-container">
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+
+                                    <script id="branch-table-element" type="x-tmpl-mustache">
+                                        <tr data-status="not_started">
+                                            <td>
+                                                <div class="media" id="{{id}}">
+                                                    <a href="#" class="pull-left">
+                                                        <img src="Assets/brain_icon.jpg" class="media-photo">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h4 class="title">
+                                                            {{topic}} Branch      - by {{creator}}
+                                                            <span class="pull-right not_started">(Not Started)</span>
+                                                        </h4>
+                                                        <p class="summary">{{description}}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </script>
+
                                     <div id="catalog-body" class="hidden col-sm-12" >
+                                    </div>
+
+                                    <script id="catalog-information" type="x-tmpl-mustache">
                                         <div class="col-sm-12">
                                             <div class="pull-left">
                                                 <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
@@ -379,36 +321,37 @@
                                                 <h4> Branch Information </h4>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="Chemistry" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-name">Branch Name</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-name" value="{{title}}" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-feed-name">Branch Name</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="JavaScript" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-type">Branch Type</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-type" value="{{topic}}" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-feed-type">Branch Type</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="List" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-structure">Branch Structure</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-structure" value="{{structure}}" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-feed-structure">Branch Structure</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="5" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-sub">Branch Leaves</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="need to code in" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-feed-sub">Branch Leaves</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="3" readonly>
-                                                <label class="mdl-textfield__label" for="branch-contributors">Number of Contributors</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-contributors" value="{{numberOfContributors}}" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-contributors">Number of Contributors</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch" >
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="120" readonly>
-                                                <label class="mdl-textfield__label" for="branch-feed-time">Time per leaf (in seconds)</label>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-time" value="{{timePerContributor}}" readonly>
+                                                <label class="mdl-textfield__label branch-label" for="branch-feed-time">Time per leaf (in seconds)</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly></textarea>
-                                                <label class="mdl-textfield__label" for="branch-description">Description</label>
+                                                <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly>{{description}}</textarea>
+                                                <label class="mdl-textfield__label branch-label" for="branch-description">Description</label>
                                             </div>
                                             <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>Start</button>
                                         </div>
-                                    </div>
+                                    </script>
+
                                     <div id="brain-feed-branch" class="hidden col-sm-12">
                                         <div class="col-sm-12">
                                             <div class="pull-left">
