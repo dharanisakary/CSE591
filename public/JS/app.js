@@ -12,6 +12,7 @@ $(document).ready(function(){
     brainTableFunctionality();
     searchBtnHandler();
     retrieveProfileInformation();
+    retrieveBranches();
     assessmentHandler();
     getBranchStructure();
     getBranchTopic();
@@ -119,6 +120,22 @@ $(document).ready(function(){
         }
     });
 });
+
+
+function retrieveBranches(){
+    firebase.database().ref('branches').once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var count = 0;
+        if (exists) {
+            for (var key in snapshot.val()) {
+                var template = $('#branch-table-element').html();
+                var html = Mustache.render(template, snapshot.val()[key]);
+                var output = $('#branch-table-container');
+                output.append(html);
+            }
+        }
+    });
+}
 
 
 function btnNextHandler(){
@@ -313,18 +330,31 @@ function brainTableFunctionality(){
         }
     });
 
-    $('#brain-feed .media').on('click', function(e){
-         $('#brain-feed #catalog-body').removeClass('hidden');
+    $(document).on('click', '.media', function(){
+        var key = $(this).attr("id").split('/')[0];
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                $('#catalog-body').empty();
+                var template = $('#catalog-information').html();
+                var html = Mustache.render(template, snapshot.val());
+                var output = $('#catalog-body');
+                output.append(html);
+
+            }
+        });
+        $('#brain-feed #catalog-body').removeClass('hidden');
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
         }
         if(!$('#brain-feed #catalog').hasClass('hidden')){
             $('#brain-feed #catalog').addClass('hidden');
         }
-
     });
 
-    $('#go-back').on('click', function(){
+
+
+    $(document).on('click', '#go-back', function(){
         $('#brain-feed #catalog').removeClass('hidden');
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
@@ -344,7 +374,7 @@ function brainTableFunctionality(){
         }
      });
 
-     $('#btn-start-branch').on('click', function(){
+    $(document).on('click', '#btn-start-branch', function(){
         $('#brain-feed #brain-feed-branch').removeClass('hidden');
         if(!$('#brain-feed #catalog').hasClass('hidden')){
             $('#brain-feed #catalog').addClass('hidden');
@@ -589,6 +619,8 @@ function preScreenEval(){
 
             if(count >= 2){
                 brainstormingBranchDbHandler();
+                $('#branch-table-container').empty();
+                retrieveBranches();
                 content = '<h3 class="correct"><i class="material-icons large">grade</i>Congratulations!</h3> <h5 class="br-feedback">You can now start Brain storming!</h5>';
             }else{
                 content = '<h3 class="red"><i class="material-icons large">error</i>Oops! </h3><h5 class="br-feedback">You did not qualify for Brain Storming!</h5>';
@@ -623,6 +655,7 @@ function brainstormingBranchDbHandler(){
         count += 1;
     });
 
+    alert('pula');
     firebase.database().ref('branches/' + currentTime).set({
         "creator": currentUser,
         "topic": currentTopic,
@@ -631,7 +664,8 @@ function brainstormingBranchDbHandler(){
         "description": topicDescription,
         "numberOfContributors": noContributors,
         "timePerContributor": timePerContributor,
-        "structure": brainstormingStructure
+        "structure": brainstormingStructure,
+        "id": currentTime + "/"
     });
 
     var branchRef = firebase.database().ref('branches/' + currentTime).child('subtopics');

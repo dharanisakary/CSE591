@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3fd9a62-277e-47c7-907c-534b5f0df088" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/CSS/home.css" afterPath="$PROJECT_DIR$/public/CSS/home.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/JS/FBconfig.js" afterPath="$PROJECT_DIR$/public/JS/FBconfig.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/JS/app.js" afterPath="$PROJECT_DIR$/public/JS/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/home.html" afterPath="$PROJECT_DIR$/public/home.html" />
     </list>
@@ -21,8 +19,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="542" column="53" lean-forward="true" selection-start-line="542" selection-start-column="53" selection-end-line="542" selection-end-column="53" />
+            <state relative-caret-position="329">
+              <caret line="306" column="57" lean-forward="false" selection-start-line="306" selection-start-column="45" selection-end-line="306" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -31,8 +29,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/JS/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="7" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
+            <state relative-caret-position="332">
+              <caret line="335" column="51" lean-forward="false" selection-start-line="335" selection-start-column="51" selection-end-line="335" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -41,8 +39,8 @@
       <file leaf-file-name="FBconfig.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/JS/FBconfig.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+            <state relative-caret-position="77">
+              <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -51,8 +49,8 @@
       <file leaf-file-name="home.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/CSS/home.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="750" column="1" lean-forward="false" selection-start-line="750" selection-start-column="1" selection-end-line="750" selection-end-column="1" />
+            <state relative-caret-position="434">
+              <caret line="738" column="19" lean-forward="false" selection-start-line="738" selection-start-column="19" selection-end-line="738" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -81,22 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>retrieveProfile</find>
-      <find>branch informa</find>
-      <find>Time per contr</find>
-      <find>choose structure</find>
-      <find>type</find>
-      <find>structur</find>
-      <find>type of</find>
-      <find>range-</find>
-      <find>structure-dropdown</find>
-      <find>type of brnch</find>
-      <find>topic-dropdown</find>
-      <find>branch-name</find>
-      <find>reader</find>
-      <find>hometown</find>
-      <find>append</find>
-      <find>number of contributors</find>
       <find>next</find>
       <find>saveImage</find>
       <find>new branch</find>
@@ -111,6 +93,22 @@
       <find>subtopics</find>
       <find>&gt; div</find>
       <find>subtopic</find>
+      <find>Chemistry</find>
+      <find>child</find>
+      <find>key</find>
+      <find>template</find>
+      <find>x-t</find>
+      <find>eval</find>
+      <find>start</find>
+      <find>catalog</find>
+      <find>brain-feed-branch</find>
+      <find>brain-feed</find>
+      <find>.medi</find>
+      <find>retrieve</find>
+      <find>alert</find>
+      <find>bran</find>
+      <find>document</find>
+      <find>media</find>
     </findStrings>
     <replaceStrings>
       <replace>main</replace>
@@ -765,12 +763,12 @@
       <workItem from="1508871666837" duration="9914000" />
       <workItem from="1509644967862" duration="3686000" />
       <workItem from="1509683744928" duration="3017000" />
-      <workItem from="1509746754432" duration="6572000" />
+      <workItem from="1509746754432" duration="12640000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111479000" />
+    <option name="totallyTimeSpent" value="117547000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -905,34 +903,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/CSS/home.css">
+    <entry file="file://$PROJECT_DIR$/public/JS/FBconfig.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="750" column="1" lean-forward="false" selection-start-line="750" selection-start-column="1" selection-end-line="750" selection-end-column="1" />
+        <state relative-caret-position="77">
+          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/JS/FBconfig.js">
+    <entry file="file://$PROJECT_DIR$/public/CSS/home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        <state relative-caret-position="434">
+          <caret line="738" column="19" lean-forward="false" selection-start-line="738" selection-start-column="19" selection-end-line="738" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="542" column="53" lean-forward="true" selection-start-line="542" selection-start-column="53" selection-end-line="542" selection-end-column="53" />
+        <state relative-caret-position="329">
+          <caret line="306" column="57" lean-forward="false" selection-start-line="306" selection-start-column="45" selection-end-line="306" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/JS/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="7" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
+        <state relative-caret-position="332">
+          <caret line="335" column="51" lean-forward="false" selection-start-line="335" selection-start-column="51" selection-end-line="335" selection-end-column="51" />
           <folding />
         </state>
       </provider>
