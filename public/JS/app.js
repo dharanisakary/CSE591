@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('#social-search').hide();
     $('#assess-knowledge').hide();
 
+
     profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
@@ -20,6 +21,7 @@ $(document).ready(function(){
     btnNextHandler();
     btnCreateBranchHandler();
     profileTagsHandler();
+
 
 
     $('#btn-save-info').on('click', function() {
@@ -816,3 +818,6 @@ function profileTagsHandler(){
         }
     });
 }
+
+
+
