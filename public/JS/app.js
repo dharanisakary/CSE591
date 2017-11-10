@@ -19,6 +19,8 @@ $(document).ready(function(){
     getBranchStructure();
     btnNextHandler();
     btnCreateBranchHandler();
+    profileTagsHandler();
+
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
@@ -265,6 +267,7 @@ function saveProfileInformation() {
 
     var count = 0;
     var count1 = 0;
+    var count2 = 0;
     $('#user-info >div').each(function() {
         count += 1;
         if (count > 1) {
@@ -277,10 +280,18 @@ function saveProfileInformation() {
             $(this).remove();
         }
     });
+
+
+    $('#profile-info-tags').empty();
+    $('#profile-info-tags').append('<span class="mdl-chip mdl-chip--contact mdl-chip--deletable"> <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a> <span class="mdl-chip__text add-branch-chip">Add a new branch</span> <!--<a class="mdl-chip__action"><i class="material-icons">cancel</i></a>--> </span>').html();
+
+    retrieveBranchTags();
 }
 
 function retrieveProfileInformation(){
     var user = $.cookie('user');
+    $('#profile-info').empty();
+    $('#user-info').empty();
     if(user){
         var ref = firebase.database().ref('users/' + user);
         ref.on('value', function(snapshot) {
@@ -297,10 +308,27 @@ function retrieveProfileInformation(){
             var html = Mustache.render(template, data);
             var output = $('#user-info');
             output.append(html);
+
+            retrieveBranchTags();
         });
     }
     else{
         alert('Error in retrieving user info!');
+    }
+}
+
+function retrieveBranchTags(){
+    var user = $.cookie('user');
+    if(user) {
+        var ref = firebase.database().ref('users/' + user + '/branchTags');
+        ref.on('value', function (snapshot) {
+            for(var key in snapshot.val()){
+                var template = $('#branch-tag').html();
+                var html = Mustache.render(template, snapshot.val()[key]);
+                var output = $('#profile-info-tags');
+                output.append(html);
+            }
+        });
     }
 }
 
@@ -655,7 +683,6 @@ function brainstormingBranchDbHandler(){
         count += 1;
     });
 
-    alert('pula');
     firebase.database().ref('branches/' + currentTime).set({
         "creator": currentUser,
         "topic": currentTopic,
@@ -665,7 +692,8 @@ function brainstormingBranchDbHandler(){
         "numberOfContributors": noContributors,
         "timePerContributor": timePerContributor,
         "structure": brainstormingStructure,
-        "id": currentTime + "/"
+        "id": currentTime + "/",
+        "branch_status": "not_started"
     });
 
     var branchRef = firebase.database().ref('branches/' + currentTime).child('subtopics');
@@ -752,12 +780,12 @@ function assessmentHandler(){
 function timer(){
     var timeleft = 4;
     var timeout='Time over';
+    $("#countdowntimer").css('margin-left', '22.5%');
     var downloadTimer = setInterval(function(){
         timeleft--;
         if(timeleft==0){
             document.getElementById("countdowntimer").textContent = timeout;
-
-
+            $("#countdowntimer").css('margin-left', '15%');
         }
         else{
             document.getElementById("countdowntimer").textContent = timeleft;
@@ -769,4 +797,22 @@ function timer(){
 
 function splitValue(value, index) {
     return value.substring(0, index) + "," + value.substring(index);
+}
+
+function profileTagsHandler(){
+    $(document).on('click', '#add-branch-button, .add-branch-chip', function(){
+        var user = $.cookie("user");
+        var tag = prompt("Please something that you have background knowledge about:", "");
+        if (!(tag == null || tag == "")) {
+            var acronym = tag.substring(0, 2).toUpperCase();
+
+            var branchRef = firebase.database().ref('users/' + user).child('branchTags');
+            branchRef.child(tag).set({
+                "value": tag,
+                "acronym": acronym
+            });
+
+            retrieveProfileInformation();
+        }
+    });
 }

@@ -203,39 +203,32 @@
                         </div>
                     </div>
 
-                    <div id="travel-info" class="col-md-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <h4 class="address-info">Branch Tags</h4>
                         </div>
-                        <div class="form-group">
-                                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
-                                    <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
-                                    <span class="mdl-chip__text">Add a new branch</span>
-                                    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-                                </span>
-                            <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">CH</span>
-                                    <span class="mdl-chip__text">Chemistry</span>
-                                </span>
-                            <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">PR</span>
-                                    <span class="mdl-chip__text">Programming</span>
-                                </span>
-                            <span class="mdl-chip mdl-chip--contact">
-                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">BI</span>
-                                    <span class="mdl-chip__text">Biology</span>
-                                </span>
+                        <div class="form-group" id="profile-info-tags">
+                            <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+                                <a id="add-branch-button" class="mdl-chip__contact"><i class="material-icons">add</i></a>
+                                <span class="mdl-chip__text add-branch-chip">Add a new branch</span>
+                                <!--<a class="mdl-chip__action"><i class="material-icons">cancel</i></a>-->
+                            </span>
                         </div>
                     </div>
                 </div>
         </script>
 
 
+        <script id="branch-tag" type="x-tmpl-mustache">
+            <span class="mdl-chip mdl-chip--contact">
+                <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{acronym}}</span>
+                <span class="mdl-chip__text">{{value}}</span>
+            </span>
+        </script>
+
+
 
         <div id="profile-content" class="profile-content">
-            <!--<div id="profile-checkbox">-->
-                <!--<input id="profile-info-toggle" type="checkbox" data-toggle="toggle" data-on="Recent Activity" data-off="Profile Info">-->
-            <!--</div>-->
             <div class="profile-pic">
                 <img class="img-circle img-thumbnail" id='img-upload' src="Assets/emptyuser.png" />
                 <div class="edit">
@@ -264,7 +257,6 @@
             <div class="col-sm-12">
                 <div class="row">
                     <section class="content">
-                        <h1>Branch Feed</h1>
                         <div class="col-md-8 col-md-offset-2">
                             <div class="panel panel-default">
                                 <div class="panel-body">
@@ -286,7 +278,7 @@
                                     </div>
 
                                     <script id="branch-table-element" type="x-tmpl-mustache">
-                                        <tr data-status="not_started">
+                                        <tr data-status="{{branch_status}}">
                                             <td>
                                                 <div class="media" id="{{id}}">
                                                     <a href="#" class="pull-left">
@@ -348,7 +340,7 @@
                                                 <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly>{{description}}</textarea>
                                                 <label class="mdl-textfield__label branch-label" for="branch-description">Description</label>
                                             </div>
-                                            <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>Start</button>
+                                            <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>  Start</button>
                                         </div>
                                     </script>
 
@@ -357,30 +349,82 @@
                                             <div class="pull-left">
                                                 <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back2"></h3>
                                             </div>
-                                            <div class="clearfix"></div>
+                                            <div class="row timer">
+                                                <h4>Contribution Time Left</h4>
+                                                <h6><div id="countdowntimer" class="timer">4</div></h6>
+                                            </div>
                                             <div class="row">
-                                                <div class="col-md-9">
-                                                    <div class="card">
-                                                        <div class="card-block">
-                                                            <h4 class="card-title">Chemistry</h4>
-                                                            <h6 class="card-subtitle mb-2 text-muted">Structure of document: list or Q&A</h6>
-                                                            <div class="card-text space_small">Your topic: Electron</div>
-                                                            <div class="card-text">
-                                                                <div id="feed-content1">
-                                                                    <form action="#">
-                                                                        <div class="">
-                                                                            <textarea name="Text1" cols="40" rows="5" placeholder="your content here"></textarea>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="testimonial testimonial-warning-filled testimonial-editable">
+                                                        <div class="testimonial-section">
+                                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                                <textarea class="mdl-textfield__input" type="text" id="brainstorming-area"></textarea>
+                                                                <label class="mdl-textfield__label" for="topic-description">Brainstorm Here</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="testimonial-desc">
+                                                            <button class="btn btn-md btn-default" ><i class="fa fa-cloud fa-2x"></i> Confirm</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="testimonial testimonial-success-filled">
+                                                        <div class="testimonial-section">
+                                                            No comment available
+                                                        </div>
+                                                        <div class="testimonial-desc">
+                                                            <img src="" alt="" />
+                                                            <div class="testimonial-writer">
+                                                                <div class="testimonial-writer-name">Contributor 1</div>
+                                                                <div class="testimonial-writer-designation">Job Title</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="userinfo">User name</div>
-                                                    More information
-                                                    <h3><div id="countdowntimer" class="timer">4</div></h3>
+                                                <div class="col-sm-6">
+                                                    <div class="testimonial testimonial-success-filled">
+                                                        <div class="testimonial-section">
+                                                            No comment available
+                                                        </div>
+                                                        <div class="testimonial-desc">
+                                                            <img src="" alt=""/>
+                                                            <div class="testimonial-writer">
+                                                                <div class="testimonial-writer-name">Contributor 2</div>
+                                                                <div class="testimonial-writer-designation">Job Title</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="testimonial testimonial-success-filled">
+                                                        <div class="testimonial-section">
+                                                            No comment available
+                                                        </div>
+                                                        <div class="testimonial-desc">
+                                                            <img src="" alt="" />
+                                                            <div class="testimonial-writer">
+                                                                <div class="testimonial-writer-name">Contributor 3</div>
+                                                                <div class="testimonial-writer-designation">Job Title</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="testimonial testimonial-success-filled">
+                                                        <div class="testimonial-section">
+                                                            No comment available yet
+                                                        </div>
+                                                        <div class="testimonial-desc">
+                                                            <img src="" alt="" />
+                                                            <div class="testimonial-writer">
+                                                                <div class="testimonial-writer-name">Contributor 4</div>
+                                                                <div class="testimonial-writer-designation">Job Title</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -427,7 +471,6 @@
                                 <input class="mdl-textfield__input" type="text" id="topic-purpose">
                                 <label class="mdl-textfield__label" for="topic-purpose">Branch Purpose...</label>
                             </div>
-
                             <div class="row">
                                 <div class="col-xs-6">
                                 <div class="range range-warning">
@@ -442,20 +485,16 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="contributors-label">
                                 <h6>Number of Contributors</h6>
                             </div>
-
                             <div id="contributors-time">
                                 <h6>Time per Contributor (in seconds)</h6>
                             </div>
-
                             <div id="new-branch-description-box" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <textarea class="mdl-textfield__input" type="text" id="topic-description"></textarea>
                                 <label class="mdl-textfield__label" for="topic-description">Description</label>
                             </div>
-
                         </div>
                         <div id="brainstorm-format" style="display: none;">
                             <div class="row">
@@ -494,10 +533,6 @@
                                     </div>
                                 </div>
                                 <div class="pull-right">
-                                    <!--<a class="carousel-control-prev" href="#pre-screening-questions" role="button" data-slide="prev">-->
-                                        <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
-                                        <!--<span class="sr-only">Previous</span>-->
-                                    <!--</a>-->
                                     <a class="carousel-control-next" href="#pre-screening-questions" role="button" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
