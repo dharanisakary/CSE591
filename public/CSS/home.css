@@ -984,22 +984,37 @@ button:focus {
 #assess-knowledge{
     margin-left: 25%;
 }
-.assess-knowledge-element, .create-assess-knowledge-element{
+.assess-knowledge-element{
     margin: 30px 0;
 }
 
-.assess-knowledge-element div:hover:not(.triangle),.create-assess-knowledge-element div:hover:not(.triangle){
-    background-color: #ddd;
+.create-assess-knowledge-element{
+    width: 250px;
+    margin: 5px;
+    text-align: left;
 }
-.assess-knowledge-element p,.create-assess-knowledge-element p{
-    font-size: 15px;
-    padding-top: 10px;
+
+.question-item{
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    margin: 12px 0;
+    background: #f2f2f2;
+    padding: 10px 12px;
+    word-break: break-all;
+    cursor: pointer;
 }
-.assess-knowledge-element p {
-    margin-top: 25px !important;
+
+.question-item i {
+    margin-right: 10px;
 }
+
 #add-mcq-option{
     margin-top: 20px;
+}
+
+#mcq-view-options input[type=radio] {
+    margin: 0 5px;
 }
 .circle{
     width: 100px;

@@ -766,17 +766,15 @@
             </div>
             <div class="col-sm-4 text-center">
                 <h3>Create Quiz</h3>
-                <div class="mcq create-assess-knowledge-element">
-                    <div class="circle" id="c_mcq" data-toggle="modal" data-target="#add-quiz" ><p><i class="large material-icons">add</i><br/> Multiple<br/>Choice</p></div>
-                </div>
-                <hr/>
-                <div class="short-ans create-assess-knowledge-element">
-                    <div class="square" id="c_short-ans" data-toggle="modal" data-target="#add-quiz2" ><p><i class="large material-icons">add</i><br/>Short<br/>Answer</p></div>
-                </div>
-                <hr/>
-                <div class="tf create-assess-knowledge-element">
-                    <div class="triangle" id="c_tf" data-toggle="modal" data-target="#add-quiz3"><p><i class="large material-icons">add</i><br/>True <br/>False</p></div>
-                </div>
+                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz">
+                <i class="material-icons">add</i> Add Multiple Choice
+                </button>
+                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz2">
+                <i class="material-icons">add</i> Add Short Answer
+                </button>
+                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz3">
+                <i class="material-icons">add</i> Add True/False
+                </button>
             </div>
         </div>
 
@@ -784,7 +782,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="mcqQuizModal">Add New Multiple Choice Question</h5>
+                        <h4 class="modal-title pull-left" id="mcqQuizModal">Add New Multiple Choice Question</h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -810,7 +808,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="shortAnsModal">Add New Short Answer Question</h5>
+                        <h4 class="modal-title pull-left" id="shortAnsModal">Add New Short Answer Question</h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -832,7 +830,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="tfModal">Add New True False Question </h5>
+                        <h4 class="modal-title pull-left" id="tfModal">Add New True False Question </h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -854,13 +852,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="mcqQuizModalView">Multiple Choice Question</h5>
+                        <h4 class="modal-title pull-left" id="mcqQuizModalView">Multiple Choice Question</h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4 id="mcq-view-quiz-question"></h4>
+                        <h5 id="mcq-view-quiz-question"></h5>
                         <div id="mcq-view-options">
                     </div>
                     </div>
@@ -875,13 +873,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="shortAnsModalView">Short Answer Question </h5>
+                        <h4 class="modal-title pull-left" id="shortAnsModalView">Short Answer Question </h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4 id="sa-view-quiz-question" ></h4>
+                        <h5 id="sa-view-quiz-question" ></h5>
                         <textarea class="mdl-textfield__input" type="text" id="sa-view-quiz-answer" value=""></textarea>
                     </div>
                     <div class="modal-footer">
@@ -895,13 +893,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title pull-left" id="tfModalView">True False Question </h5>
+                        <h4 class="modal-title pull-left" id="tfModalView">True False Question </h4>
                         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4 id="tf-view-quiz-question"></h4>
+                        <h5 id="tf-view-quiz-question"></h5>
                         <div class="tf-options">
                             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="true">
                                 <input type="radio" id="true" class="mdl-radio__button" name="options" value="true">

@@ -575,32 +575,32 @@ function getAssessments(){
         if(data.mcq){
             // TODO : Add Empty case
             Object.keys(data.mcq).forEach(function(key) {
-                $('#all-mcqs').append('<div class="circle text-center" data-toggle="modal" data-target="#view-quiz" ><p>'+key+'</p></div>');
+                $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
             });
         }
         if(data.tf){
             Object.keys(data.tf).forEach(function(key) {
-                $('#all-tfs').append('<div class="triangle text-center" data-toggle="modal" data-target="#view-quiz3" ><p>'+key+'</p></div>');
+                $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
             });
         }
         if(data.sq){
             Object.keys(data.sq).forEach(function(key) {
-                $('#all-shortAns').append('<div class="square text-center" data-toggle="modal" data-target="#view-quiz2" ><p>'+key+'</p></div>');
+                $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
             });
         }
         $('#view-quiz').on('show.bs.modal', function(e){
-            $('#mcq-view-quiz-question').text(e.relatedTarget.textContent);
-            var options = quizData.mcq[e.relatedTarget.textContent];
+            $('#mcq-view-quiz-question').text(e.relatedTarget.textContent.replace('list',''));
+            var options = quizData.mcq[e.relatedTarget.textContent.replace('list','')];
             $('#mcq-view-options').empty();
             Object.keys(options.options).forEach(function(key) {
-                $('#mcq-view-options').append('<p> <input type="radio" class="mdl-radio__button" name="view-quiz-quesion-modal" value="'+options.options[key]+'" >'+options.options[key] +'</p>');
+                $('#mcq-view-options').append('<h6> <input type="radio" class="mdl-radio__button" name="view-quiz-quesion-modal" value="'+options.options[key]+'" >'+options.options[key] +'</h6>');
             });
         });
         $('#view-quiz2').on('show.bs.modal', function(e){
-            $('#sa-view-quiz-question').text(e.relatedTarget.textContent);
+            $('#sa-view-quiz-question').text(e.relatedTarget.textContent.replace('menu',''));
         });
         $('#view-quiz3').on('show.bs.modal', function(e){
-            $('#tf-view-quiz-question').text(e.relatedTarget.textContent);
+            $('#tf-view-quiz-question').text(e.relatedTarget.textContent.replace('radio_button_checked',''));
         });
     });
 }
