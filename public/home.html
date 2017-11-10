@@ -750,19 +750,18 @@
             <div class="col-sm-8">
                 <h3>Exisiting Quizzes</h3>
                 <div class="mcq assess-knowledge-element">
-                    <div class="circle text-center" id="mcq1" data-toggle="modal" data-target="#view-quiz" ><p>1323</p></div>
-                    <div class="circle text-center" id="mcq2" data-toggle="modal" data-target="#view-quiz" ><p>3434</p></div>
-                    <div class="circle text-center" id="mcq3" data-toggle="modal" data-target="#view-quiz" ><p>456456</p></div>
+                    <h4>Multiple Choice Questions</h4>
+                    <div id="all-mcqs"></div>
                 </div>
                 <hr/>
                 <div class="short-ans assess-knowledge-element">
-                    <div class="square text-center" id="short-ans1" data-toggle="modal" data-target="#view-quiz2" ><p>3w45</p></div>
-                    <div class="square text-center" id="short-ans2" data-toggle="modal" data-target="#view-quiz2" ><p>45</p></div>
+                    <h4>Short Answer Questions</h4>
+                    <div id="all-shortAns"></div>
                 </div>
                 <hr/>
                 <div class="tf assess-knowledge-element">
-                    <div class="triangle text-center" id="tf1" data-toggle="modal" data-target="#view-quiz3" ><p>4556</p></div>
-                    <div class="triangle text-center" id="tf2" data-toggle="modal" data-target="#view-quiz3" ><p>5e656</p></div>
+                    <h4>True/False Questions</h4>
+                    <div id="all-tfs"></div>
                 </div>
             </div>
             <div class="col-sm-4 text-center">
@@ -793,7 +792,7 @@
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                            <label class="mdl-textfield__label" for="quiz-question">Question</label>
                         </div>
                         <div id="mcq-options"></div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-mcq-option" >
@@ -801,7 +800,7 @@
                         </button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -818,12 +817,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                            <input class="mdl-textfield__input" type="text" id="sa-quiz-question" value="">
+                            <label class="mdl-textfield__label" for="sa-quiz-question">Question</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -840,18 +839,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
+                            <input class="mdl-textfield__input" type="text" id="tf-quiz-question" value="">
+                            <label class="mdl-textfield__label" for="tf-quiz-question">Question</label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="view-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModalView" aria-hidden="true">
+        <div class="modal fade mcqquiz" id="view-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModalView" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -861,33 +860,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
-                        </div>
-                        <div id="mcq-options">
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                                <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
-                              <span class="mdl-radio__label">Option 1</span>
-                            </label>
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2" checked>
-                              <span class="mdl-radio__label">Option 2</span>
-                            </label>
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                                <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="3" checked>
-                              <span class="mdl-radio__label">Option 3</span>
-                            </label>
-                        </div>
+                        <h4 id="mcq-view-quiz-question"></h4>
+                        <div id="mcq-view-options">
+                    </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">OK</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="view-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModalView" aria-hidden="true">
+        <div class="modal fade saquiz" id="view-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModalView" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -897,23 +881,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question">Question</label>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <textarea class="mdl-textfield__input" type="text" id="q-answer" value="Lorum Ipsum"></textarea>
-                            <label class="mdl-textfield__label" for="q-answer">Answer</label>
-                        </div>
+                        <h4 id="sa-view-quiz-question" ></h4>
+                        <textarea class="mdl-textfield__input" type="text" id="sa-view-quiz-answer" value=""></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="view-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModalView" aria-hidden="true">
+        <div class="modal fade tfquiz" id="view-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModalView" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -923,13 +901,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question-contributors" value="">
-                            <label class="mdl-textfield__label" for="quiz-question-contributors">Question</label>
-                        </div>
+                        <h4 id="tf-view-quiz-question"></h4>
                         <div class="tf-options">
                             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="true">
-                                <input type="radio" id="true" class="mdl-radio__button" name="options" value="true" checked>
+                                <input type="radio" id="true" class="mdl-radio__button" name="options" value="true">
                               <span class="mdl-radio__label">True</span>
                             </label>
                             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="false">
@@ -939,7 +914,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

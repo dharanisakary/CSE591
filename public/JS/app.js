@@ -15,6 +15,7 @@ $(document).ready(function(){
     searchBtnHandler();
     retrieveProfileInformation();
     assessmentHandler();
+    getAssessments();
     getBranchStructure();
     getBranchTopic();
     getBranchStructure();
@@ -533,6 +534,75 @@ function assessmentHandler(){
         var html = '<input class="mdl-textfield__input" type="text" >';
         $('#mcq-options').append(html);
     })
+    $('#add-quiz button[type=submit]').on('click', function(){
+        var questionText = $('#quiz-question')[0].value;
+        var options = $('#mcq-options input[type=text]');
+        var optionsText = {};
+        for(var i=0;i<options.length;i++){
+            optionsText["option"+i] = options[i].value;
+        }
+        var quizRef = firebase.database().ref('quizzes/');
+        var mcqRef = quizRef.child('mcq');
+        mcqRef.child(questionText).set({
+            options: optionsText
+        });
+        $('#add-quiz').modal('hide');
+    });
+    $('#add-quiz2 button[type=submit]').on('click', function(){
+        var questionText = $('#sa-quiz-question')[0].value;
+        var quizRef = firebase.database().ref('quizzes/');
+        var mcqRef = quizRef.child('sq').child(questionText).set({answer : ''});
+        $('#add-quiz2').modal('hide');
+    });
+    $('#add-quiz3 button[type=submit]').on('click', function(){
+        var questionText = $('#tf-quiz-question')[0].value;
+        var quizRef = firebase.database().ref('quizzes/');
+        var mcqRef = quizRef.child('tf').child(questionText).set({answer : ''});
+        $('#add-quiz3').modal('hide');
+    });
+
+}
+
+function getAssessments(){
+    var quizData = null;
+    var ref = firebase.database().ref('quizzes/');
+    ref.on('value', function(snapshot){
+        var data = snapshot.val();
+        quizData = data;
+        $('#all-mcqs').empty();
+        $('#all-shortAns').empty();
+        $('#all-tfs').empty();
+        if(data.mcq){
+            // TODO : Add Empty case
+            Object.keys(data.mcq).forEach(function(key) {
+                $('#all-mcqs').append('<div class="circle text-center" data-toggle="modal" data-target="#view-quiz" ><p>'+key+'</p></div>');
+            });
+        }
+        if(data.tf){
+            Object.keys(data.tf).forEach(function(key) {
+                $('#all-tfs').append('<div class="triangle text-center" data-toggle="modal" data-target="#view-quiz3" ><p>'+key+'</p></div>');
+            });
+        }
+        if(data.sq){
+            Object.keys(data.sq).forEach(function(key) {
+                $('#all-shortAns').append('<div class="square text-center" data-toggle="modal" data-target="#view-quiz2" ><p>'+key+'</p></div>');
+            });
+        }
+        $('#view-quiz').on('show.bs.modal', function(e){
+            $('#mcq-view-quiz-question').text(e.relatedTarget.textContent);
+            var options = quizData.mcq[e.relatedTarget.textContent];
+            $('#mcq-view-options').empty();
+            Object.keys(options.options).forEach(function(key) {
+                $('#mcq-view-options').append('<p> <input type="radio" class="mdl-radio__button" name="view-quiz-quesion-modal" value="'+options.options[key]+'" >'+options.options[key] +'</p>');
+            });
+        });
+        $('#view-quiz2').on('show.bs.modal', function(e){
+            $('#sa-view-quiz-question').text(e.relatedTarget.textContent);
+        });
+        $('#view-quiz3').on('show.bs.modal', function(e){
+            $('#tf-view-quiz-question').text(e.relatedTarget.textContent);
+        });
+    });
 }
 
 function timer(){
@@ -542,8 +612,6 @@ function timer(){
         timeleft--;
         if(timeleft==0){
             document.getElementById("countdowntimer").textContent = timeout;
-
-
         }
         else{
             document.getElementById("countdowntimer").textContent = timeleft;
