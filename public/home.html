@@ -68,7 +68,6 @@
                 <a id= "profile-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Profile</a>
                 <a id= "brainfeed-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Brainfeed</a>
                 <a id= "social-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
-                <a id= "assess-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">school</i>Assess</a>
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span>© Webstorming</a>
             </nav>
@@ -342,6 +341,11 @@
                                             </div>
                                             <button id="btn-start-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-play fa-2x"></i>  Start</button>
                                             <button id="btn-enroll-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Enroll</button>
+
+                                            <button id="btn-assess-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Assess</button>
+
+                                            <button id="btn-review-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Review</button>
+
                                             <button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  Maximum number of contributors reached.Waiting for the author to start this branch...</button>
                                         </div>
                                     </script>
@@ -350,6 +354,184 @@
                                         <div class="col-sm-12" id="brain-feed-branch-content">
                                         </div>
                                     </div>
+
+                                    <div id="assess-knowledge">
+                                        <div class="col-sm-8">
+                                            <h3>Exisiting Quizzes</h3>
+                                            <div class="mcq assess-knowledge-element">
+                                                <h4>Multiple Choice Questions</h4>
+                                                <div id="all-mcqs"></div>
+                                            </div>
+                                            <hr/>
+                                            <div class="short-ans assess-knowledge-element">
+                                                <h4>Short Answer Questions</h4>
+                                                <div id="all-shortAns"></div>
+                                            </div>
+                                            <hr/>
+                                            <div class="tf assess-knowledge-element">
+                                                <h4>True/False Questions</h4>
+                                                <div id="all-tfs"></div>
+                                            </div>
+                                            <div class="">
+                                                <button id="quiz-stats" class="btn btn-primary">
+                                                    Get Stats
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 text-center">
+                                            <h3>Create Quiz</h3>
+                                            <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz">
+                                            <i class="material-icons">add</i> Multiple Choice
+                                            </button>
+                                            <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz2">
+                                            <i class="material-icons">add</i> Short Answer
+                                            </button>
+                                            <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz3">
+                                            <i class="material-icons">add</i> True/False
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="all-knowledge">
+                                        <div id="branch-knowledge">
+                                        </div>
+                                        <div id="quiz-knowledge">
+                                        </div>
+                                    </div>
+                                    <div >
+                                    </div>
+
+                                    <div class="modal fade" id="add-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModal" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="mcqQuizModal">Add New Multiple Choice Question</h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                        <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
+                                                        <label class="mdl-textfield__label" for="quiz-question">Question</label>
+                                                    </div>
+                                                    <div id="mcq-options"></div>
+                                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-mcq-option" >
+                                                        Add Option
+                                                    </button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="add-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModal" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="shortAnsModal">Add New Short Answer Question</h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                        <input class="mdl-textfield__input" type="text" id="sa-quiz-question" value="">
+                                                        <label class="mdl-textfield__label" for="sa-quiz-question">Question</label>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="add-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModal" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="tfModal">Add New True False Question </h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                        <input class="mdl-textfield__input" type="text" id="tf-quiz-question" value="">
+                                                        <label class="mdl-textfield__label" for="tf-quiz-question">Question</label>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade mcqquiz" id="view-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModalView" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="mcqQuizModalView">Multiple Choice Question</h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 id="mcq-view-quiz-question"></h5>
+                                                    <div id="mcq-view-options">
+                                                </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">OK</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade saquiz" id="view-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModalView" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="shortAnsModalView">Short Answer Question </h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 id="sa-view-quiz-question" ></h5>
+                                                    <textarea class="mdl-textfield__input" type="text" id="sa-view-quiz-answer" value=""></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade tfquiz" id="view-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModalView" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title pull-left" id="tfModalView">True False Question </h4>
+                                                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 id="tf-view-quiz-question"></h5>
+                                                    <div id="tf-view-options">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -645,170 +827,6 @@
                     <input type="search" value="" placeholder="Type username(s) here" />
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-            </div>
-
-        </div>
-
-        <div id="assess-knowledge">
-            <div class="col-sm-8">
-                <h3>Exisiting Quizzes</h3>
-                <div class="mcq assess-knowledge-element">
-                    <h4>Multiple Choice Questions</h4>
-                    <div id="all-mcqs"></div>
-                </div>
-                <hr/>
-                <div class="short-ans assess-knowledge-element">
-                    <h4>Short Answer Questions</h4>
-                    <div id="all-shortAns"></div>
-                </div>
-                <hr/>
-                <div class="tf assess-knowledge-element">
-                    <h4>True/False Questions</h4>
-                    <div id="all-tfs"></div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <h3>Create Quiz</h3>
-                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz">
-                <i class="material-icons">add</i> Add Multiple Choice
-                </button>
-                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz2">
-                <i class="material-icons">add</i> Add Short Answer
-                </button>
-                <button class="create-assess-knowledge-element mdl-button mdl-js-button mdl-button--raised mdl-button--accent" data-toggle="modal" data-target="#add-quiz3">
-                <i class="material-icons">add</i> Add True/False
-                </button>
-            </div>
-        </div>
-
-        <div class="modal fade" id="add-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="mcqQuizModal">Add New Multiple Choice Question</h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="quiz-question" value="">
-                            <label class="mdl-textfield__label" for="quiz-question">Question</label>
-                        </div>
-                        <div id="mcq-options"></div>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="add-mcq-option" >
-                            Add Option
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="add-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="shortAnsModal">Add New Short Answer Question</h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="sa-quiz-question" value="">
-                            <label class="mdl-textfield__label" for="sa-quiz-question">Question</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="add-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="tfModal">Add New True False Question </h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="tf-quiz-question" value="">
-                            <label class="mdl-textfield__label" for="tf-quiz-question">Question</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade mcqquiz" id="view-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModalView" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="mcqQuizModalView">Multiple Choice Question</h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 id="mcq-view-quiz-question"></h5>
-                        <div id="mcq-view-options">
-                    </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade saquiz" id="view-quiz2" tabindex="-1" role="dialog" aria-labelledby="shortAnsModalView" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="shortAnsModalView">Short Answer Question </h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 id="sa-view-quiz-question" ></h5>
-                        <textarea class="mdl-textfield__input" type="text" id="sa-view-quiz-answer" value=""></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade tfquiz" id="view-quiz3" tabindex="-1" role="dialog" aria-labelledby="tfModalView" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" id="tfModalView">True False Question </h4>
-                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h5 id="tf-view-quiz-question"></h5>
-                        <div id="tf-view-options">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

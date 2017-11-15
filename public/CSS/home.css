@@ -1001,14 +1001,14 @@ button:focus {
 /********  Assessing Knowledge   ********/
 
 #assess-knowledge{
-    margin-left: 25%;
+   
 }
 .assess-knowledge-element{
     margin: 30px 0;
 }
 
 .create-assess-knowledge-element{
-    width: 250px;
+    width: 200px;
     margin: 5px;
     text-align: left;
 }

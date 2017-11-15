@@ -3,18 +3,18 @@ $(document).ready(function(){
     $('#profile-content').hide();
     $('#brain-feed').hide();
     $('#social-search').hide();
-    $('#assess-knowledge').hide();
+    
 
-    profilePictureRetrieval();
+    //profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
-    retrieveProfileInformation();
+    //retrieveProfileInformation();
     retrieveBranches();
-    assessmentHandler();
-    getAssessments();
+    
+    //getAssessments();
     getBranchStructure();
     getBranchTopic();
     getBranchStructure();
@@ -451,6 +451,8 @@ function brainTableFunctionality(){
                         }
                         else{
                             $('#btn-error-branch').show();
+                            $('#btn-assess-branch').show();
+                            $('#btn-review-branch').show();
                             $('#btn-error-branch').html('  Maximum number of contributors reached.Waiting for the author to start this branch...');
                         }
                     }
@@ -485,7 +487,7 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
-                    $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
+                    $('#btn-error-branch').html();
                 }
 
                 if(pendingCheck == 3){
@@ -503,6 +505,7 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
+
                     $('#btn-error-branch').html('  Congratulations! You have now finished contributing. Wait until this branch is completed...');
                 }
 
@@ -512,6 +515,12 @@ function brainTableFunctionality(){
 
     $(document).on('click', '#go-back', function(){
         $('#brain-feed #catalog').removeClass('hidden');
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
         $('#catalog-body').empty()
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
@@ -524,6 +533,67 @@ function brainTableFunctionality(){
 
         $('#branch-table-container').empty();
         retrieveBranches();
+    });
+
+    $(document).on('click', '#btn-assess-branch', function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        $('#assess-knowledge').removeClass('hidden');
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+
+        assessmentHandler(key);
+        getAssessments(key);
+    });
+
+    $(document).on('click',"#btn-review-branch",function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        if(!$('#brain-feed #quiz-knowledge').hasClass('hidden')){
+            $('#brain-feed #quiz-knowledge').addClass('hidden');
+        }
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        if($('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').removeClass('hidden')
+        }
+        if($('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').removeClass('hidden')
+        }
+        var ref = firebase.database().ref('branches/'+key);
+
+        ref.on('value', function(snapshot){
+            var mapOfSubTopics = {};
+            var branchData = snapshot.val();
+            var subtopics = branchData.subtopics;
+            for(var data in subtopics){
+                if(subtopics.hasOwnProperty(data)){
+                    var subtopicName = subtopics[data].value;
+                    var subtopicArray = [];
+                    for(var c in branchData.contributors){
+                        subtopicArray.push(branchData.contributors[c][data].value);
+                    }
+                    mapOfSubTopics[subtopicName] = subtopicArray;
+                }
+            }
+            var reviewContent = "";
+            for( var data in mapOfSubTopics){
+                if(mapOfSubTopics.hasOwnProperty(data)){
+                    reviewContent = reviewContent + "<h4> Sub Topic : "+data+"</h4>";
+                    for ( var subData in mapOfSubTopics[data]){
+                        reviewContent = reviewContent + "<p>"+mapOfSubTopics[data][subData]+"</p>";
+                    }
+                }
+            }
+            $('#branch-knowledge').html(reviewContent);
+        })
+
     });
 
     $(document).on('click', '#btn-start-branch', function(){
@@ -547,8 +617,12 @@ function brainTableFunctionality(){
                 if(!$('#brain-feed #catalog-body').hasClass('hidden')){
                     $('#brain-feed #catalog-body').addClass('hidden');
                 }
-
-
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-knowledge').addClass('hidden')
+                }
                 var subtopicOrder = [];
                 var nameOrder = -1;
 
@@ -565,7 +639,6 @@ function brainTableFunctionality(){
                         subtopicOrder.push(subtopic);
                     }
                 }
-
                 timer(timePerContributor, numberOfContributors, subtopicOrder, snapshot.val()["id"].split('/')[0].trim());
             }
         });
@@ -674,10 +747,6 @@ function menuChoiceHndler(){
            $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
-        if($('#assess-choice').hasClass('selected')){
-           $('#assess-choice').removeClass('selected');
-            $('#assess-knowledge').hide();
-        }
     });
 
     $('#brainfeed-choice, #get-started').on('click',function(){
@@ -691,6 +760,12 @@ function menuChoiceHndler(){
             }
             if(!$('#catalog-body').hasClass('hidden')){
                 $('#catalog-body').addClass('hidden');
+            }
+            if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                $('#brain-feed #assess-knowledge').addClass('hidden')
+            }
+            if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+                $('#brain-feed #all-knowledge').addClass('hidden')
             }
             $('#btn-create-branch').show();
 
@@ -707,10 +782,6 @@ function menuChoiceHndler(){
         if($('#social-choice').hasClass('selected')){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
-        }
-        if($('#assess-choice').hasClass('selected')){
-           $('#assess-choice').removeClass('selected');
-            $('#assess-knowledge').hide();
         }
 
         $('#catalog-body').empty();
@@ -737,17 +808,10 @@ function menuChoiceHndler(){
             $('#social-choice').removeClass('selected');
             $('#social-search').hide();
         }
-        if($('#assess-choice').hasClass('selected')){
-           $('#assess-choice').removeClass('selected');
-            $('#assess-knowledge').hide();
-        }
     });
 
     $('#social-choice, #make-friends').on('click',function(){
-        if($('#assess-choice').hasClass('selected')){
-           $('#assess-choice').removeClass('selected');
-            $('#assess-knowledge').hide();
-        }
+        
         if(!$('#social-choice').hasClass('selected')){
             $('#social-choice').addClass('selected');
             $('#social-search').show();
@@ -766,28 +830,7 @@ function menuChoiceHndler(){
         }
     });
 
-    $('#assess-choice').on('click',function(){
-        if(!$('#assess-choice').hasClass('selected')){
-            $('#assess-choice').addClass('selected');
-            $('#assess-knowledge').show();
-        }
-        if($('#social-choice').hasClass('selected')){
-            $('#social-choice').removeClass('selected');
-            $('#social-search').hide();
-        }
-        if($('#brainfeed-choice').hasClass('selected')){
-            $('#brainfeed-choice').removeClass('selected');
-            $('#brain-feed').hide();
-        }
-        if($('#home-choice').hasClass('selected')){
-            $('#home-choice').removeClass('selected');
-            $('#cards').hide();
-        }
-        if($('#profile-choice').hasClass('selected')){
-            $('#profile-choice').removeClass('selected');
-            $('#profile-content').hide();
-        }
-    });
+ 
 }
 
 function randomization(random){
@@ -1026,12 +1069,13 @@ function branchCreationModelhandler(){
     });
 }
 
-function assessmentHandler(){
+function assessmentHandler(branchkey){
     $('#add-mcq-option').on('click', function(){
         var html = '<input class="mdl-textfield__input" type="text" >';
         $('#mcq-options').append(html);
     })
     $('#add-quiz button[type=submit]').on('click', function(){
+
         var questionText = $('#quiz-question')[0].value;
         var options = $('#mcq-options input[type=text]');
         var optionsText = {};
@@ -1040,7 +1084,7 @@ function assessmentHandler(){
             optionsText["option"+i] = options[i].value;
             statsText["option"+i] = 0;
         }
-        var quizRef = firebase.database().ref('quizzes/');
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
         var mcqRef = quizRef.child('mcq');
         mcqRef.child(questionText).set({
             options: optionsText,
@@ -1051,13 +1095,13 @@ function assessmentHandler(){
     });
     $('#add-quiz2 button[type=submit]').on('click', function(){
         var questionText = $('#sa-quiz-question')[0].value;
-        var quizRef = firebase.database().ref('quizzes/');
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
         var mcqRef = quizRef.child('sq').child(questionText).set({answers : ''});
         $('#add-quiz2').modal('hide');
     });
     $('#add-quiz3 button[type=submit]').on('click', function(){
         var questionText = $('#tf-quiz-question')[0].value;
-        var quizRef = firebase.database().ref('quizzes/');
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
 
         var optionsText = {option0 : "true", option1: "false"};
         var statsText = {option0 : 0, option1: 0};
@@ -1072,7 +1116,7 @@ function assessmentHandler(){
         var optionRef = null;
         var questionText = $("#mcq-view-quiz-question").text();
         // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
-        var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child("options");
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("options");
         quizRef.on('value', function(snapshot){
             for (var key in snapshot.val()){
                 //alert(snapshot.val()[key]);
@@ -1082,11 +1126,22 @@ function assessmentHandler(){
             }
         });
         //quizRef.update(option{Update);
-        var quizStatRef = firebase.database().ref('quizzes/mcq/').child(questionText).child("stats").child(optionRef);
+        var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("stats").child(optionRef);
         quizStatRef.transaction(function(count){
             count = count +1;
             return count;
         });
+        
+        /*
+        var v = $('#all-mcqs div p');
+        for(var x in v){
+            if(v.hasOwnProperty(x) && Number.isInteger(parseInt(x))){
+                var quizTest = v[x].textContent.replace("list","")
+                if(quizTest === questionText){
+                    v[x].parentElement.style.display='none';
+                }
+            }
+        }*/
 
         $('#view-quiz').modal('hide');
     });
@@ -1096,7 +1151,7 @@ function assessmentHandler(){
         var optionRef = null;
         var questionText = $("#tf-view-quiz-question").text();
         // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
-        var quizRef = firebase.database().ref('quizzes/tf/').child(questionText).child("options");
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("options");
         quizRef.on('value', function(snapshot){
             for (var key in snapshot.val()){
               //alert(snapshot.val()[key]);
@@ -1106,7 +1161,7 @@ function assessmentHandler(){
             }
         });
         //quizRef.update(option{Update);
-        var quizStatRef = firebase.database().ref('quizzes/tf/').child(questionText).child("stats").child(optionRef);
+        var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("stats").child(optionRef);
         quizStatRef.transaction(function(count){
             count = count +1;
             return count;
@@ -1121,40 +1176,117 @@ function assessmentHandler(){
         // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
 
         var options = {answer: selected_option};
-        var quizRef = firebase.database().ref('quizzes/sq/').child(questionText).child("answers");
+        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answers");
         var answers = null;
         quizRef.on('value', function(snapshot){
             answers = snapshot.val();
         });
         answers = answers + "," + selected_option;
-        firebase.database().ref('quizzes/sq/').child(questionText).child("answers").set(answers);
+        firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answers").set(answers);
 
         $('#view-quiz2').modal('hide');
+    });
+    $('#quiz-stats').on('click', function(){
+        console.log(branchkey);
+        var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
+        ref.on('value', function(snapshot){
+            var knowledgeArea = $('#all-knowledge #quiz-knowledge');
+            knowledgeArea.empty();
+            var data = snapshot.val();
+            quizData = data;
+            $('#brain-feed #catalog').removeClass('hidden');
+            if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                $('#brain-feed #assess-knowledge').addClass('hidden')
+            }
+            if($('#brain-feed #all-knowledge').hasClass('hidden')){
+                $('#brain-feed #all-knowledge').removeClass('hidden')
+            }
+            if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
+                $('#brain-feed #quiz-knowledge').removeClass('hidden')
+            }
+            if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                $('#brain-feed #branch-knowledge').addClass('hidden')
+            }
+            $('#catalog-body').empty()
+            if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                $('#brain-feed #brain-feed-branch').addClass('hidden');
+            }
+            if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                $('#brain-feed #catalog-body').addClass('hidden');
+            }
+            if(!$('#brain-feed #catalog').hasClass('hidden')){
+                $('#brain-feed #catalog').addClass('hidden');
+            }
+            if(quizData){
+                var knowledge = "";
+                if(quizData.mcq){
+                    var mcq = quizData.mcq;
+                    var mcqContent = "<h4>Multiple Choice Stats</h4>";
+                    for(var ques in mcq){
+                        mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
+                        for (var op in mcq[ques].stats) {
+                            if (mcq[ques].stats.hasOwnProperty(op)) {
+                                mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +" : "+ mcq[ques].stats[op]+"</p>";
+                            }
+                        }
+                    }
+                    knowledge = knowledge +mcqContent;
+                }
+                if(quizData.sq){
+                    var sq = quizData.sq;
+                    var sqContent = "<h4>Short Answers</h4>";
+                    for(var ques in sq){
+                        sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
+                        var answers = sq[ques].answers.split(",");
+                        for(ans in answers)
+                            if(ans != ""){
+                                sqContent = sqContent + "<p>"+answers[ans]+"</p>";
+                            }
+                    }
+                    knowledge = knowledge + sqContent;
+                }
+                if(quizData.tf){
+                    var tf = quizData.tf;
+                    var tfContent = "<h4>Multiple Choice Stats</h4>";
+                    for(var ques in tf){
+                        tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
+                        for (var op in tf[ques].stats) {
+                            if (tf[ques].stats.hasOwnProperty(op)) {
+                                tfContent = tfContent + "<p>"+ tf[ques].options[op] +" : "+ tf[ques].stats[op]+"</p>";
+                            }
+                        }
+                        tfContent = tfContent + "<br/>";
+                    }
+                    knowledge = knowledge +tfContent;
+                }
+                knowledgeArea.html(knowledge);
+            }
+        })
     });
 
 }
 
-function getAssessments(){
+function getAssessments(branchkey){
     var quizData = null;
-    var ref = firebase.database().ref('quizzes/');
+    var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
     ref.on('value', function(snapshot){
         var data = snapshot.val();
         quizData = data;
         $('#all-mcqs').empty();
         $('#all-shortAns').empty();
         $('#all-tfs').empty();
-        if(data.mcq){
+        if(data && data.mcq){
             // TODO : Add Empty case
             Object.keys(data.mcq).forEach(function(key) {
                 $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
             });
         }
-        if(data.tf){
+        if(data && data.tf){
             Object.keys(data.tf).forEach(function(key) {
                 $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
             });
         }
-        if(data.sq){
+        if(data && data.sq){
             Object.keys(data.sq).forEach(function(key) {
                 $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
             });
