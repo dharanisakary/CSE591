@@ -5,13 +5,13 @@ $(document).ready(function(){
     $('#social-search').hide();
     
 
-    //profilePictureRetrieval();
+    profilePictureRetrieval();
     menuChoiceHndler();
     branchCreationModelhandler();
     retrieveInfo();
     brainTableFunctionality();
     searchBtnHandler();
-    //retrieveProfileInformation();
+    retrieveProfileInformation();
     retrieveBranches();
     
     //getAssessments();
