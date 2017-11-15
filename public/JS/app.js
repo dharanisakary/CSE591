@@ -209,7 +209,6 @@ function getBranchTopic() {
     });
 }
 
-
 function getBranchStructure(){
     var currentText = $('#structure-button').text().trim();
 
@@ -224,7 +223,6 @@ function getBranchStructure(){
         }
     });
 }
-
 
 function profilePictureRetrieval(){
     var user = $.cookie("user");
@@ -368,20 +366,44 @@ function brainTableFunctionality(){
                     var contributionNo = 0;
                     pendingCheck = 1;
 
-                    for(var coVal in snapshot.val()["subtopics"]){
-                        subtopicNo+=1;
-                    }
+                    var exists = (snapshot.val()["contributors"][user] !== undefined);
+                    if(exists){
+                        for(var coVal in snapshot.val()["subtopics"]){
+                            subtopicNo+=1;
+                        }
 
-                    for(var value in snapshot.val()["contributors"][user]){
-                        contributionNo+=1;
-                    }
+                        for(var value in snapshot.val()["contributors"][user]){
+                            contributionNo+=1;
+                        }
 
-                    if(contributionNo-1 == subtopicNo){
-                        pendingCheck = 3;
+                        if(contributionNo-1 == subtopicNo){
+                            pendingCheck = 3;
+                        }
+                    }
+                    else{
+                        pendingCheck = -1;
                     }
                 }
                 if(snapshot.val()["branch_status"] == "completed"){
                     pendingCheck = 2;
+                }
+
+                if(pendingCheck == -1){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  Aw snap! This branch is currently in progress and you haven not enrolled in it yet...');
                 }
 
                 if(pendingCheck == 1){
@@ -487,7 +509,8 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
-                    $('#btn-error-branch').html();
+                    $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
+                    $('#btn-download-branch').show();
                 }
 
                 if(pendingCheck == 3){
@@ -717,6 +740,65 @@ function brainTableFunctionality(){
                     $('#btn-confirm-brainstorming').attr('disabled', true);
                     $('#brainstorming-area').attr('disabled', true);
                 }
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-download-branch', function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                var creator = 'Creator:'+snapshot.val()["creator"];
+                var description = 'Description:'+snapshot.val()["description"];
+                var dateCreated = 'Time:'+snapshot.val()["id"].split('/')[0];
+                var numberOfContributors = snapshot.val()["numberOfContributors"];
+                var purpose = 'Purpose:'+snapshot.val()["purpose"];
+                var structure = 'Structure:'+snapshot.val()["structure"];
+                var timePerContributor = snapshot.val()["timePerContributor"];
+                var title = snapshot.val()["title"];
+                var topic = snapshot.val()["topic"];
+
+                var subtopicString = 'Subtopics:\n';
+                var userString = 'Contributors:\n';
+
+                //Name of Subtopics
+                var subtopics = [];
+                for(var key in snapshot.val()["subtopics"]){
+                    subtopics.push(snapshot.val()["subtopics"][key]["value"]);
+                    console.log(snapshot.val()["subtopics"][key]["value"]);
+                    subtopicString+=snapshot.val()["subtopics"][key]["value"]+'\n';
+                }
+
+                //Name of contributors
+                var contributorNames = [];
+
+                //This contains the contributor objects, you can get their contributions from here. Print them out and look at the structure
+                var contributorsObject = [];
+
+                for(var key1 in snapshot.val()["contributors"]){
+                    contributorNames.push(snapshot.val()["contributors"][key1]["contributorName"]);
+                    contributorsObject.push(JSON.stringify(snapshot.val()["contributors"][key1]));
+                    console.log(snapshot.val()["contributors"][key1]["contributorName"]);
+                    userString+=snapshot.val()["contributors"][key1]["contributorName"]+'\n';
+                }
+
+                var pdf = new jsPDF();
+                pdf.setFontSize(25);
+                pdf.text(30, 30, title+'\n');
+                pdf.setFontSize(15);
+                pdf.text(30, 40, topic+'\n');
+                pdf.line(20, 45, 180, 45);
+                pdf.setFontSize(12);
+                pdf.setFontType("bolditalic");
+                pdf.text(30, 55, creator+'\n'+structure+'\n'+purpose+'\n'+dateCreated);
+                pdf.line(30, 80, 170, 80);
+                pdf.setFontSize(12);
+                pdf.setFontType("normal");
+                pdf.text(30, 90, subtopicString+'\n'+userString);
+
+                pdf.save(title);
             }
         });
     });
@@ -1330,7 +1412,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             for(var contributor in snapshot.val()["contributors"]){
                 var testimonialCheck = (snapshot.val()["contributors"][contributor][subtopicOrder[0]] !== undefined);
-                if(testimonialCheck){
+                if(testimonialCheck && contributor != user){
                     var contributorData = snapshot.val()["contributors"][contributor];
                     var template = $('#contributor').html();
                     var html = Mustache.render(template, contributorData);
@@ -1395,7 +1477,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                             }
                         }
 
-                        if(contributions == 3){
+                        if(contributions == subtopicNo){
                             firebase.database().ref('branches/' +key + '/branch_status').set("completed");
                         }
                     }
@@ -1417,7 +1499,6 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
         }
     });
 }
-
 
 function splitValue(value, index) {
     return value.substring(0, index) + "," + value.substring(index);
