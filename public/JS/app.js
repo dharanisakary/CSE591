@@ -123,7 +123,6 @@ $(document).ready(function(){
     });
 });
 
-
 function retrieveBranches(){
     firebase.database().ref('branches').once('value', function(snapshot) {
         var exists = (snapshot.val() !== null);
@@ -138,7 +137,6 @@ function retrieveBranches(){
         }
     });
 }
-
 
 function btnNextHandler(){
     $('#saveImage').on('click',function(){
@@ -155,7 +153,6 @@ function btnNextHandler(){
         }
     });
 }
-
 
 function btnCreateBranchHandler(){
     $('#btn-create-branch').on('click', function(){
@@ -183,8 +180,6 @@ function btnCreateBranchHandler(){
         }
     });
 }
-
-
 
 function resetDropdownMenus(){
     $('#structure-button').text('Brainstorming Structure');
@@ -359,62 +354,297 @@ function brainTableFunctionality(){
     });
 
     $(document).on('click', '.media', function(){
+        $('#btn-create-branch').hide();
         var key = $(this).attr("id").split('/')[0];
+        var user = $.cookie('user');
         firebase.database().ref('branches/' + key).once('value', function(snapshot) {
             var exists = (snapshot.val() !== null);
             if (exists) {
-                $('#catalog-body').empty();
-                var template = $('#catalog-information').html();
-                var html = Mustache.render(template, snapshot.val());
-                var output = $('#catalog-body');
-                output.append(html);
+                var pendingCheck = 0;
+
+                if(snapshot.val()["branch_status"] == "pending"){
+                    var subtopicNo  = 0;
+                    var contributionNo = 0;
+                    pendingCheck = 1;
+
+                    for(var coVal in snapshot.val()["subtopics"]){
+                        subtopicNo+=1;
+                    }
+
+                    for(var value in snapshot.val()["contributors"][user]){
+                        contributionNo+=1;
+                    }
+
+                    if(contributionNo-1 == subtopicNo){
+                        pendingCheck = 3;
+                    }
+                }
+                if(snapshot.val()["branch_status"] == "completed"){
+                    pendingCheck = 2;
+                }
+
+                if(pendingCheck == 1){
+                    var timePerContributor = snapshot.val()["timePerContributor"];
+                    var numberOfContributors = snapshot.val()["numberOfContributors"];
+
+                    $('#brain-feed #brain-feed-branch').removeClass('hidden');
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                        $('#brain-feed #catalog-body').addClass('hidden');
+                    }
+
+                    var subtopicOrder = [];
+                    var nameOrder = -1;
+
+                    for(var name in snapshot.val()["contributors"]){
+                        nameOrder+=1;
+                        if(name == user){
+                            break;
+                        }
+                    }
+                    subtopicOrder.push("subtopic"+nameOrder);
+
+                    for(var subtopic in snapshot.val()["subtopics"]){
+                        if(subtopic != "subtopic"+nameOrder){
+                            subtopicOrder.push(subtopic);
+                        }
+                    }
+                    timer(timePerContributor, numberOfContributors, subtopicOrder, snapshot.val()["id"].split('/')[0]);
+                }
+
+                if(pendingCheck == 0){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    var contributorCount = 0;
+                    var contributorCheck = false;
+                    var checkForError = false;
+                    var checkForAuthor = false;
+                    var numberOfContributors = snapshot.val()["numberOfContributors"];
+                    for (var key in snapshot.val()['contributors']){
+                        if(key == user){
+                            contributorCheck = true;
+                        }
+                        contributorCount+= 1;
+                    }
+
+                    if(snapshot.val()["creator"] == user){
+                        checkForAuthor = true;
+                        if(contributorCount != numberOfContributors){
+                            $('#btn-error-branch').show();
+                            $('#btn-error-branch').html('  Necessary number of contributors not yet reached. Cannot start the branch just yet...');
+                        }
+                        else{
+                            $('#btn-start-branch').show();
+                            checkForError = true;
+                        }
+                    }
+                    else{
+                        if(contributorCount != numberOfContributors){
+                            $('#btn-enroll-branch').show();
+                        }
+                        else{
+                            $('#btn-error-branch').show();
+                            $('#btn-error-branch').html('  Maximum number of contributors reached.Waiting for the author to start this branch...');
+                        }
+                    }
+
+                    if(contributorCheck && !checkForError && !checkForAuthor){
+                        $('#btn-enroll-branch').hide();
+                        $('#btn-error-branch').show();
+                        $('#btn-error-branch').html('  You already enrolled in this branch. Waiting for people to sign up or for the branch start...');
+                    }
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                }
+
+                if(pendingCheck == 2){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
+                }
+
+                if(pendingCheck == 3){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  Congratulations! You have now finished contributing. Wait until this branch is completed...');
+                }
 
             }
         });
-        $('#brain-feed #catalog-body').removeClass('hidden');
-        if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
-            $('#brain-feed #brain-feed-branch').addClass('hidden');
-        }
-        if(!$('#brain-feed #catalog').hasClass('hidden')){
-            $('#brain-feed #catalog').addClass('hidden');
-        }
     });
-
-
 
     $(document).on('click', '#go-back', function(){
         $('#brain-feed #catalog').removeClass('hidden');
+        $('#catalog-body').empty()
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
         }
         if(!$('#brain-feed #catalog-body').hasClass('hidden')){
             $('#brain-feed #catalog-body').addClass('hidden');
         }
-    });
 
-    $('#go-back2').on('click', function(){
-        $('#brain-feed #catalog-body').removeClass('hidden');
-        if(!$('#brain-feed #catalog').hasClass('hidden')){
-            $('#brain-feed #catalog').addClass('hidden');
-        }
-        if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
-            $('#brain-feed #brain-feed-branch').addClass('hidden');
-        }
-     });
+        $('#btn-create-branch').show();
+
+        $('#branch-table-container').empty();
+        retrieveBranches();
+    });
 
     $(document).on('click', '#btn-start-branch', function(){
-        $('#brain-feed #brain-feed-branch').removeClass('hidden');
-        if(!$('#brain-feed #catalog').hasClass('hidden')){
-            $('#brain-feed #catalog').addClass('hidden');
-        }
-        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
-            $('#brain-feed #catalog-body').addClass('hidden');
-        }
-        timer();
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                var timePerContributor = snapshot.val()["timePerContributor"];
+                var numberOfContributors = snapshot.val()["numberOfContributors"];
+
+                if(snapshot.val()["branch_status"] == "not_started"){
+                    firebase.database().ref('branches/' +key + '/branch_status').set("pending");
+                }
+
+                $('#brain-feed #brain-feed-branch').removeClass('hidden');
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+
+
+                var subtopicOrder = [];
+                var nameOrder = -1;
+
+                for(var name in snapshot.val()["contributors"]){
+                    nameOrder+=1;
+                    if(name == user){
+                        break;
+                    }
+                }
+                subtopicOrder.push("subtopic"+nameOrder);
+
+                for(var subtopic in snapshot.val()["subtopics"]){
+                    if(subtopic != "subtopic"+nameOrder){
+                        subtopicOrder.push(subtopic);
+                    }
+                }
+
+                timer(timePerContributor, numberOfContributors, subtopicOrder, snapshot.val()["id"].split('/')[0].trim());
+            }
+        });
     });
 
-    $('#btn-done-brainstorm').on('click', function(){
-        // Handle post Brainstorm action
+    $(document).on('click', '#btn-enroll-branch', function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            var key1 = snapshot.val()["id"].split('/')[0];
+            var numberOfContributors = snapshot.val()["numberOfContributors"];
+            if (exists) {
+                var contributorsRef = (snapshot.val()['contributors'] !== undefined);
+                var author = snapshot.val()["creator"];
+                if(contributorsRef){
+                    var contributorCount = 0;
+                    var contributorCheck = false;
+                    for (var key in snapshot.val()['contributors']){
+                        if(key == user){
+                            contributorCheck = true;
+                        }
+                        contributorCount+= 1;
+                    }
+
+                    if(!contributorCheck && (numberOfContributors != contributorCount)){
+                        firebase.database().ref('branches/' + key1).child('contributors').child(user).set({
+                            "contributorName": user
+                        });
+
+                        if(contributorCount == 4){
+                            $('#btn-enroll-branch').hide();
+                            $('#btn-error-branch').show();
+                            $('#btn-error-branch').html('  Maximum number of contributors reached.Waiting for the author to start this branch...');
+                        }
+
+                        else{
+                            $('#btn-enroll-branch').hide();
+                            $('#btn-error-branch').show();
+                            $('#btn-error-branch').html('  You already enrolled in this branch. Waiting for people to sign up or for the branch start...');
+                        }
+                    }
+                }
+                else{
+                    firebase.database().ref('branches/' + key1).child('contributors').child(user).set({
+                        "contributorName": user
+                    });
+                    firebase.database().ref('branches/' + key1).child('contributors').child(author).set({
+                        "contributorName": author
+                    });
+
+                    $('#btn-enroll-branch').hide();
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  You already enrolled in this branch. Waiting for people to sign up or for the branch start...');
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-confirm-brainstorming', function(){
+        var key = $(this).attr('data-button');
+        var user = $.cookie("user");
+        var subtopicValue = $('#brainstorming-subtopic').text().split(':')[1].trim();
+        var brainstormingValue = $('#brainstorming-area').val();
+
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                for(var subtopic in snapshot.val()["subtopics"]){
+                    if(snapshot.val()["subtopics"][subtopic]["value"] == subtopicValue){
+                        firebase.database().ref('branches/' + key + '/contributors/' + user).child(subtopic).set({
+                            "value": brainstormingValue
+                        });
+                    }
+
+                    $('#btn-confirm-brainstorming').attr('disabled', true);
+                    $('#brainstorming-area').attr('disabled', true);
+                }
+            }
+        });
     });
 }
 
@@ -453,6 +683,16 @@ function menuChoiceHndler(){
         if(!$('#brainfeed-choice').hasClass('selected')){
             $('#brainfeed-choice').addClass('selected');
             $('#brain-feed').show();
+
+            $('#brain-feed-branch').addClass('hidden');
+            if($('#catalog').hasClass('hidden')){
+                $('#catalog').removeClass('hidden');
+            }
+            if(!$('#catalog-body').hasClass('hidden')){
+                $('#catalog-body').addClass('hidden');
+            }
+            $('#btn-create-branch').show();
+
             resetDropdownMenus();
         }
         if($('#home-choice').hasClass('selected')){
@@ -471,6 +711,12 @@ function menuChoiceHndler(){
            $('#assess-choice').removeClass('selected');
             $('#assess-knowledge').hide();
         }
+
+        $('#catalog-body').empty();
+        $('#brain-feed-branch-content').empty();
+
+        $('#branch-table-container').empty();
+        retrieveBranches();
     });
 
     $('#profile-choice, #find-out-now').on('click',function(){
@@ -632,7 +878,6 @@ function preScreenEval(){
                                 count+=1;
                             }
                         }
-
                     }
                 }
             }
@@ -650,7 +895,8 @@ function preScreenEval(){
                 $('#branch-table-container').empty();
                 retrieveBranches();
                 content = '<h3 class="correct"><i class="material-icons large">grade</i>Congratulations!</h3> <h5 class="br-feedback">You can now start Brain storming!</h5>';
-            }else{
+            }
+            else{
                 content = '<h3 class="red"><i class="material-icons large">error</i>Oops! </h3><h5 class="br-feedback">You did not qualify for Brain Storming!</h5>';
             }
 
@@ -704,7 +950,6 @@ function brainstormingBranchDbHandler(){
     }
 }
 
-
 function branchCreationModelhandler(){
     $('#pre-screening-questions').carousel({
         wrap:false,
@@ -715,11 +960,20 @@ function branchCreationModelhandler(){
     $('#preScreen').on('click', function() {
         var currentText = $('#structure-button').text().trim();
         var noSubTopics = $('#input-range').val().trim();
+        var noContributors = $('#rangeContributors').val();
+        var check = false;
+
+        if(noSubTopics != noContributors){
+            alert("Please match the number of subtopics/questions with your contributor number!");
+            check = true;
+        }
 
         if(currentText === "Brainstorming Structure" || noSubTopics == 0){
             alert("Please enter all the necessary information in order to continue!");
+            check = true;
         }
-        else{
+
+        if(!check){
             $('#modal-branches .modal-title').text('Pre Screening');
             $('#saveImage').parent().addClass('hidden');
             $('#preScreen').attr('disabled', true);
@@ -733,6 +987,7 @@ function branchCreationModelhandler(){
 
 
     $('#finishPreScreen').on('click', function(){
+       $('#finishPreScreen').attr('disabled', true);
        preScreenEval();
     });
 
@@ -777,23 +1032,112 @@ function assessmentHandler(){
     })
 }
 
-function timer(){
-    var timeleft = 4;
-    var timeout='Time over';
-    $("#countdowntimer").css('margin-left', '22.5%');
-    var downloadTimer = setInterval(function(){
-        timeleft--;
-        if(timeleft==0){
-            document.getElementById("countdowntimer").textContent = timeout;
-            $("#countdowntimer").css('margin-left', '15%');
+function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
+    firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var user = $.cookie("user");
+        if (exists) {
+            $('#brain-feed-branch-content').empty();
+            $('#contributors').empty();
+
+            var template = $('#contribution').html();
+            var html = Mustache.render(template, snapshot.val()["subtopics"][subtopicOrder[0]]);
+            var output = $('#brain-feed-branch-content');
+            output.append(html);
+
+            $('#btn-confirm-brainstorming').attr('data-button', key);
+
+            for(var contributor in snapshot.val()["contributors"]){
+                var testimonialCheck = (snapshot.val()["contributors"][contributor][subtopicOrder[0]] !== undefined);
+                if(testimonialCheck){
+                    var contributorData = snapshot.val()["contributors"][contributor];
+                    var template = $('#contributor').html();
+                    var html = Mustache.render(template, contributorData);
+                    var output = $('#contributors');
+                    output.append(html);
+
+                    document.getElementById("testimonial-" + contributor).textContent = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
+                }
+            }
+
+            $('#brain-feed-branch-content').append($('#contributors').html());
+            subtopicOrder.shift();
+
+            document.getElementById("countdowntimer").textContent = "";
+            $("#countdowntimer").css('margin-left', '22.5%');
+            var timeleft = 5;
+            var timeout='Time over';
+
+            var downloadTimer = setInterval(function(){
+                if(timeleft == 0){
+                    var subtopicValue = $('#brainstorming-subtopic').text().split(':')[1].trim();
+                    var brainstormingValue = $('#brainstorming-area').val();
+
+                    for(var subtopic in snapshot.val()["subtopics"]){
+                        if(snapshot.val()["subtopics"][subtopic]["value"] == subtopicValue){
+                            firebase.database().ref('branches/' + key + '/contributors/' + user).child(subtopic).set({
+                                "value": brainstormingValue
+                            });
+                        }
+
+                        $('#btn-confirm-brainstorming').attr('disabled', true);
+                        $('#brainstorming-area').attr('disabled', true);
+                    }
+
+                    document.getElementById("countdowntimer").textContent = timeout;
+                    $("#countdowntimer").css('margin-left', '15%');
+                    numberOfContributors--;
+
+                    if(subtopicOrder.length == 0){
+                        $('#brain-feed-branch').hide();
+                        $('#catalog').removeClass('hidden');
+
+                        $('#branch-table-container').empty();
+                        retrieveBranches();
+
+                        var contributions = 0;
+                        var subtopicNo = 0;
+
+                        for(var subtopicKey in snapshot.val()["subtopics"]){
+                            subtopicNo+=1;
+                        }
+
+                        for(var contributorKey in snapshot.val()["contributors"]){
+                            var contributionsNo = 0;
+
+                            for(var contributorSubKey in snapshot.val()["contributors"][contributorKey]){
+                                contributionsNo+=1;
+                            }
+
+                            if(contributionsNo-1 == subtopicNo){
+                                contributions +=1;
+                            }
+                        }
+
+                        if(contributions == 3){
+                            firebase.database().ref('branches/' +key + '/branch_status').set("completed");
+                        }
+                    }
+                }
+                if(timeleft > 0){
+                    document.getElementById("countdowntimer").textContent = timeleft;
+                }
+                if(timeleft < 0) {
+                    clearInterval(downloadTimer);
+                }
+                timeleft--;
+            },1000);
+
+            setTimeout(function() {
+                if(numberOfContributors > 0){
+                    timer(timePerContributor, numberOfContributors, subtopicOrder, key);
+                }
+            }, 7000);
+
         }
-        else{
-            document.getElementById("countdowntimer").textContent = timeleft;
-        }
-        if(timeleft <= 0)
-            clearInterval(downloadTimer);
-    },1000);
- }
+    });
+}
+
 
 function splitValue(value, index) {
     return value.substring(0, index) + "," + value.substring(index);
