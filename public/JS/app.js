@@ -208,7 +208,6 @@ function getBranchTopic() {
     });
 }
 
-
 function getBranchStructure(){
     var currentText = $('#structure-button').text().trim();
 
@@ -223,7 +222,6 @@ function getBranchStructure(){
         }
     });
 }
-
 
 function profilePictureRetrieval(){
     var user = $.cookie("user");
@@ -367,20 +365,44 @@ function brainTableFunctionality(){
                     var contributionNo = 0;
                     pendingCheck = 1;
 
-                    for(var coVal in snapshot.val()["subtopics"]){
-                        subtopicNo+=1;
-                    }
+                    var exists = (snapshot.val()["contributors"][user] !== undefined);
+                    if(exists){
+                        for(var coVal in snapshot.val()["subtopics"]){
+                            subtopicNo+=1;
+                        }
 
-                    for(var value in snapshot.val()["contributors"][user]){
-                        contributionNo+=1;
-                    }
+                        for(var value in snapshot.val()["contributors"][user]){
+                            contributionNo+=1;
+                        }
 
-                    if(contributionNo-1 == subtopicNo){
-                        pendingCheck = 3;
+                        if(contributionNo-1 == subtopicNo){
+                            pendingCheck = 3;
+                        }
+                    }
+                    else{
+                        pendingCheck = -1;
                     }
                 }
                 if(snapshot.val()["branch_status"] == "completed"){
                     pendingCheck = 2;
+                }
+
+                if(pendingCheck == -1){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  Aw snap! This branch is currently in progress and you haven not enrolled in it yet...');
                 }
 
                 if(pendingCheck == 1){
@@ -485,6 +507,7 @@ function brainTableFunctionality(){
                     }
                     $('#btn-error-branch').show();
                     $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
+                    $('#btn-download-branch').show();
                 }
 
                 if(pendingCheck == 3){
@@ -645,6 +668,46 @@ function brainTableFunctionality(){
                 }
             }
         });
+    });
+
+    $(document).on('click', '#btn-download-branch', function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                var creator = snapshot.val()["creator"];
+                var description = snapshot.val()["description"];
+                var dateCreated = snapshot.val()["id"].split('/')[0];
+                var numberOfContributors = snapshot.val()["numberOfContributors"];
+                var purpose = snapshot.val()["purpose"];
+                var structure = snapshot.val()["structure"];
+                var timePerContributor = snapshot.val()["timePerContributor"];
+                var title = snapshot.val()["title"];
+                var topic = snapshot.val()["topic"];
+
+                //Name of Subtopics
+                var subtopics = [];
+                for(var key in snapshot.val()["subtopics"]){
+                    subtopics.push(snapshot.val()["subtopics"][key]["value"]);
+                }
+
+                //Name of contributors
+                var contributorNames = [];
+
+                //This contains the contributor objects, you can get their contributions from here. Print them out and look at the structure
+                var contributorsObject = [];
+
+                for(var key1 in snapshot.val()["contributors"]){
+                    contributorNames.push(snapshot.val()["contributors"][key1]["contributorName"]);
+                    contributorsObject.push(JSON.stringify(snapshot.val()["contributors"][key1]));
+                }
+            }
+        });
+
+        var pdf = new jsPDF();
+        pdf.text(30, 30, 'Hello world!');
+        pdf.save('hello_world.pdf');
     });
 }
 
@@ -1049,7 +1112,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             for(var contributor in snapshot.val()["contributors"]){
                 var testimonialCheck = (snapshot.val()["contributors"][contributor][subtopicOrder[0]] !== undefined);
-                if(testimonialCheck){
+                if(testimonialCheck && contributor != user){
                     var contributorData = snapshot.val()["contributors"][contributor];
                     var template = $('#contributor').html();
                     var html = Mustache.render(template, contributorData);
@@ -1114,7 +1177,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                             }
                         }
 
-                        if(contributions == 3){
+                        if(contributions == subtopicNo){
                             firebase.database().ref('branches/' +key + '/branch_status').set("completed");
                         }
                     }
@@ -1137,7 +1200,6 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
         }
     });
 }
-
 
 function splitValue(value, index) {
     return value.substring(0, index) + "," + value.substring(index);
