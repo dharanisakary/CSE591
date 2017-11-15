@@ -473,7 +473,6 @@ function brainTableFunctionality(){
                         }
                         else{
                             $('#btn-error-branch').show();
-                            $('#btn-assess-branch').show();
                             $('#btn-review-branch').show();
                             $('#btn-error-branch').html('  Maximum number of contributors reached.Waiting for the author to start this branch...');
                         }
@@ -509,6 +508,7 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
+                    $('#btn-assess-branch').show();
                     $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
                     $('#btn-download-branch').show();
                 }
