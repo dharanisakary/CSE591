@@ -278,7 +278,7 @@
                                     </div>
 
                                     <script id="branch-table-element" type="x-tmpl-mustache">
-                                        <tr data-status="{{branch_status}}">
+                                        <tr id="tr-{{id}}" data-status="{{branch_status}}">
                                             <td>
                                                 <div class="media" id="{{id}}">
                                                     <a href="#" class="pull-left">
@@ -340,93 +340,14 @@
                                                 <textarea class="mdl-textfield__input" type="text" id="branch-description" readonly>{{description}}</textarea>
                                                 <label class="mdl-textfield__label branch-label" for="branch-description">Description</label>
                                             </div>
-                                            <button id="btn-start-branch" class="btn btn-md btn-default" ><i class="fa fa-play fa-2x"></i>  Start</button>
+                                            <button id="btn-start-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-play fa-2x"></i>  Start</button>
+                                            <button id="btn-enroll-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Enroll</button>
+                                            <button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  Maximum number of contributors reached.Waiting for the author to start this branch...</button>
                                         </div>
                                     </script>
 
                                     <div id="brain-feed-branch" class="hidden col-sm-12">
-                                        <div class="col-sm-12">
-                                            <div class="pull-left">
-                                                <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back2"></h3>
-                                            </div>
-                                            <div class="row timer">
-                                                <h4>Contribution Time Left</h4>
-                                                <h6><div id="countdowntimer" class="timer">4</div></h6>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="testimonial testimonial-warning-filled testimonial-editable">
-                                                        <div class="testimonial-section">
-                                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                                <textarea class="mdl-textfield__input" type="text" id="brainstorming-area"></textarea>
-                                                                <label class="mdl-textfield__label" for="topic-description">Brainstorm Here</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="testimonial-desc">
-                                                            <button class="btn btn-md btn-default" ><i class="fa fa-cloud fa-2x"></i> Confirm</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="testimonial testimonial-success-filled">
-                                                        <div class="testimonial-section">
-                                                            No comment available
-                                                        </div>
-                                                        <div class="testimonial-desc">
-                                                            <img src="" alt="" />
-                                                            <div class="testimonial-writer">
-                                                                <div class="testimonial-writer-name">Contributor 1</div>
-                                                                <div class="testimonial-writer-designation">Job Title</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="testimonial testimonial-success-filled">
-                                                        <div class="testimonial-section">
-                                                            No comment available
-                                                        </div>
-                                                        <div class="testimonial-desc">
-                                                            <img src="" alt=""/>
-                                                            <div class="testimonial-writer">
-                                                                <div class="testimonial-writer-name">Contributor 2</div>
-                                                                <div class="testimonial-writer-designation">Job Title</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="testimonial testimonial-success-filled">
-                                                        <div class="testimonial-section">
-                                                            No comment available
-                                                        </div>
-                                                        <div class="testimonial-desc">
-                                                            <img src="" alt="" />
-                                                            <div class="testimonial-writer">
-                                                                <div class="testimonial-writer-name">Contributor 3</div>
-                                                                <div class="testimonial-writer-designation">Job Title</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="testimonial testimonial-success-filled">
-                                                        <div class="testimonial-section">
-                                                            No comment available yet
-                                                        </div>
-                                                        <div class="testimonial-desc">
-                                                            <img src="" alt="" />
-                                                            <div class="testimonial-writer">
-                                                                <div class="testimonial-writer-name">Contributor 4</div>
-                                                                <div class="testimonial-writer-designation">Job Title</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="col-sm-12" id="brain-feed-branch-content">
                                         </div>
                                     </div>
                                 </div>
@@ -440,6 +361,49 @@
                 <button id="btn-create-branch" class="btn btn-md btn-default" data-toggle="modal" data-target="#modal-branches"><i class="fa fa-plus fa-5x"></i>New Branch</button>
             </div>
         </div>
+
+        <div class="row" id="contributors">
+        </div>
+
+        <script id="contribution" type="x-tmpl-mustache">
+             <div class="row timer">
+                <h4>Contribution Time Left</h4>
+                <h6><div id="countdowntimer" class="timer"></div></h6>
+             </div>
+             <div class="row brainstorming-topic">
+                <h5 id="brainstorming-subtopic">Start brainstorming about: {{value}}</h5>
+             </div>
+             <div class="row">
+                <div class="col-sm-6">
+                    <div class="testimonial testimonial-warning-filled testimonial-editable">
+                        <div class="testimonial-section">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <textarea class="mdl-textfield__input" type="text" id="brainstorming-area">Brainstorm Here</textarea>
+                            </div>
+                        </div>
+                        <div class="testimonial-desc">
+                            <button id="btn-confirm-brainstorming" class="btn btn-md btn-default" ><i class="fa fa-cloud fa-2x"></i> Confirm</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </script>
+
+        <script id="contributor" type="x-tmpl-mustache">
+            <div class="col-sm-6">
+                <div class="testimonial testimonial-success-filled">
+                    <div class="testimonial-section" id="testimonial-{{contributorName}}">
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">{{contributorName}}</div>
+                            <div class="testimonial-writer-designation">Contributor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
 
         <div class="modal fade" id="modal-branches" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">

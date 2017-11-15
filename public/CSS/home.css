@@ -696,6 +696,17 @@ h4 {
 #btn-start-branch{
     margin-left: 86%;
     margin-bottom: 20px;
+    display: none;
+}
+#btn-enroll-branch{
+    display: none;
+    margin-left: 86%;
+    margin-bottom: 20px;
+}
+#btn-error-branch{
+    display: none;
+    margin-left: 7%;
+    margin-bottom: 20px;
 }
 #delete-branch{
     cursor: pointer;
@@ -1066,6 +1077,7 @@ button:focus {
     border-radius: 5px;
     position: relative;
     border: 1px solid #fff;
+    word-wrap: break-word;
 }
 .testimonial-section:after {
     top: 100%;
@@ -1371,7 +1383,16 @@ button:focus {
     width: 800px;
 }
 #brainstorming-area{
-    height: 80px;
-    width: 70px;
+    height: 100px;
+    width: 750px;
     border: none;
+}
+.brainstorming-topic{
+    margin-left: 2.5%;
+}
+#contributors{
+    display: none;
+}
+#btn-create-branch{
+    display:none;
 }
