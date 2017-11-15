@@ -1396,3 +1396,7 @@ button:focus {
 #btn-create-branch{
     display:none;
 }
+#btn-download-branch{
+    display:none;
+    margin-left: 40%
+}
