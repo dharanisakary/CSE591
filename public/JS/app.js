@@ -538,27 +538,101 @@ function assessmentHandler(){
         var questionText = $('#quiz-question')[0].value;
         var options = $('#mcq-options input[type=text]');
         var optionsText = {};
+        var statsText = {};
         for(var i=0;i<options.length;i++){
             optionsText["option"+i] = options[i].value;
+            statsText["option"+i] = 0;
         }
         var quizRef = firebase.database().ref('quizzes/');
         var mcqRef = quizRef.child('mcq');
         mcqRef.child(questionText).set({
-            options: optionsText
+            options: optionsText,
+            stats : statsText
         });
+
         $('#add-quiz').modal('hide');
     });
     $('#add-quiz2 button[type=submit]').on('click', function(){
         var questionText = $('#sa-quiz-question')[0].value;
         var quizRef = firebase.database().ref('quizzes/');
-        var mcqRef = quizRef.child('sq').child(questionText).set({answer : ''});
+        var mcqRef = quizRef.child('sq').child(questionText).set({answers : ''});
         $('#add-quiz2').modal('hide');
     });
     $('#add-quiz3 button[type=submit]').on('click', function(){
         var questionText = $('#tf-quiz-question')[0].value;
         var quizRef = firebase.database().ref('quizzes/');
-        var mcqRef = quizRef.child('tf').child(questionText).set({answer : ''});
+
+        var optionsText = {option0 : "true", option1: "false"};
+        var statsText = {option0 : 0, option1: 0};
+        var mcqRef = quizRef.child('tf').child(questionText).set({
+            options: optionsText,
+            stats : statsText
+        });
         $('#add-quiz3').modal('hide');
+    });
+    $('#view-quiz button[type=submit]').on('click', function(){
+        var selected_option = $("input[name='view-quiz-quesion-modal']:checked").attr('value');
+        var optionRef = null;
+        var questionText = $("#mcq-view-quiz-question").text();
+        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+        var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child("options");
+        quizRef.on('value', function(snapshot){
+            for (var key in snapshot.val()){
+                //alert(snapshot.val()[key]);
+                if(snapshot.val()[key] === selected_option){
+                    optionRef =key;
+                }
+            }
+        });
+        //quizRef.update(option{Update);
+        var quizStatRef = firebase.database().ref('quizzes/mcq/').child(questionText).child("stats").child(optionRef);
+        quizStatRef.transaction(function(count){
+            count = count +1;
+            return count;
+        });
+
+        $('#view-quiz').modal('hide');
+    });
+
+    $('#view-quiz3 button[type=submit]').on('click', function(){
+        var selected_option = $("#tf-view-options input[name='view-quiz-tf-modal']:checked").attr('value');
+        var optionRef = null;
+        var questionText = $("#tf-view-quiz-question").text();
+        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+        var quizRef = firebase.database().ref('quizzes/tf/').child(questionText).child("options");
+        quizRef.on('value', function(snapshot){
+            for (var key in snapshot.val()){
+              //alert(snapshot.val()[key]);
+                if(snapshot.val()[key] === selected_option){
+                    optionRef =key;
+                }
+            }
+        });
+        //quizRef.update(option{Update);
+        var quizStatRef = firebase.database().ref('quizzes/tf/').child(questionText).child("stats").child(optionRef);
+        quizStatRef.transaction(function(count){
+            count = count +1;
+            return count;
+        });
+
+        $('#view-quiz3').modal('hide');
+    });
+
+    $('#view-quiz2 button[type=submit]').on('click', function(){
+        var selected_option = $("#sa-view-quiz-answer").val();
+        var questionText = $("#sa-view-quiz-question").text();
+        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+
+        var options = {answer: selected_option};
+        var quizRef = firebase.database().ref('quizzes/sq/').child(questionText).child("answers");
+        var answers = null;
+        quizRef.on('value', function(snapshot){
+            answers = snapshot.val();
+        });
+        answers = answers + "," + selected_option;
+        firebase.database().ref('quizzes/sq/').child(questionText).child("answers").set(answers);
+
+        $('#view-quiz2').modal('hide');
     });
 
 }
@@ -601,6 +675,11 @@ function getAssessments(){
         });
         $('#view-quiz3').on('show.bs.modal', function(e){
             $('#tf-view-quiz-question').text(e.relatedTarget.textContent.replace('radio_button_checked',''));
+            var options = quizData.tf[e.relatedTarget.textContent.replace('radio_button_checked','')];
+            $('#tf-view-options').empty();
+            Object.keys(options.options).forEach(function(key) {
+                $('#tf-view-options').append('<h6> <input type="radio" class="mdl-radio__button" name="view-quiz-tf-modal" value="'+options.options[key]+'" >'+options.options[key] +'</h6>');
+            });
         });
     });
 }
