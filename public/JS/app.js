@@ -676,20 +676,25 @@ function brainTableFunctionality(){
         firebase.database().ref('branches/' + key).once('value', function(snapshot) {
             var exists = (snapshot.val() !== null);
             if (exists) {
-                var creator = snapshot.val()["creator"];
-                var description = snapshot.val()["description"];
-                var dateCreated = snapshot.val()["id"].split('/')[0];
+                var creator = 'Creator:'+snapshot.val()["creator"];
+                var description = 'Description:'+snapshot.val()["description"];
+                var dateCreated = 'Time:'+snapshot.val()["id"].split('/')[0];
                 var numberOfContributors = snapshot.val()["numberOfContributors"];
-                var purpose = snapshot.val()["purpose"];
-                var structure = snapshot.val()["structure"];
+                var purpose = 'Purpose:'+snapshot.val()["purpose"];
+                var structure = 'Structure:'+snapshot.val()["structure"];
                 var timePerContributor = snapshot.val()["timePerContributor"];
                 var title = snapshot.val()["title"];
                 var topic = snapshot.val()["topic"];
+
+                var subtopicString = 'Subtopics:\n';
+                var userString = 'Contributors:\n';
 
                 //Name of Subtopics
                 var subtopics = [];
                 for(var key in snapshot.val()["subtopics"]){
                     subtopics.push(snapshot.val()["subtopics"][key]["value"]);
+                    console.log(snapshot.val()["subtopics"][key]["value"]);
+                    subtopicString+=snapshot.val()["subtopics"][key]["value"]+'\n';
                 }
 
                 //Name of contributors
@@ -701,13 +706,27 @@ function brainTableFunctionality(){
                 for(var key1 in snapshot.val()["contributors"]){
                     contributorNames.push(snapshot.val()["contributors"][key1]["contributorName"]);
                     contributorsObject.push(JSON.stringify(snapshot.val()["contributors"][key1]));
+                    console.log(snapshot.val()["contributors"][key1]["contributorName"]);
+                    userString+=snapshot.val()["contributors"][key1]["contributorName"]+'\n';
                 }
+
+                var pdf = new jsPDF();
+                pdf.setFontSize(25);
+                pdf.text(30, 30, title+'\n');
+                pdf.setFontSize(15);
+                pdf.text(30, 40, topic+'\n');
+                pdf.line(20, 45, 180, 45);
+                pdf.setFontSize(12);
+                pdf.setFontType("bolditalic");
+                pdf.text(30, 55, creator+'\n'+structure+'\n'+purpose+'\n'+dateCreated);
+                pdf.line(30, 80, 170, 80);
+                pdf.setFontSize(12);
+                pdf.setFontType("normal");
+                pdf.text(30, 90, subtopicString+'\n'+userString);
+
+                pdf.save(title);
             }
         });
-
-        var pdf = new jsPDF();
-        pdf.text(30, 30, 'Hello world!');
-        pdf.save('hello_world.pdf');
     });
 }
 
