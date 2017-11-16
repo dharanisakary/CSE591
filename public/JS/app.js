@@ -784,6 +784,36 @@ function brainTableFunctionality(){
                     userString+=snapshot.val()["contributors"][key1]["contributorName"]+'\n';
                 }
 
+                var contributions = {
+                    "subtopic0": [],
+                    "subtopic1": [],
+                    "subtopic2": [],
+                    "subtopic3": [],
+                    "subtopic4": [],
+                    "subtopic5": []
+                };
+
+                for(var contributorKey in snapshot.val()["contributors"]){
+                    for(var subtopicKey in snapshot.val()["contributors"][contributorKey]){
+                        for(var subtopicArray in contributions){
+                            if(subtopicArray == subtopicKey){
+                                contributions[subtopicArray].push(snapshot.val()["contributors"][contributorKey][subtopicKey]["value"]);
+                            }
+                        }
+                    }
+                }
+
+                var subtopicNo = 0;
+                for(var noContrKey in snapshot.val()["subtopics"]){
+                    subtopicNo+=1;
+                    for(var contrArray in contributions){
+                        if(contributions[contrArray].length != 0){
+                            if(contrArray == noContrKey){
+                                contributions[contrArray].push(snapshot.val()["subtopics"][noContrKey]["value"]);
+                            }
+                        }
+                    }
+                }
                 var pdf = new jsPDF();
                 pdf.setFontSize(25);
                 pdf.text(30, 30, title+'\n');
@@ -796,8 +826,15 @@ function brainTableFunctionality(){
                 pdf.line(30, 80, 170, 80);
                 pdf.setFontSize(12);
                 pdf.setFontType("normal");
-                pdf.text(30, 90, subtopicString+'\n'+userString);
+                pdf.text(30, 90, subtopicString+'\n'+userString + '\n');
 
+                // for(var array in contributions){
+                //     if(contributions[array].length != 0){
+                //         pdf.setFontSize(12);
+                //         pdf.setFontType("bolditalic");
+                //         pdf.text(30, 100, contributions[array][contributions[array].length-1] + '\n');
+                //     }
+                // }
                 pdf.save(title);
             }
         });
