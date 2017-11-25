@@ -21,7 +21,7 @@ $(document).ready(function(){
     btnNextHandler();
     btnCreateBranchHandler();
     profileTagsHandler();
-
+    handleContributionsSelection();
 
     $('#btn-save-info').on('click', function() {
         saveProfileInformation();
@@ -473,8 +473,8 @@ function brainTableFunctionality(){
                         }
                         else{
                             $('#btn-error-branch').show();
-                            $('#btn-assess-branch').show();
-                            $('#btn-review-branch').show();
+                            // $('#btn-assess-branch').show();
+                            // $('#btn-review-branch').show();
                             $('#btn-error-branch').html('  Maximum number of contributors reached.Waiting for the author to start this branch...');
                         }
                     }
@@ -509,8 +509,18 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
-                    $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Download the PDF with the results...');
+                    $('#btn-error-branch').html('  Congratulations! Everyone contributed to this branch. Please follow the instructions below...');
                     $('#btn-download-branch').show();
+                    $('#btn-assess-branch').show();
+                    $('#btn-review-branch').show();
+                    $('#btn-review-branch').addClass(snapshot.val()["id"]);
+                    $('#btn-assess-branch').addClass(snapshot.val()["id"]);
+                    $('#post-completion-message').show();
+                    $('#post-completion-message2').show();
+                    $('#separator').show();
+
+                    $('#btn-review-branch').attr('disabled', false);
+                    determineReviewingStatus(snapshot.val()["id"].split('/')[0]);
                 }
 
                 if(pendingCheck == 3){
@@ -553,6 +563,11 @@ function brainTableFunctionality(){
         }
 
         $('#btn-create-branch').show();
+        $('#btn-assess-branch').hide();
+        $('#btn-review-branch').hide();
+        $('#post-completion-message').hide();
+        $('#post-completion-message2').hide();
+        $('#separator').hide();
 
         $('#branch-table-container').empty();
         retrieveBranches();
@@ -567,6 +582,9 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
             $('#brain-feed #all-knowledge').addClass('hidden')
         }
+        $('#post-completion-message').hide();
+        $('#post-completion-message2').hide();
+        $('#separator').hide();
 
         assessmentHandler(key);
         getAssessments(key);
@@ -574,49 +592,52 @@ function brainTableFunctionality(){
 
     $(document).on('click',"#btn-review-branch",function(){
         var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
-        if(!$('#brain-feed #quiz-knowledge').hasClass('hidden')){
-            $('#brain-feed #quiz-knowledge').addClass('hidden');
-        }
-        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
-            $('#brain-feed #catalog-body').addClass('hidden');
-        }
-        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
-            $('#brain-feed #assess-knowledge').addClass('hidden')
-        }
-        if($('#brain-feed #all-knowledge').hasClass('hidden')){
-            $('#brain-feed #all-knowledge').removeClass('hidden')
-        }
-        if($('#brain-feed #branch-knowledge').hasClass('hidden')){
-            $('#brain-feed #branch-knowledge').removeClass('hidden')
-        }
-        var ref = firebase.database().ref('branches/'+key);
+        var user = $.cookie('user');
+        $('#btn-review-branch').removeClass($(this).attr("class").split("default")[1]);
 
-        ref.on('value', function(snapshot){
-            var mapOfSubTopics = {};
-            var branchData = snapshot.val();
-            var subtopics = branchData.subtopics;
-            for(var data in subtopics){
-                if(subtopics.hasOwnProperty(data)){
-                    var subtopicName = subtopics[data].value;
-                    var subtopicArray = [];
-                    for(var c in branchData.contributors){
-                        subtopicArray.push(branchData.contributors[c][data].value);
-                    }
-                    mapOfSubTopics[subtopicName] = subtopicArray;
-                }
-            }
-            var reviewContent = "";
-            for( var data in mapOfSubTopics){
-                if(mapOfSubTopics.hasOwnProperty(data)){
-                    reviewContent = reviewContent + "<h4> Sub Topic : "+data+"</h4>";
-                    for ( var subData in mapOfSubTopics[data]){
-                        reviewContent = reviewContent + "<p>"+mapOfSubTopics[data][subData]+"</p>";
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                var subtopicOrder = [];
+                var nameOrder = -1;
+
+                for(var name in snapshot.val()["contributors"]){
+                    nameOrder+=1;
+                    if(name == user){
+                        break;
                     }
                 }
-            }
-            $('#branch-knowledge').html(reviewContent);
-        })
+                subtopicOrder.push("subtopic"+nameOrder);
 
+                for(var subtopic in snapshot.val()["subtopics"]){
+                    if(subtopic != "subtopic"+nameOrder){
+                        subtopicOrder.push(subtopic);
+                    }
+                }
+
+                if(!$('#brain-feed #quiz-knowledge').hasClass('hidden')){
+                    $('#brain-feed #quiz-knowledge').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if($('#brain-feed #all-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-knowledge').removeClass('hidden')
+                }
+                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                }
+
+                $('#post-completion-message').hide();
+                $('#post-completion-message2').hide();
+                $('#separator').hide();
+
+                reviewTimer(subtopicOrder, key);
+            }
+        });
     });
 
     $(document).on('click', '#btn-start-branch', function(){
@@ -689,7 +710,8 @@ function brainTableFunctionality(){
 
                     if(!contributorCheck && (numberOfContributors != contributorCount)){
                         firebase.database().ref('branches/' + key1).child('contributors').child(user).set({
-                            "contributorName": user
+                            "contributorName": user,
+                            "reviewing_flag": false
                         });
 
                         if(contributorCount == 4){
@@ -707,10 +729,13 @@ function brainTableFunctionality(){
                 }
                 else{
                     firebase.database().ref('branches/' + key1).child('contributors').child(user).set({
-                        "contributorName": user
+                        "contributorName": user,
+                        "reviewing_flag": false
                     });
                     firebase.database().ref('branches/' + key1).child('contributors').child(author).set({
-                        "contributorName": author
+                        "contributorName": author,
+                        "reviewing_flag": false,
+                        "author_flag": false
                     });
 
                     $('#btn-enroll-branch').hide();
@@ -841,6 +866,206 @@ function brainTableFunctionality(){
     });
 }
 
+function reviewTimer(subtopicOrder, key){
+    firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var user = $.cookie("user");
+        if (exists) {
+            var numberOfContributors = snapshot.val()["numberOfContributors"];
+            var subtopicValue = snapshot.val()["subtopics"][subtopicOrder[0]]["value"];
+            $('#review-sentences').empty();
+            $('#contributions-review').empty();
+            $('#review-sentences').empty();
+            $('#reviewing-time-left').addClass(key);
+
+            $('#review-sentences').append('<h5>What do you think brings the most value for this particular subtopic?</h5>').html();
+            for(var contributor in snapshot.val()["contributors"]){
+                var testimonialCheck = (snapshot.val()["contributors"][contributor][subtopicOrder[0]] !== undefined);
+                if(testimonialCheck && contributor != user){
+                    var contributorData = snapshot.val()["contributors"][contributor];
+                    var template = $('#contributor-review').html();
+                    var html = Mustache.render(template, contributorData);
+                    var output = $('#contributions-review');
+                    output.append(html);
+
+                    document.getElementById("testimonial-review-" + contributor).textContent = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
+                    var contributionIdeas = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"].split('.');
+                    var entireIdea = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
+                    $(".testimonial-writer-designation").text("Subtopic:  " + snapshot.val()["subtopics"][subtopicOrder[0]]["value"]);
+
+                    for(var idea in contributionIdeas){
+                        if(contributionIdeas[idea] != ""){
+                            var contributionIdeaData = {
+                                "acronym": "IDEA",
+                                "sentence": contributionIdeas[idea]
+                            };
+                            var template = $('#review-sentence').html();
+                            var html = Mustache.render(template, contributionIdeaData);
+                            var output = $('#review-sentences');
+                            output.append(html);
+                        }
+                    }
+                    var entireIdeaData = {
+                        "acronym": "ALL",
+                        "sentence": entireIdea
+                    };
+                    var template = $('#review-sentence').html();
+                    var html = Mustache.render(template, entireIdeaData);
+                    var output = $('#review-sentences');
+                    output.append(html);
+                }
+            }
+
+            subtopicOrder.shift();
+            document.getElementById("countdowntimer-review").textContent = "";
+            $("#countdowntimer-review").css('margin-left', '12.5%');
+            var timeleft = 5;
+            var timeout='Time over';
+
+            var downloadTimer = setInterval(function(){
+                if(timeleft == 0){
+                    document.getElementById("countdowntimer-review").textContent = timeout;
+                    $("#countdowntimer-review").css('margin-left', '8.5%');
+                    numberOfContributors--;
+
+                    if(subtopicOrder.length == 0){
+                        if($('#brain-feed #catalog-body').hasClass('hidden')){
+                            $('#brain-feed #catalog-body').removeClass('hidden');
+                        }
+                        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+                            $('#brain-feed #all-knowledge').addClass('hidden')
+                        }
+                        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                            $('#brain-feed #branch-knowledge').addClass('hidden')
+                        }
+                        $('#post-completion-message').show();
+                        $('#post-completion-message2').show();
+                        $('#separator').show();
+
+                        firebase.database().ref('branches/' + key + '/contributors/' + user + '/reviewing_flag').set(true);
+                        determineReviewingStatus(key);
+                    }
+                }
+                if(timeleft > 0){
+                    document.getElementById("countdowntimer-review").textContent = timeleft;
+                }
+                if(timeleft < 0) {
+                    clearInterval(downloadTimer);
+                }
+                timeleft--;
+            },1000);
+
+            setTimeout(function() {
+                if(numberOfContributors > 0){
+                    reviewTimer(subtopicOrder, key);
+                }
+            },7000);
+
+
+        }
+    });
+}
+
+function determineReviewingStatus(key){
+    firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var user = $.cookie("user");
+        if (exists) {
+            var branchAuthor = snapshot.val()["creator"];
+            var authorCheck = true;
+            var contributorsCheck = true;
+
+            for(var contributor in snapshot.val()["contributors"]){
+                if(snapshot.val()["contributors"][contributor]["reviewing_flag"] == false){
+                    contributorsCheck = false;
+                }
+
+                if(contributor == branchAuthor){
+                    if(snapshot.val()["contributors"][contributor]["author_flag"] == false){
+                        authorCheck = false;
+                    }
+                }
+            }
+
+            //Everyone reviewed branch contributions
+            if(contributorsCheck){
+                //The logged in user is the author of the branch that he reviewed
+                if(user == branchAuthor){
+                    //I completed his final reviewing check
+                    if(authorCheck){
+                        //The final html button should be shown
+                    }
+                    else{
+                        $('#review-message').text('Please make your author contribution as the final step of this whole process');
+                        $('#btn-review-branch').attr('disabled', true);
+                    }
+                }
+                else{
+                    //The author completed his final reviewing check
+                    if(authorCheck){
+                        //The final html button should be shown
+                    }
+
+                    //The author did not complete his check
+                    else{
+                        $('#review-message').text('Successfully reviewed this branch. Waiting for the author to do this as well');
+                        $('#btn-review-branch').attr('disabled', true);
+                    }
+                }
+            }
+            //Not everyone reviewed branch contributions
+            else{
+                if(!snapshot.val()["contributors"][user]["reviewing_flag"] == false){
+                    $('#review-message').text('Successfully reviewed this branch. Waiting for the other contributors to do it too');
+                    $('#btn-review-branch').attr('disabled', true);
+                }
+                else{
+                    $('#review-message').text('Please review all the contributions that will be included in the final document...');
+                    $('#btn-review-branch').attr('disabled', false);
+                }
+            }
+        }
+    });
+}
+
+function handleContributionsSelection(){
+    $(document).on('click', '.chip-sentence', function(){
+        var selectedContribution =  $(this).text();
+        var formattedSelectedContribution = selectedContribution.replace(/\./g, "   ");
+        var key = $('#reviewing-time-left').attr('class');
+
+        firebase.database().ref('branches/' + key + '/selected_contributions').once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            var user = $.cookie("user");
+            if (exists) {
+                var contributionExists = (snapshot.val()[formattedSelectedContribution] !== undefined);
+
+                if(contributionExists){
+                    var contributorExists = (snapshot.val()[formattedSelectedContribution][user] !== undefined);
+                    if(!contributorExists){
+                        var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                        branchRef.child(formattedSelectedContribution).child(user).set({
+                            "contributor": user
+                        });
+                    }
+                }
+                else{
+                    var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                    branchRef.child(formattedSelectedContribution).child(user).set({
+                        "contributor": user
+                    });
+                }
+            }
+            else{
+                var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                branchRef.child(formattedSelectedContribution).child(user).set({
+                    "contributor": user
+                });
+            }
+        });
+    });
+}
+
 function retrieveInfo(){
     var user = $.cookie("user");
     if(!user){
@@ -887,6 +1112,11 @@ function menuChoiceHndler(){
                 $('#brain-feed #all-knowledge').addClass('hidden')
             }
             $('#btn-create-branch').show();
+            $('#btn-assess-branch').hide();
+            $('#btn-review-branch').hide();
+            $('#post-completion-message').hide();
+            $('#post-completion-message2').hide();
+            $('#separator').hide();
 
             resetDropdownMenus();
         }
@@ -1465,7 +1695,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             document.getElementById("countdowntimer").textContent = "";
             $("#countdowntimer").css('margin-left', '22.5%');
-            var timeleft = 5;
+            var timeleft = timePerContributor;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -1532,7 +1762,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                 if(numberOfContributors > 0){
                     timer(timePerContributor, numberOfContributors, subtopicOrder, key);
                 }
-            }, 7000);
+            },(snapshot.val()["timePerContributor"]*1000) + 2000);
         }
     });
 }
