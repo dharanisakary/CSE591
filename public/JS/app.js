@@ -950,7 +950,6 @@ function reviewTimer(subtopicOrder, key){
         var user = $.cookie("user");
         if (exists) {
             var numberOfContributors = snapshot.val()["numberOfContributors"];
-            var subtopicValue = snapshot.val()["subtopics"][subtopicOrder[0]]["value"];
             $('#review-sentences').empty();
             $('#contributions-review').empty();
             $('#review-sentences').empty();
