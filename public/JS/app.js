@@ -1152,12 +1152,17 @@ function branchCreationModelhandler(){
 }
 
 function assessmentHandler(branchkey){
-    $('#add-mcq-option').on('click', function(){
+    $('#quiz-stats').remove();
+    var template = $('#branch-stats-btn').html();
+    var html = Mustache.render(template, {branchKey : branchkey+"/"});
+    var output = $('#assess-knowledge');
+    output.append(html);
+
+    $('#add-mcq-option').off('click').on('click', function(){
         var html = '<input class="mdl-textfield__input" type="text" >';
         $('#mcq-options').append(html);
     })
-    $('#add-quiz button[type=submit]').on('click', function(){
-
+    $('#add-quiz button[type=submit]').off('click').on('click', function(){
         var questionText = $('#quiz-question')[0].value;
         var options = $('#mcq-options input[type=text]');
         var optionsText = {};
@@ -1170,16 +1175,19 @@ function assessmentHandler(branchkey){
         var mcqRef = quizRef.child('mcq');
         mcqRef.child(questionText).set({
             options: optionsText,
-            stats : statsText
+            stats : statsText,
+            answeredBy: ''
         });
-
         $('#add-quiz').modal('hide');
+        $('#quiz-question')[0].value = '';
+        $('#mcq-options').empty();
     });
     $('#add-quiz2 button[type=submit]').on('click', function(){
         var questionText = $('#sa-quiz-question')[0].value;
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
-        var mcqRef = quizRef.child('sq').child(questionText).set({answers : ''});
+        quizRef.child('sq').child(questionText).set({answers : '', answeredBy : ''});
         $('#add-quiz2').modal('hide');
+        $('#sa-quiz-question')[0].value = '';
     });
     $('#add-quiz3 button[type=submit]').on('click', function(){
         var questionText = $('#tf-quiz-question')[0].value;
@@ -1187,52 +1195,51 @@ function assessmentHandler(branchkey){
 
         var optionsText = {option0 : "true", option1: "false"};
         var statsText = {option0 : 0, option1: 0};
-        var mcqRef = quizRef.child('tf').child(questionText).set({
+        quizRef.child('tf').child(questionText).set({
             options: optionsText,
-            stats : statsText
+            stats : statsText,
+            answeredBy: ''
         });
         $('#add-quiz3').modal('hide');
+        $('#tf-quiz-question')[0].value = '';
     });
     $('#view-quiz button[type=submit]').on('click', function(){
         var selected_option = $("input[name='view-quiz-quesion-modal']:checked").attr('value');
-        var optionRef = null;
-        var questionText = $("#mcq-view-quiz-question").text();
-        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
-        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("options");
-        quizRef.on('value', function(snapshot){
-            for (var key in snapshot.val()){
-                //alert(snapshot.val()[key]);
-                if(snapshot.val()[key] === selected_option){
-                    optionRef =key;
+        if(selected_option){
+            var optionRef = null;
+            var questionText = $("#mcq-view-quiz-question").text();
+            // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+            var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("options");
+            quizRef.on('value', function(snapshot){
+                for (var key in snapshot.val()){
+                    //alert(snapshot.val()[key]);
+                    if(snapshot.val()[key] === selected_option){
+                        optionRef =key;
+                    }
                 }
-            }
-        });
-        //quizRef.update(option{Update);
-        var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("stats").child(optionRef);
-        quizStatRef.transaction(function(count){
-            count = count +1;
-            return count;
-        });
-        
-        /*
-        var v = $('#all-mcqs div p');
-        for(var x in v){
-            if(v.hasOwnProperty(x) && Number.isInteger(parseInt(x))){
-                var quizTest = v[x].textContent.replace("list","")
-                if(quizTest === questionText){
-                    v[x].parentElement.style.display='none';
-                }
-            }
-        }*/
-
-        $('#view-quiz').modal('hide');
+            });
+            //quizRef.update(option{Update);
+            var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("stats").child(optionRef);
+            quizStatRef.transaction(function(count){
+                count = count +1;
+                return count;
+            });
+            var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("answeredBy");
+            var answeredBy = null;
+            quizAnsweredByRef.on('value', function(snapshot){
+                answeredBy = snapshot.val();
+            });
+            answeredBy = answeredBy+","+  $.cookie("user");
+            firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("answeredBy").set(answeredBy);
+            $('#view-quiz').modal('hide');
+        }
     });
 
     $('#view-quiz3 button[type=submit]').on('click', function(){
         var selected_option = $("#tf-view-options input[name='view-quiz-tf-modal']:checked").attr('value');
         var optionRef = null;
         var questionText = $("#tf-view-quiz-question").text();
-        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+        var quizStatRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("options");
         quizRef.on('value', function(snapshot){
             for (var key in snapshot.val()){
@@ -1248,7 +1255,13 @@ function assessmentHandler(branchkey){
             count = count +1;
             return count;
         });
-
+        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("answeredBy");
+        var answeredBy = null;
+        quizAnsweredByRef.on('value', function(snapshot){
+            answeredBy = snapshot.val();
+        });
+        answeredBy = answeredBy+","+  $.cookie("user");
+        firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz3').modal('hide');
     });
 
@@ -1265,85 +1278,103 @@ function assessmentHandler(branchkey){
         });
         answers = answers + "," + selected_option;
         firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answers").set(answers);
-
+        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/sa/').child(questionText).child("answeredBy");
+        var answeredBy = null;
+        quizAnsweredByRef.on('value', function(snapshot){
+            answeredBy = snapshot.val();
+        });
+        answeredBy = answeredBy+","+  $.cookie("user");
+        firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz2').modal('hide');
     });
-    $('#quiz-stats').on('click', function(){
+    $('#quiz-stats').off('click').on('click', function(e){
         console.log(branchkey);
         var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
-        ref.on('value', function(snapshot){
-            var knowledgeArea = $('#all-knowledge #quiz-knowledge');
-            knowledgeArea.empty();
-            var data = snapshot.val();
-            quizData = data;
-            $('#brain-feed #catalog').removeClass('hidden');
-            if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
-                $('#brain-feed #assess-knowledge').addClass('hidden')
-            }
-            if($('#brain-feed #all-knowledge').hasClass('hidden')){
-                $('#brain-feed #all-knowledge').removeClass('hidden')
-            }
-            if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
-                $('#brain-feed #quiz-knowledge').removeClass('hidden')
-            }
-            if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
-                $('#brain-feed #branch-knowledge').addClass('hidden')
-            }
-            $('#catalog-body').empty()
-            if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
-                $('#brain-feed #brain-feed-branch').addClass('hidden');
-            }
-            if(!$('#brain-feed #catalog-body').hasClass('hidden')){
-                $('#brain-feed #catalog-body').addClass('hidden');
-            }
-            if(!$('#brain-feed #catalog').hasClass('hidden')){
-                $('#brain-feed #catalog').addClass('hidden');
-            }
-            if(quizData){
-                var knowledge = "";
-                if(quizData.mcq){
-                    var mcq = quizData.mcq;
-                    var mcqContent = "<h4>Multiple Choice Stats</h4>";
-                    for(var ques in mcq){
-                        mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
-                        for (var op in mcq[ques].stats) {
-                            if (mcq[ques].stats.hasOwnProperty(op)) {
-                                mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +" : "+ mcq[ques].stats[op]+"</p>";
+        var contributors = 0;
+        var contributorsRef = firebase.database().ref('branches/'+branchkey+"/numberOfContributors");
+        var self2 = this;
+        contributorsRef.once('value').then(function(snapshot){
+            var self = this;
+            this.contributors = snapshot.val();
+            console.log("con ", this.contributors);
+            ref.on('value', function(snapshot){
+                var knowledgeArea = $('#all-knowledge #quiz-knowledge');
+                knowledgeArea.empty();
+                var data = snapshot.val();
+                quizData = data;
+                $('#brain-feed #catalog').removeClass('hidden');
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if($('#brain-feed #all-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-knowledge').removeClass('hidden')
+                }
+                if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
+                    $('#brain-feed #quiz-knowledge').removeClass('hidden')
+                }
+                if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').addClass('hidden')
+                }
+                $('#catalog-body').empty()
+                if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                    $('#brain-feed #brain-feed-branch').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
+                if(quizData){
+                    var knowledge = "";
+                    if(quizData.mcq){
+                        var mcq = quizData.mcq;
+                        var mcqContent = "<h4>Multiple Choice Stats</h4>";
+                        for(var ques in mcq){
+                            mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
+                            for (var op in mcq[ques].stats) {
+                                if (mcq[ques].stats.hasOwnProperty(op)) {
+                                    mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
+                                    var percentContributions =  (parseInt(mcq[ques].stats[op])/parseInt(this.contributors))*100;
+                                    mcqContent = mcqContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
                             }
                         }
+                        knowledge = knowledge +mcqContent;
                     }
-                    knowledge = knowledge +mcqContent;
-                }
-                if(quizData.sq){
-                    var sq = quizData.sq;
-                    var sqContent = "<h4>Short Answers</h4>";
-                    for(var ques in sq){
-                        sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
-                        var answers = sq[ques].answers.split(",");
-                        for(ans in answers)
-                            if(ans != ""){
-                                sqContent = sqContent + "<p>"+answers[ans]+"</p>";
-                            }
-                    }
-                    knowledge = knowledge + sqContent;
-                }
-                if(quizData.tf){
-                    var tf = quizData.tf;
-                    var tfContent = "<h4>Multiple Choice Stats</h4>";
-                    for(var ques in tf){
-                        tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
-                        for (var op in tf[ques].stats) {
-                            if (tf[ques].stats.hasOwnProperty(op)) {
-                                tfContent = tfContent + "<p>"+ tf[ques].options[op] +" : "+ tf[ques].stats[op]+"</p>";
-                            }
+                    if(quizData.sq){
+                        var sq = quizData.sq;
+                        var sqContent = "<h4>Short Answers stats</h4>";
+                        for(var ques in sq){
+                            sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
+                            var answers = sq[ques].answers.split(",");
+                            for(ans in answers)
+                                if(ans != ""){
+                                    sqContent = sqContent + "<p>"+answers[ans]+"</p>";
+                                }
                         }
-                        tfContent = tfContent + "<br/>";
+                        knowledge = knowledge + sqContent;
                     }
-                    knowledge = knowledge +tfContent;
+                    if(quizData.tf){
+                        var tf = quizData.tf;
+                        var tfContent = "<h4>True False Stats</h4>";
+                        for(var ques in tf){
+                            tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
+                            for (var op in tf[ques].stats) {
+                                if (tf[ques].stats.hasOwnProperty(op)) {
+                                    tfContent = tfContent + "<p>"+ tf[ques].options[op] +"</p>";
+                                    percentContributions =  (parseInt(tf[ques].stats[op])/parseInt(this.contributors))*100;
+                                    tfContent = tfContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
+                            }
+                            tfContent = tfContent + "<br/>";
+                        }
+                        knowledge = knowledge +tfContent;
+                    }
+                    knowledgeArea.html(knowledge);
                 }
-                knowledgeArea.html(knowledge);
-            }
-        })
+            }, self);
+        }, self2);
     });
 
 }
@@ -1357,21 +1388,28 @@ function getAssessments(branchkey){
         $('#all-mcqs').empty();
         $('#all-shortAns').empty();
         $('#all-tfs').empty();
+        var self = this;
         if(data && data.mcq){
             // TODO : Add Empty case
-            Object.keys(data.mcq).forEach(function(key) {
-                $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
-            });
+            Object.keys(data.mcq).forEach(function(key, quizData) {
+                if( this.mcq[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         if(data && data.tf){
             Object.keys(data.tf).forEach(function(key) {
-                $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
-            });
+                if(this.tf[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         if(data && data.sq){
             Object.keys(data.sq).forEach(function(key) {
-                $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
-            });
+                if(this.sq[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         $('#view-quiz').on('show.bs.modal', function(e){
             $('#mcq-view-quiz-question').text(e.relatedTarget.textContent.replace('list',''));
