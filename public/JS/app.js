@@ -376,7 +376,7 @@ function brainTableFunctionality(){
                             contributionNo+=1;
                         }
 
-                        if(contributionNo-1 == subtopicNo){
+                        if(contributionNo-2 == subtopicNo || contributionNo-3 == subtopicNo){
                             pendingCheck = 3;
                         }
                     }
@@ -1695,7 +1695,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             document.getElementById("countdowntimer").textContent = "";
             $("#countdowntimer").css('margin-left', '22.5%');
-            var timeleft = timePerContributor;
+            var timeleft = 5;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -1719,6 +1719,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                     numberOfContributors--;
 
                     if(subtopicOrder.length == 0){
+                        alert("here exitins");
                         $('#brain-feed-branch').hide();
                         $('#catalog').removeClass('hidden');
 
@@ -1762,7 +1763,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                 if(numberOfContributors > 0){
                     timer(timePerContributor, numberOfContributors, subtopicOrder, key);
                 }
-            },(snapshot.val()["timePerContributor"]*1000) + 2000);
+            },7000);
         }
     });
 }
