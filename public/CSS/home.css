@@ -1436,6 +1436,10 @@ button:focus {
 #btn-review-branch{
     margin-left: 35%;
 }
+#btn-review-author-branch{
+    display: none;
+    margin-left: 35%;
+}
 hr {
     border:none;
     border-top:1px solid;
@@ -1479,6 +1483,9 @@ hr {
 #pdf-welcome{
     margin-left: 23%;
 }
+#pdf-author-welcome{
+    margin-left: 23%;
+}
 .divider{
     margin-top: 50px;
 }
@@ -1506,6 +1513,10 @@ hr {
 }
 #contributor-opinion{
     margin-top: 40px;
+}
+#contributor-author-subtopic{
+    margin-top: 10px;
+    color: #00C851;
 }
 #review-sentences{
     display: inline-block;
