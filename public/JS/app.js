@@ -385,7 +385,36 @@ function brainTableFunctionality(){
                     }
                 }
                 if(snapshot.val()["branch_status"] == "completed"){
-                    pendingCheck = 2;
+                    var check = false;
+                    for (var contributorKey in snapshot.val()["contributors"]){
+                        if(contributorKey == user){
+                            check = true;
+                        }
+                    }
+                    if(!check){
+                        pendingCheck = -2;
+                    }
+                    else{
+                        pendingCheck = 2;
+                    }
+                }
+
+                if(pendingCheck == -2){
+                    $('#catalog-body').empty();
+                    var template = $('#catalog-information').html();
+                    var html = Mustache.render(template, snapshot.val());
+                    var output = $('#catalog-body');
+                    output.append(html);
+
+                    $('#brain-feed #catalog-body').removeClass('hidden');
+                    if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                        $('#brain-feed #brain-feed-branch').addClass('hidden');
+                    }
+                    if(!$('#brain-feed #catalog').hasClass('hidden')){
+                        $('#brain-feed #catalog').addClass('hidden');
+                    }
+                    $('#btn-error-branch').show();
+                    $('#btn-error-branch').html('  Aw snap! This branch is completed, but you are not enrolled, so you cannot proceed');
                 }
 
                 if(pendingCheck == -1){
@@ -403,7 +432,7 @@ function brainTableFunctionality(){
                         $('#brain-feed #catalog').addClass('hidden');
                     }
                     $('#btn-error-branch').show();
-                    $('#btn-error-branch').html('  Aw snap! This branch is currently in progress and you haven not enrolled in it yet...');
+                    $('#btn-error-branch').html('  Aw snap! This branch is currently in progress and you have not enrolled in it yet...');
                 }
 
                 if(pendingCheck == 1){
@@ -515,6 +544,7 @@ function brainTableFunctionality(){
                     $('#btn-review-branch').show();
                     $('#btn-review-branch').addClass(snapshot.val()["id"]);
                     $('#btn-assess-branch').addClass(snapshot.val()["id"]);
+                    $('#btn-review-author-branch').addClass(snapshot.val()["id"]);
                     $('#post-completion-message').show();
                     $('#post-completion-message2').show();
                     $('#separator').show();
@@ -548,11 +578,16 @@ function brainTableFunctionality(){
 
     $(document).on('click', '#go-back', function(){
         $('#brain-feed #catalog').removeClass('hidden');
+        $('#btn-review-author-branch').hide();
+
         if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
             $('#brain-feed #assess-knowledge').addClass('hidden')
         }
         if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
             $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
         }
         $('#catalog-body').empty()
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
@@ -582,6 +617,9 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
             $('#brain-feed #all-knowledge').addClass('hidden')
         }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
         $('#post-completion-message').hide();
         $('#post-completion-message2').hide();
         $('#separator').hide();
@@ -589,6 +627,43 @@ function brainTableFunctionality(){
         assessmentHandler(key);
         getAssessments(key);
     });
+
+    $(document).on('click',"#btn-review-author-branch",function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+        $('#btn-review-author-branch').removeClass($(this).attr("class").split("default")[1]);
+
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+
+
+
+
+
+                if(!$('#brain-feed #quiz-knowledge').hasClass('hidden')){
+                    $('#brain-feed #quiz-knowledge').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-author-knowledge').removeClass('hidden')
+                }
+                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                }
+
+                $('#post-completion-message').hide();
+                $('#post-completion-message2').hide();
+                $('#separator').hide();
+            }
+        });
+    });
+
 
     $(document).on('click',"#btn-review-branch",function(){
         var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
@@ -666,6 +741,9 @@ function brainTableFunctionality(){
                 }
                 if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-knowledge').addClass('hidden')
+                }
+                if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-author-knowledge').addClass('hidden')
                 }
                 var subtopicOrder = [];
                 var nameOrder = -1;
@@ -889,6 +967,7 @@ function reviewTimer(subtopicOrder, key){
                     output.append(html);
 
                     document.getElementById("testimonial-review-" + contributor).textContent = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
+                    alert(JSON.stringify(snapshot.val()["contributors"][contributor][subtopicOrder[0]]));
                     var contributionIdeas = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"].split('.');
                     var entireIdea = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
                     $(".testimonial-writer-designation").text("Subtopic:  " + snapshot.val()["subtopics"][subtopicOrder[0]]["value"]);
@@ -997,7 +1076,8 @@ function determineReviewingStatus(key){
                     }
                     else{
                         $('#review-message').text('Please make your author contribution as the final step of this whole process');
-                        $('#btn-review-branch').attr('disabled', true);
+                        $('#btn-review-branch').hide();
+                        $('#btn-review-author-branch').show();
                     }
                 }
                 else{
@@ -1033,6 +1113,7 @@ function handleContributionsSelection(){
         var selectedContribution =  $(this).text();
         var formattedSelectedContribution = selectedContribution.replace(/\./g, "   ");
         var key = $('#reviewing-time-left').attr('class');
+        var subtopic =  $(".testimonial-writer-designation").text();
 
         firebase.database().ref('branches/' + key + '/selected_contributions').once('value', function(snapshot) {
             var exists = (snapshot.val() !== null);
@@ -1043,21 +1124,21 @@ function handleContributionsSelection(){
                 if(contributionExists){
                     var contributorExists = (snapshot.val()[formattedSelectedContribution][user] !== undefined);
                     if(!contributorExists){
-                        var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                        var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions/' + subtopic);
                         branchRef.child(formattedSelectedContribution).child(user).set({
                             "contributor": user
                         });
                     }
                 }
                 else{
-                    var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                    var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions/' + subtopic);
                     branchRef.child(formattedSelectedContribution).child(user).set({
                         "contributor": user
                     });
                 }
             }
             else{
-                var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions');
+                var branchRef = firebase.database().ref('branches/' + key + '/selected_contributions/' + subtopic);
                 branchRef.child(formattedSelectedContribution).child(user).set({
                     "contributor": user
                 });
@@ -1110,6 +1191,9 @@ function menuChoiceHndler(){
             }
             if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
                 $('#brain-feed #all-knowledge').addClass('hidden')
+            }
+            if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+                $('#brain-feed #all-author-knowledge').addClass('hidden')
             }
             $('#btn-create-branch').show();
             $('#btn-assess-branch').hide();
@@ -1550,6 +1634,9 @@ function assessmentHandler(branchkey){
             if($('#brain-feed #all-knowledge').hasClass('hidden')){
                 $('#brain-feed #all-knowledge').removeClass('hidden')
             }
+            if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
+                $('#brain-feed #all-author-knowledge').removeClass('hidden')
+            }
             if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
                 $('#brain-feed #quiz-knowledge').removeClass('hidden')
             }
@@ -1740,7 +1827,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                                 contributionsNo+=1;
                             }
 
-                            if(contributionsNo-1 == subtopicNo){
+                            if(contributionsNo-2 == subtopicNo || contributionsNo-3 == subtopicNo){
                                 contributions +=1;
                             }
                         }
