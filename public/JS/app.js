@@ -967,7 +967,6 @@ function reviewTimer(subtopicOrder, key){
                     output.append(html);
 
                     document.getElementById("testimonial-review-" + contributor).textContent = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
-                    alert(JSON.stringify(snapshot.val()["contributors"][contributor][subtopicOrder[0]]));
                     var contributionIdeas = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"].split('.');
                     var entireIdea = snapshot.val()["contributors"][contributor][subtopicOrder[0]]["value"];
                     $(".testimonial-writer-designation").text("Subtopic:  " + snapshot.val()["subtopics"][subtopicOrder[0]]["value"]);
@@ -1113,7 +1112,7 @@ function handleContributionsSelection(){
         var selectedContribution =  $(this).text();
         var formattedSelectedContribution = selectedContribution.replace(/\./g, "   ");
         var key = $('#reviewing-time-left').attr('class');
-        var subtopic =  $(".testimonial-writer-designation").text();
+        var subtopic =  $(".testimonial-writer-designation").text().split('  ')[1].split('Subtopic')[0];
 
         firebase.database().ref('branches/' + key + '/selected_contributions').once('value', function(snapshot) {
             var exists = (snapshot.val() !== null);
@@ -1806,7 +1805,6 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                     numberOfContributors--;
 
                     if(subtopicOrder.length == 0){
-                        alert("here exitins");
                         $('#brain-feed-branch').hide();
                         $('#catalog').removeClass('hidden');
 
@@ -1827,13 +1825,14 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                                 contributionsNo+=1;
                             }
 
-                            if(contributionsNo-2 == subtopicNo || contributionsNo-3 == subtopicNo){
-                                contributions +=1;
+                            if(contributionsNo == 5){
+                                if(contributionsNo-3 == subtopicNo){
+                                    firebase.database().ref('branches/' +key + '/branch_status').set("completed");
+                                }
+                                if(contributionsNo-2 == subtopicNo){
+                                    firebase.database().ref('branches/' +key + '/branch_status').set("completed");
+                                }
                             }
-                        }
-
-                        if(contributions == subtopicNo){
-                            firebase.database().ref('branches/' +key + '/branch_status').set("completed");
                         }
                     }
                 }
