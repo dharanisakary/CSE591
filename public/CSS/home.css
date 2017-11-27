@@ -1408,10 +1408,20 @@ button:focus {
     margin-top: -40px;
     color: #D9534F;
 }
+#countdowntimer-author-review{
+    margin-left: 22.5%;
+    margin-top: -40px;
+    color: #D9534F;
+}
 .testimonial-editable{
     width: 800px;
 }
 #brainstorming-area{
+    height: 100px;
+    width: 750px;
+    border: none;
+}
+#comment-area{
     height: 100px;
     width: 750px;
     border: none;
@@ -1437,6 +1447,10 @@ button:focus {
     margin-left: 35%;
 }
 #btn-review-author-branch{
+    display: none;
+    margin-left: 35%;
+}
+#btn-show-results{
     display: none;
     margin-left: 35%;
 }
