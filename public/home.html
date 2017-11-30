@@ -68,7 +68,7 @@
                 <a id= "home-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
                 <a id= "profile-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Profile</a>
                 <a id= "brainfeed-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Brainfeed</a>
-                <a id= "social-choice" class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
+                <!--<a id= "social-choice" class="mdl-navigation__link"><i class="mdl-color-text&#45;&#45;blue-grey-400 material-icons" role="presentation">people</i>Social</a>-->
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span>© Webstorming</a>
             </nav>
@@ -117,26 +117,26 @@
                     </div>
                 </div>
             </div>
-            <div id="social-card" class="intro-card-wide mdl-card mdl-shadow--2dp">
-                <div class="social-title mdl-card__title">
-                </div>
-                <div class="intro-welcome-text mdl-card__supporting-text">
-                    Looking for Contributors? Now you can easily find who is on Webstorming, by using our new social matching tool!
-                </div>
-                <div class="mdl-card__actions mdl-card--border">
-                    <a id="make-friends" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        Make Friends
-                    </a>
-                </div>
-                <div class="mdl-card__menu">
-                    <button id="tt2" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        <i class="card-share material-icons">share</i>
-                    </button>
-                    <div class="mdl-tooltip" for="tt2">
-                        Brag about us<br>on social media
-                    </div>
-                </div>
-            </div>
+            <!--<div id="social-card" class="intro-card-wide mdl-card mdl-shadow&#45;&#45;2dp">-->
+                <!--<div class="social-title mdl-card__title">-->
+                <!--</div>-->
+                <!--<div class="intro-welcome-text mdl-card__supporting-text">-->
+                    <!--Looking for Contributors? Now you can easily find who is on Webstorming, by using our new social matching tool!-->
+                <!--</div>-->
+                <!--<div class="mdl-card__actions mdl-card&#45;&#45;border">-->
+                    <!--<a id="make-friends" class="mdl-button mdl-button&#45;&#45;colored mdl-js-button mdl-js-ripple-effect">-->
+                        <!--Make Friends-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="mdl-card__menu">-->
+                    <!--<button id="tt2" class="mdl-button mdl-button&#45;&#45;icon mdl-js-button mdl-js-ripple-effect">-->
+                        <!--<i class="card-share material-icons">share</i>-->
+                    <!--</button>-->
+                    <!--<div class="mdl-tooltip" for="tt2">-->
+                        <!--Brag about us<br>on social media-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div id="me-card" class="intro-card-wide mdl-card mdl-shadow--2dp">
                 <div class="me-title mdl-card__title">
                 </div>
@@ -296,7 +296,23 @@
                                         </tr>
                                     </script>
 
-                                    <div id="catalog-body" class="hidden col-sm-12" >
+                                    <div>
+                                        <div id="catalog-body" class="hidden col-sm-12" >
+                                        </div>
+                                        <div class="col-sm-12" id="post-completion-message">
+                                            <h5 id="review-message"></h5>
+                                            <button id="btn-review-branch" data-target="" class="btn btn-md btn-default" ><i class="fa fa-comment fa-2x"></i>  Review</button>
+                                            <button id="btn-review-author-branch" data-target="" class="btn btn-md btn-default" ><i class="fa fa-comment fa-2x"></i>  Review</button>
+                                        </div>
+                                        <h7 id="or-separator"></h7>
+                                        <div id="separator">
+                                            <hr/>
+                                        </div>
+
+                                        <div class="col-sm-12" id="post-completion-message2">
+                                            <h5> Assess your fellow contributors by asking them a question... </h5>
+                                            <button id="btn-assess-branch" data-target="" class="btn btn-md btn-default" ><i class="fa fa-comment fa-2x"></i>  Assess</button>
+                                        </div>
                                     </div>
 
                                     <script id="catalog-information" type="x-tmpl-mustache">
@@ -304,9 +320,9 @@
                                             <div class="pull-left">
                                                 <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back"></h3>
                                             </div>
-                                            <div id="delete-branch">
-                                                <h3 class="glyphicon glyphicon-trash"></h3>
-                                            </div>
+                                            <!--<div id="delete-branch">-->
+                                                <!--<h3 class="glyphicon glyphicon-trash"></h3>-->
+                                            <!--</div>-->
 
                                             <div class="clearfix"></div>
                                             <div class="form-group">
@@ -342,18 +358,14 @@
                                             </div>
                                             <button id="btn-start-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-play fa-2x"></i>  Start</button>
                                             <button id="btn-enroll-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Enroll</button>
-
-                                            <button id="btn-assess-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Assess</button>
-
-                                            <button id="btn-review-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Review</button>
-
-                                            <button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  Maximum number of contributors reached.Waiting for the author to start this branch...</button>
-                                            <button id="btn-download-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-download fa-2x"></i>  Download PDF</button>
+                                            <button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>
+                                            <!--<button id="btn-download-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-download fa-2x"></i>  Download PDF</button>-->
                                         </div>
                                     </script>
 
                                     <div id="brain-feed-branch" class="hidden col-sm-12">
                                         <div class="col-sm-12" id="brain-feed-branch-content">
+
                                         </div>
                                     </div>
 
@@ -396,13 +408,100 @@
                                         </div>
                                     </div>
 
-                                    <div id="all-knowledge">
-                                        <div id="branch-knowledge">
+                                    <script id="contributor-review" type="x-tmpl-mustache">
+                                        <div class="col-sm-6">
+                                            <div class="testimonial testimonial-primary-filled">
+                                                <div class="testimonial-section" id="testimonial-review-{{contributorName}}">
+                                                </div>
+                                                <div class="testimonial-desc">
+                                                    <img src="Assets/friend.png"/>
+                                                    <div class="testimonial-writer">
+                                                        <div class="testimonial-writer-name">{{contributorName}}</div>
+                                                        <div class="testimonial-writer-designation">Subtopic: need to retrieve</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div id="quiz-knowledge">
+                                    </script>
+
+
+                                    <script id="review-sentence" type="x-tmpl-mustache">
+                                        <div class="mdl-chip mdl-chip--contact sentence-chip">
+                                            <div class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{acronym}}</div>
+                                            <div class="mdl-chip__text chip-sentence">{{sentence}}</div>
+                                        </div>
+                                    </script>
+
+
+                                    <div id="all-author-knowledge">
+                                        <div class="container">
+                                            <h4 id="pdf-author-welcome"> Welcome to the author review!</h4>
+                                            <div class="panel panel-default panel-detail">
+                                                <div class="panel-body">Review each brainstorming contribution that was chosen. Accept them in your final result, or add a comment for the whole review before they get added.</div>
+                                            </div>
+                                            <div class="row timer-review">
+                                                <h4 id="author-reviewing-time-left">Reviewing Time Left</h4>
+                                                <h6><div id="countdowntimer-author-review" class="timer-review"></div></h6>
+                                            </div>
+                                            <h5 id="contributor-opinion">What do other contributors think would go best in this branch's document?</h5>
+                                            <h5 id="contributor-author-subtopic">Subtopic: This is the subtopic</h5>
+                                            <div class="container stats">
+                                                <div class="row">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                                            <span class="sr-only">60% Complete</span>
+                                                        </div>
+                                                        <span class="progress-type">IE8 supports the outline properties only if a !DOCTYPE...</span>
+                                                        <span class="progress-completed">60%</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                            <span class="sr-only">40% Complete (success)</span>
+                                                        </div>
+                                                        <span class="progress-type">Second sentence for contribution...</span>
+                                                        <span class="progress-completed">40%</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                                            <span class="sr-only">20% Complete (info)</span>
+                                                        </div>
+                                                        <span class="progress-type">IE8 supports the outline properties only if a !DOCTYPE is specified. Second sentence for...</span>
+                                                        <span class="progress-completed">20%</span>
+                                                    </div>
+                                                    <!--<div class="progress">-->
+                                                    <!--<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">-->
+                                                    <!--<span class="sr-only">60% Complete (warning)</span>-->
+                                                    <!--</div>-->
+                                                    <!--<span class="progress-type">JavaScript / jQuery</span>-->
+                                                    <!--<span class="progress-completed">60%</span>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="progress">-->
+                                                    <!--<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">-->
+                                                    <!--<span class="sr-only">80% Complete (danger)</span>-->
+                                                    <!--</div>-->
+                                                    <!--<span class="progress-type">CSS / CSS3</span>-->
+                                                    <!--<span class="progress-completed">80%</span>-->
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div >
+
+
+                                    <div id="all-knowledge">
+                                        <div class="container">
+                                            <h4 id="pdf-welcome"> Welcome to the PDF creator!</h4>
+                                            <div class="panel panel-default panel-detail">
+                                                <div class="panel-body">Review each brainstorming contribution from your fellow contributors and decide, together, what will be included in your final document.</div>
+                                            </div>
+                                            <div class="row timer-review">
+                                                <h4 id="reviewing-time-left">Reviewing Time Left</h4>
+                                                <h6><div id="countdowntimer-review" class="timer-review"></div></h6>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div id="contributions-review"></div>
+                                        <div id="review-sentences"></div>
                                     </div>
 
                                     <div class="modal fade" id="add-quiz" tabindex="-1" role="dialog" aria-labelledby="mcqQuizModal" aria-hidden="true">
@@ -731,107 +830,107 @@
         </script>
 
 
-        <div id="social-search">
-            <div class="container stat-cards">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="panel panel-warning">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <i class="fa fa-globe fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">--</p>
-                                        <p class="announcement-text">Users</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <i class="fa fa-users fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">--</p>
-                                        <p class="announcement-text">Friends</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!--<div id="social-search">-->
+            <!--<div class="container stat-cards">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-lg-3">-->
+                        <!--<div class="panel panel-warning">-->
+                            <!--<div class="panel-heading">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-xs-6">-->
+                                        <!--<i class="fa fa-globe fa-5x"></i>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-6 text-right">-->
+                                        <!--<p class="announcement-heading">&#45;&#45;</p>-->
+                                        <!--<p class="announcement-text">Users</p>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-3">-->
+                        <!--<div class="panel panel-danger">-->
+                            <!--<div class="panel-heading">-->
+                                <!--<div class="row">-->
+                                    <!--<div class="col-xs-6">-->
+                                        <!--<i class="fa fa-users fa-5x"></i>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-6 text-right">-->
+                                        <!--<p class="announcement-heading">&#45;&#45;</p>-->
+                                        <!--<p class="announcement-text">Friends</p>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="container bootstrap snippet friend-zone">
-                <div class="header">
-                    <h3 class="text-muted prj-name">
-                        <span class="fa fa-users fa-2x principal-title"></span>
-                        Friend zone
-                    </h3>
-                </div>
-                <div class="list-content">
-                    <ul class="list-group">
-                        <li href="#" class="list-group-item title">
-                            Your friend zone
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <label class="name text-middle">
-                                No friends available yet. Please search for existing Contributors!<br>
-                            </label>
-                            <div class="break"></div>
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
-                            <label class="name">
-                                Juan guillermo cuadrado<br>
-                            </label>
-                            <label class="pull-right">
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                            </label>
-                            <div class="break"></div>
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_1.jpg">
-                            <label class="name">
-                                James Rodriguez (10)
-                            </label>
-                            <label class="pull-right">
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                            </label>
-                            <div class="break"></div>
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_2.jpg">
-                            <label class="name">
-                                Mariana pajon
-                            </label>
-                            <label class="pull-right">
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                            </label>
-                            <div class="break"></div>
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <a a href="#search" class="btn btn-block btn-primary">
-                                <i class="glyphicon glyphicon-search"></i>
-                                Need more Contributors...
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!--<div class="container bootstrap snippet friend-zone">-->
+                <!--<div class="header">-->
+                    <!--<h3 class="text-muted prj-name">-->
+                        <!--<span class="fa fa-users fa-2x principal-title"></span>-->
+                        <!--Friend zone-->
+                    <!--</h3>-->
+                <!--</div>-->
+                <!--<div class="list-content">-->
+                    <!--<ul class="list-group">-->
+                        <!--<li href="#" class="list-group-item title">-->
+                            <!--Your friend zone-->
+                        <!--</li>-->
+                        <!--<li href="#" class="list-group-item text-left">-->
+                            <!--<label class="name text-middle">-->
+                                <!--No friends available yet. Please search for existing Contributors!<br>-->
+                            <!--</label>-->
+                            <!--<div class="break"></div>-->
+                        <!--</li>-->
+                        <!--<li href="#" class="list-group-item text-left">-->
+                            <!--<img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">-->
+                            <!--<label class="name">-->
+                                <!--Juan guillermo cuadrado<br>-->
+                            <!--</label>-->
+                            <!--<label class="pull-right">-->
+                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
+                            <!--</label>-->
+                            <!--<div class="break"></div>-->
+                        <!--</li>-->
+                        <!--<li href="#" class="list-group-item text-left">-->
+                            <!--<img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_1.jpg">-->
+                            <!--<label class="name">-->
+                                <!--James Rodriguez (10)-->
+                            <!--</label>-->
+                            <!--<label class="pull-right">-->
+                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
+                            <!--</label>-->
+                            <!--<div class="break"></div>-->
+                        <!--</li>-->
+                        <!--<li href="#" class="list-group-item text-left">-->
+                            <!--<img class="img-thumbnail"  src="https://bootdey.com/img/Content/user_2.jpg">-->
+                            <!--<label class="name">-->
+                                <!--Mariana pajon-->
+                            <!--</label>-->
+                            <!--<label class="pull-right">-->
+                                <!--<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>-->
+                            <!--</label>-->
+                            <!--<div class="break"></div>-->
+                        <!--</li>-->
+                        <!--<li href="#" class="list-group-item text-left">-->
+                            <!--<a a href="#search" class="btn btn-block btn-primary">-->
+                                <!--<i class="glyphicon glyphicon-search"></i>-->
+                                <!--Need more Contributors...-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div id="search">
-                <button type="button" class="close">×</button>
-                <form>
-                    <input type="search" value="" placeholder="Type username(s) here" />
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-            </div>
+            <!--<div id="search">-->
+                <!--<button type="button" class="close">×</button>-->
+                <!--<form>-->
+                    <!--<input type="search" value="" placeholder="Type username(s) here" />-->
+                    <!--<button type="submit" class="btn btn-primary">Search</button>-->
+                <!--</form>-->
+            <!--</div>-->
         </div>
     </div>
 </body>

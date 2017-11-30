@@ -141,8 +141,8 @@ body.modal-open .background-container {
     margin-top: 3%;
 }
 #me-card{
-    margin-top: -33.85%;
-    margin-left: 50%;
+    margin-top: 3%;
+    margin-left: 26%;
 }
 /**********************************************************/
 /****************   Profile Information   ****************/
@@ -693,6 +693,11 @@ h4 {
     cursor: pointer;
     color: rgb(217, 199, 33);
 }
+#go-back3{
+    cursor: pointer;
+    color: rgb(217, 199, 33);
+}
+
 #btn-start-branch{
     margin-left: 86%;
     margin-bottom: 20px;
@@ -1389,7 +1394,16 @@ button:focus {
     margin-left: 35%;
     margin-top: -2px;
 }
+.timer-review{
+    margin-left: 27%;
+    margin-top: -20px;
+}
 #countdowntimer{
+     margin-left: 12.5%;
+     margin-top: -40px;
+     color: #D9534F;
+ }
+#countdowntimer-review{
     margin-left: 22.5%;
     margin-top: -40px;
     color: #D9534F;
@@ -1414,4 +1428,97 @@ button:focus {
 #btn-download-branch{
     display:none;
     margin-left: 40%
+}
+#post-completion-message{
+    margin-top: 10px;
+    margin-left: 70px;
+}
+#btn-review-branch{
+    margin-left: 35%;
+}
+#btn-review-author-branch{
+    display: none;
+    margin-left: 35%;
+}
+hr {
+    border:none;
+    border-top:1px solid;
+    margin:1em auto;
+    width:17em;
+}
+#or-separator{
+    margin-left: 48.5%;
+}
+#post-completion-message2{
+    margin-left: 130px;
+}
+#btn-assess-branch{
+    margin-left: 28%;
+}
+.sentence-chip {
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-size: medium;
+    font-weight: 500;
+    display: inline-block;
+    cursor: hand;
+    word-wrap: break-word;
+}
+.chip-sentence{
+    display: inline-block;
+    text-overflow: ellipsis;
+    width: 830px;
+    overflow:hidden;
+}
+.sentence-chip:hover{
+    cursor: pointer;
+    background-color:  #dbf1ff;
+}
+.panel-detail{
+    width: 600px;
+    margin-top: -2%;
+    margin-left: 11%;
+    text-align: center;
+    font-weight: 600;
+}
+#pdf-welcome{
+    margin-left: 23%;
+}
+#pdf-author-welcome{
+    margin-left: 23%;
+}
+.divider{
+    margin-top: 50px;
+}
+.progress {
+    position: relative;
+    height: 25px;
+}
+.progress > .progress-type {
+    position: absolute;
+    left: 0px;
+    font-weight: 800;
+    padding: 3px 30px 2px 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(25, 25, 25, 0.2);
+}
+.progress > .progress-completed {
+    position: absolute;
+    right: 0px;
+    font-weight: 800;
+    padding: 3px 10px 2px;
+}
+.stats{
+    margin-left: -1%;
+    width: 700px;
+}
+#contributor-opinion{
+    margin-top: 40px;
+}
+#contributor-author-subtopic{
+    margin-top: 10px;
+    color: #00C851;
+}
+#review-sentences{
+    display: inline-block;
+    width: 950px;
 }
