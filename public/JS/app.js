@@ -545,6 +545,7 @@ function brainTableFunctionality(){
                     $('#btn-review-branch').addClass(snapshot.val()["id"]);
                     $('#btn-assess-branch').addClass(snapshot.val()["id"]);
                     $('#btn-review-author-branch').addClass(snapshot.val()["id"]);
+                    $('#btn-confirm-comment').addClass(snapshot.val()["id"]);
                     $('#post-completion-message').show();
                     $('#post-completion-message2').show();
                     $('#separator').show();
@@ -579,6 +580,7 @@ function brainTableFunctionality(){
     $(document).on('click', '#go-back', function(){
         $('#brain-feed #catalog').removeClass('hidden');
         $('#btn-review-author-branch').hide();
+        $('#btn-show-results').hide();
 
         if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
             $('#brain-feed #assess-knowledge').addClass('hidden')
@@ -628,6 +630,24 @@ function brainTableFunctionality(){
         getAssessments(key);
     });
 
+    $(document).on('click', "#btn-confirm-comment", function(){
+        var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var user = $.cookie('user');
+
+        firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+            var exists = (snapshot.val() !== null);
+            if (exists) {
+                var subtopic = $('#contributor-author-subtopic').text().split(' ')[1];
+
+                firebase.database().ref('branches/' + key).child('comments').child(subtopic).set({
+                    "contributorName": user,
+                    "comment":  $('#comment-area').val()
+                });
+                $('#btn-confirm-comment').attr('disabled', true);
+            }
+        });
+    });
+
     $(document).on('click',"#btn-review-author-branch",function(){
         var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
         var user = $.cookie('user');
@@ -636,10 +656,22 @@ function brainTableFunctionality(){
         firebase.database().ref('branches/' + key).once('value', function(snapshot) {
             var exists = (snapshot.val() !== null);
             if (exists) {
+                var subtopicOrder = [];
+                var nameOrder = -1;
 
+                for(var name in snapshot.val()["contributors"]){
+                    nameOrder+=1;
+                    if(name == user){
+                        break;
+                    }
+                }
+                subtopicOrder.push("subtopic"+nameOrder);
 
-
-
+                for(var subtopic in snapshot.val()["subtopics"]){
+                    if(subtopic != "subtopic"+nameOrder){
+                        subtopicOrder.push(subtopic);
+                    }
+                }
 
                 if(!$('#brain-feed #quiz-knowledge').hasClass('hidden')){
                     $('#brain-feed #quiz-knowledge').addClass('hidden');
@@ -647,19 +679,15 @@ function brainTableFunctionality(){
                 if(!$('#brain-feed #catalog-body').hasClass('hidden')){
                     $('#brain-feed #catalog-body').addClass('hidden');
                 }
-                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
-                    $('#brain-feed #assess-knowledge').addClass('hidden')
-                }
                 if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-author-knowledge').removeClass('hidden')
-                }
-                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
-                    $('#brain-feed #branch-knowledge').removeClass('hidden')
                 }
 
                 $('#post-completion-message').hide();
                 $('#post-completion-message2').hide();
                 $('#separator').hide();
+
+                authorReviewTimer(subtopicOrder, key);
             }
         });
     });
@@ -944,13 +972,108 @@ function brainTableFunctionality(){
     });
 }
 
+function authorReviewTimer(subtopicOrder, key){
+    firebase.database().ref('branches/' + key).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        var user = $.cookie("user");
+        if (exists) {
+            var numberOfContributors = snapshot.val()["numberOfContributors"];
+            $('#statistics').empty();
+            $('#contributor-author-subtopic').text('Subtopic: ' +  snapshot.val()["subtopics"][subtopicOrder[0]]["value"]);
+            $('#comment-area').val("Comment Here");
+            $('#btn-confirm-comment').attr('disabled', false);
+
+            for(var key in snapshot.val()["selected_contributions"]){
+                if(key ==  snapshot.val()["subtopics"][subtopicOrder[0]]["value"]){
+                    for(var contributionKey in snapshot.val()["selected_contributions"][key]){
+                        var subtopicValue =  snapshot.val()["subtopics"][subtopicOrder[0]]["value"];
+                        var totalNumberOfVotes = 0;
+                        var contributionNumberOfVotes = 0;
+
+                        for(var key0 in snapshot.val()["selected_contributions"][subtopicValue]){
+                            for(var key1 in snapshot.val()["selected_contributions"][subtopicValue][key0]){
+                                totalNumberOfVotes+=1;
+                            }
+
+                            if(key0 == contributionKey){
+                                for(var contributioKey0 in snapshot.val()["selected_contributions"][subtopicValue][key0]){
+                                    contributionNumberOfVotes+=1;
+                                }
+                            }
+                        }
+                        var percentage = (contributionNumberOfVotes/totalNumberOfVotes *100).toFixed(2);
+                        var contributionStatistic = {
+                            "percent": percentage,
+                            "contribution": contributionKey
+                        };
+
+                        var template = $('#statistic').html();
+                        var html = Mustache.render(template, contributionStatistic);
+                        var output = $('#statistics');
+                        output.append(html);
+                    }
+                }
+            }
+
+            subtopicOrder.shift();
+            document.getElementById("countdowntimer-author-review").textContent = "";
+            $("#countdowntimer-author-review").css('margin-left', '12.5%');
+            var timeleft = 10;
+            var timeout='Time over';
+
+            var downloadTimer = setInterval(function(){
+                if(timeleft == 0){
+                    document.getElementById("countdowntimer-author-review").textContent = timeout;
+                    $("#countdowntimer-author-review").css('margin-left', '8.5%');
+                    numberOfContributors--;
+
+                    if(subtopicOrder.length == 0){
+                        $('#btn-confirm-comment').removeClass(snapshot.val()["id"]);
+
+                        if($('#brain-feed #catalog-body').hasClass('hidden')){
+                            $('#brain-feed #catalog-body').removeClass('hidden');
+                        }
+                        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+                            $('#brain-feed #all-author-knowledge').addClass('hidden')
+                        }
+                        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                            $('#brain-feed #branch-knowledge').addClass('hidden')
+                        }
+                        $('#post-completion-message').show();
+                        $('#post-completion-message2').show();
+                        $('#separator').show();
+
+                        firebase.database().ref('branches/' + snapshot.val()["id"].split('/')[0] + '/contributors/' + user + '/author_flag').set(true);
+                        $('#review-message').text('Congratulations. Now this branch has been reviewed. Please see the results');
+                        $('#btn-review-branch').hide();
+                        $('#btn-review-author-branch').hide();
+                        $('#btn-show-results').show();
+                    }
+                }
+                if(timeleft > 0){
+                    document.getElementById("countdowntimer-author-review").textContent = timeleft;
+                }
+                if(timeleft < 0) {
+                    clearInterval(downloadTimer);
+                }
+                timeleft--;
+            },1000);
+
+            setTimeout(function() {
+                if(numberOfContributors > 0){
+                    authorReviewTimer(subtopicOrder, snapshot.val()["id"].split('/')[0]);
+                }
+            },12000);
+        }
+    });
+}
+
 function reviewTimer(subtopicOrder, key){
     firebase.database().ref('branches/' + key).once('value', function(snapshot) {
         var exists = (snapshot.val() !== null);
         var user = $.cookie("user");
         if (exists) {
             var numberOfContributors = snapshot.val()["numberOfContributors"];
-            var subtopicValue = snapshot.val()["subtopics"][subtopicOrder[0]]["value"];
             $('#review-sentences').empty();
             $('#contributions-review').empty();
             $('#review-sentences').empty();
@@ -1038,8 +1161,6 @@ function reviewTimer(subtopicOrder, key){
                     reviewTimer(subtopicOrder, key);
                 }
             },7000);
-
-
         }
     });
 }
@@ -1071,18 +1192,26 @@ function determineReviewingStatus(key){
                 if(user == branchAuthor){
                     //I completed his final reviewing check
                     if(authorCheck){
-                        //The final html button should be shown
+                        $('#review-message').text('Congratulations. Now this branch has been reviewed. Please see the results');
+                        $('#btn-review-branch').hide();
+                        $('#btn-review-author-branch').hide();
+                        $('#btn-show-results').show();
+
                     }
                     else{
                         $('#review-message').text('Please make your author contribution as the final step of this whole process');
                         $('#btn-review-branch').hide();
+                        $('#btn-show-results').hide();
                         $('#btn-review-author-branch').show();
                     }
                 }
                 else{
                     //The author completed his final reviewing check
                     if(authorCheck){
-                        //The final html button should be shown
+                        $('#review-message').text('Congratulations. Now this branch has been reviewed. Please see the results');
+                        $('#btn-review-branch').hide();
+                        $('#btn-review-author-branch').hide();
+                        $('#btn-show-results').show();
                     }
 
                     //The author did not complete his check
