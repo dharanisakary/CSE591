@@ -296,8 +296,8 @@
                                         </tr>
                                     </script>
 
-                                    <div>
-                                        <div id="catalog-body" class="hidden col-sm-12" >
+                                    <div id="catalog-body" class="hidden col-sm-12">
+                                        <div id="catalog-body-placeholder" class="" >
                                         </div>
                                         <div class="col-sm-12" id="post-completion-message">
                                             <h5 id="review-message"></h5>
@@ -370,7 +370,10 @@
                                         </div>
                                     </div>
 
-                                    <div id="assess-knowledge">
+                                    <div id="assess-knowledge" class="hidden">
+                                        <div class="pull-left col-sm-12">
+                                            <h3 class="glyphicon glyphicon-circle-arrow-left" id="go-back-assess"></h3>
+                                        </div>
                                         <div class="col-sm-8">
                                             <h3>Exisiting Quizzes</h3>
                                             <div class="mcq assess-knowledge-element">
@@ -386,13 +389,6 @@
                                             <div class="tf assess-knowledge-element">
                                                 <h4>True/False Questions</h4>
                                                 <div id="all-tfs"></div>
-                                            </div>
-                                            <div class="">
-                                                <script type="x-tmpl-mustache" id="branch-stats-btn">
-                                                <button id="quiz-stats" class="btn btn-default {{branchKey}}">
-                                                    Get Stats
-                                                </button>
-                                                </script>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 text-center">

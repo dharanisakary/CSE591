@@ -400,10 +400,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == -2){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -418,10 +418,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == -1){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -467,10 +467,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 0){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     var contributorCount = 0;
@@ -524,10 +524,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 2){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -555,10 +555,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 3){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -591,7 +591,7 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
             $('#brain-feed #all-author-knowledge').addClass('hidden')
         }
-        $('#catalog-body').empty()
+        $('#catalog-body-placeholder').empty()
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
         }
@@ -608,6 +608,27 @@ function brainTableFunctionality(){
 
         $('#branch-table-container').empty();
         retrieveBranches();
+    });
+
+    $(document).on('click', '#go-back-assess', function(){
+        if($('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').removeClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        $('#post-completion-message').show();
+        $('#post-completion-message2').show();
+        $('#separator').show();
     });
 
     $(document).on('click', '#btn-assess-branch', function(){
@@ -1345,7 +1366,7 @@ function menuChoiceHndler(){
             $('#social-search').hide();
         }
 
-        $('#catalog-body').empty();
+        $('#catalog-body-placeholder').empty();
         $('#brain-feed-branch-content').empty();
 
         $('#branch-table-container').empty();
@@ -1631,11 +1652,6 @@ function branchCreationModelhandler(){
 }
 
 function assessmentHandler(branchkey){
-    $('#quiz-stats').remove();
-    var template = $('#branch-stats-btn').html();
-    var html = Mustache.render(template, {branchKey : branchkey+"/"});
-    var output = $('#assess-knowledge');
-    output.append(html);
 
     $('#add-mcq-option').off('click').on('click', function(){
         var html = '<input class="mdl-textfield__input" type="text" >';
@@ -1766,6 +1782,7 @@ function assessmentHandler(branchkey){
         firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz2').modal('hide');
     });
+    /*code for getting quiz stats*/
     $('#quiz-stats').off('click').on('click', function(e){
         console.log(branchkey);
         var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
@@ -1794,7 +1811,7 @@ function assessmentHandler(branchkey){
                 if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
                     $('#brain-feed #branch-knowledge').addClass('hidden')
                 }
-                $('#catalog-body').empty()
+                $('#catalog-body-placeholder').empty()
                 if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
                     $('#brain-feed #brain-feed-branch').addClass('hidden');
                 }
