@@ -543,6 +543,7 @@ function brainTableFunctionality(){
                     $('#btn-assess-branch').show();
                     $('#btn-review-branch').show();
                     $('#btn-review-branch').addClass(snapshot.val()["id"]);
+                    $('#btn-show-results').addClass(snapshot.val()["id"]);
                     $('#btn-assess-branch').addClass(snapshot.val()["id"]);
                     $('#btn-review-author-branch').addClass(snapshot.val()["id"]);
                     $('#btn-confirm-comment').addClass(snapshot.val()["id"]);
@@ -608,6 +609,49 @@ function brainTableFunctionality(){
 
         $('#branch-table-container').empty();
         retrieveBranches();
+    });
+
+    $(document).on('click', '#go-back-assess', function(){
+        if($('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').removeClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        $('#post-completion-message').show();
+        $('#post-completion-message2').show();
+        $('#separator').show();
+    });
+
+    $(document).on('click', '#go-back-from-res', function(){
+        if($('#brain-feed #catalog').hasClass('hidden')){
+            $('#brain-feed #catalog').removeClass('hidden');
+        }
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+
     });
 
     $(document).on('click', '#go-back-assess', function(){
@@ -712,7 +756,6 @@ function brainTableFunctionality(){
             }
         });
     });
-
 
     $(document).on('click',"#btn-review-branch",function(){
         var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
@@ -990,6 +1033,94 @@ function brainTableFunctionality(){
                 pdf.save(title);
             }
         });
+    });
+
+    $(document).on('click', '#btn-show-results', function(e){
+        var branchkey = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var ref = firebase.database().ref('branches/'+branchkey+'/');
+        var contributors = 0;
+        var contributorsRef = firebase.database().ref('branches/'+branchkey+"/numberOfContributors");
+        var self2 = this;
+        contributorsRef.once('value').then(function(snapshot){
+            var self = this;
+            this.contributors = snapshot.val();
+            console.log("con ", this.contributors);
+            ref.on('value', function(snapshot){
+                var knowledgeArea = $('#branch-knowledge #branch-knowledge-container');
+                knowledgeArea.empty();
+                var data = snapshot.val();
+                debugger;
+                var quizData = data.quizzes;
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-knowledge').addClass('hidden')
+                }
+                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                }
+                $('#catalog-body-placeholder').empty()
+                if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                    $('#brain-feed #brain-feed-branch').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
+
+                if(quizData){
+                    var knowledge = "";
+                    if(quizData.mcq){
+                        var mcq = quizData.mcq;
+                        var mcqContent = "<h4>Multiple Choice Stats</h4>";
+                        for(var ques in mcq){
+                            mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
+                            for (var op in mcq[ques].stats) {
+                                if (mcq[ques].stats.hasOwnProperty(op)) {
+                                    mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
+                                    var percentContributions =  (parseInt(mcq[ques].stats[op])/parseInt(this.contributors))*100;
+                                    mcqContent = mcqContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
+                            }
+                        }
+                        knowledge = knowledge +mcqContent;
+                    }
+                    if(quizData.sq){
+                        var sq = quizData.sq;
+                        var sqContent = "<h4>Short Answers stats</h4>";
+                        for(var ques in sq){
+                            sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
+                            var answers = sq[ques].answers.split(",");
+                            for(ans in answers)
+                                if(ans != ""){
+                                    sqContent = sqContent + "<p>"+answers[ans]+"</p>";
+                                }
+                        }
+                        knowledge = knowledge + sqContent;
+                    }
+                    if(quizData.tf){
+                        var tf = quizData.tf;
+                        var tfContent = "<h4>True False Stats</h4>";
+                        for(var ques in tf){
+                            tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
+                            for (var op in tf[ques].stats) {
+                                if (tf[ques].stats.hasOwnProperty(op)) {
+                                    tfContent = tfContent + "<p>"+ tf[ques].options[op] +"</p>";
+                                    percentContributions =  (parseInt(tf[ques].stats[op])/parseInt(this.contributors))*100;
+                                    tfContent = tfContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
+                            }
+                            tfContent = tfContent + "<br/>";
+                        }
+                        knowledge = knowledge +tfContent;
+                    }
+                    knowledgeArea.html(knowledge);
+                }
+            }, self);
+        }, self2);
     });
 }
 
@@ -1343,6 +1474,9 @@ function menuChoiceHndler(){
             }
             if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
                 $('#brain-feed #all-author-knowledge').addClass('hidden')
+            }
+            if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                $('#brain-feed #branch-knowledge').addClass('hidden')
             }
             $('#btn-create-branch').show();
             $('#btn-assess-branch').hide();
@@ -1782,97 +1916,6 @@ function assessmentHandler(branchkey){
         firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz2').modal('hide');
     });
-    /*code for getting quiz stats*/
-    $('#quiz-stats').off('click').on('click', function(e){
-        console.log(branchkey);
-        var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
-        var contributors = 0;
-        var contributorsRef = firebase.database().ref('branches/'+branchkey+"/numberOfContributors");
-        var self2 = this;
-        contributorsRef.once('value').then(function(snapshot){
-            var self = this;
-            this.contributors = snapshot.val();
-            console.log("con ", this.contributors);
-            ref.on('value', function(snapshot){
-                var knowledgeArea = $('#all-knowledge #quiz-knowledge');
-                knowledgeArea.empty();
-                var data = snapshot.val();
-                quizData = data;
-                $('#brain-feed #catalog').removeClass('hidden');
-                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
-                    $('#brain-feed #assess-knowledge').addClass('hidden')
-                }
-                if($('#brain-feed #all-knowledge').hasClass('hidden')){
-                    $('#brain-feed #all-knowledge').removeClass('hidden')
-                }
-                if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
-                    $('#brain-feed #quiz-knowledge').removeClass('hidden')
-                }
-                if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
-                    $('#brain-feed #branch-knowledge').addClass('hidden')
-                }
-                $('#catalog-body-placeholder').empty()
-                if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
-                    $('#brain-feed #brain-feed-branch').addClass('hidden');
-                }
-                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
-                    $('#brain-feed #catalog-body').addClass('hidden');
-                }
-                if(!$('#brain-feed #catalog').hasClass('hidden')){
-                    $('#brain-feed #catalog').addClass('hidden');
-                }
-                if(quizData){
-                    var knowledge = "";
-                    if(quizData.mcq){
-                        var mcq = quizData.mcq;
-                        var mcqContent = "<h4>Multiple Choice Stats</h4>";
-                        for(var ques in mcq){
-                            mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
-                            for (var op in mcq[ques].stats) {
-                                if (mcq[ques].stats.hasOwnProperty(op)) {
-                                    mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
-                                    var percentContributions =  (parseInt(mcq[ques].stats[op])/parseInt(this.contributors))*100;
-                                    mcqContent = mcqContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
-                                }
-                            }
-                        }
-                        knowledge = knowledge +mcqContent;
-                    }
-                    if(quizData.sq){
-                        var sq = quizData.sq;
-                        var sqContent = "<h4>Short Answers stats</h4>";
-                        for(var ques in sq){
-                            sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
-                            var answers = sq[ques].answers.split(",");
-                            for(ans in answers)
-                                if(ans != ""){
-                                    sqContent = sqContent + "<p>"+answers[ans]+"</p>";
-                                }
-                        }
-                        knowledge = knowledge + sqContent;
-                    }
-                    if(quizData.tf){
-                        var tf = quizData.tf;
-                        var tfContent = "<h4>True False Stats</h4>";
-                        for(var ques in tf){
-                            tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
-                            for (var op in tf[ques].stats) {
-                                if (tf[ques].stats.hasOwnProperty(op)) {
-                                    tfContent = tfContent + "<p>"+ tf[ques].options[op] +"</p>";
-                                    percentContributions =  (parseInt(tf[ques].stats[op])/parseInt(this.contributors))*100;
-                                    tfContent = tfContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
-                                }
-                            }
-                            tfContent = tfContent + "<br/>";
-                        }
-                        knowledge = knowledge +tfContent;
-                    }
-                    knowledgeArea.html(knowledge);
-                }
-            }, self);
-        }, self2);
-    });
-
 }
 
 function getAssessments(branchkey){
