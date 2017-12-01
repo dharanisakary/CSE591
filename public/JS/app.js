@@ -1910,7 +1910,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             document.getElementById("countdowntimer").textContent = "";
             $("#countdowntimer").css('margin-left', '22.5%');
-            var timeleft = 5;
+            var timeleft = timePerContributor;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -1978,7 +1978,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                 if(numberOfContributors > 0){
                     timer(timePerContributor, numberOfContributors, subtopicOrder, key);
                 }
-            },7000);
+            },(timePerContributor * 1000) + 2000);
         }
     });
 }
