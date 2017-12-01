@@ -1170,7 +1170,7 @@ function authorReviewTimer(subtopicOrder, key){
             subtopicOrder.shift();
             document.getElementById("countdowntimer-author-review").textContent = "";
             $("#countdowntimer-author-review").css('margin-left', '12.5%');
-            var timeleft = 10;
+            var timeleft = 30;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -1215,7 +1215,7 @@ function authorReviewTimer(subtopicOrder, key){
                 if(numberOfContributors > 0){
                     authorReviewTimer(subtopicOrder, snapshot.val()["id"].split('/')[0]);
                 }
-            },12000);
+            },32000);
         }
     });
 }
@@ -1272,7 +1272,7 @@ function reviewTimer(subtopicOrder, key){
             subtopicOrder.shift();
             document.getElementById("countdowntimer-review").textContent = "";
             $("#countdowntimer-review").css('margin-left', '12.5%');
-            var timeleft = 5;
+            var timeleft = 30;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -1312,7 +1312,7 @@ function reviewTimer(subtopicOrder, key){
                 if(numberOfContributors > 0){
                     reviewTimer(subtopicOrder, key);
                 }
-            },7000);
+            },32000);
         }
     });
 }
@@ -2005,7 +2005,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
 
             document.getElementById("countdowntimer").textContent = "";
             $("#countdowntimer").css('margin-left', '22.5%');
-            var timeleft = 5;
+            var timeleft = timePerContributor;
             var timeout='Time over';
 
             var downloadTimer = setInterval(function(){
@@ -2073,7 +2073,7 @@ function timer(timePerContributor, numberOfContributors, subtopicOrder, key){
                 if(numberOfContributors > 0){
                     timer(timePerContributor, numberOfContributors, subtopicOrder, key);
                 }
-            },7000);
+            },(timePerContributor * 1000) + 2000);
         }
     });
 }
