@@ -651,6 +651,9 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
             $('#brain-feed #assess-knowledge').addClass('hidden')
         }
+        $('#post-completion-message').hide();
+        $('#post-completion-message2').hide();
+        $('#separator').hide();
 
     });
 
@@ -747,6 +750,9 @@ function brainTableFunctionality(){
                 if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-author-knowledge').removeClass('hidden')
                 }
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
 
                 $('#post-completion-message').hide();
                 $('#post-completion-message2').hide();
@@ -794,8 +800,8 @@ function brainTableFunctionality(){
                 if($('#brain-feed #all-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-knowledge').removeClass('hidden')
                 }
-                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
-                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').addClass('hidden')
                 }
 
                 $('#post-completion-message').hide();
@@ -1070,9 +1076,27 @@ function brainTableFunctionality(){
                 if(!$('#brain-feed #catalog').hasClass('hidden')){
                     $('#brain-feed #catalog').addClass('hidden');
                 }
-
+                var title = "<h4> Title - "+ data.title+"</h4>";
+                var topic = "<p> Topic - "+ data.topic+"</p>";
+                var author = "<p> Creator - "+data.creator+"</p>";
+                var desc = "<p> Description - "+data.description+"</p>";
+                var createdAt = "<p> Time stamp - "+data.id.replace("/","")+"</p>";
+                var purpose = "<p> Purpose - "+data.purpose+"</p>";
+                var contributors = "<p> Contributors - "+data.numberOfContributors+"</p>";
+                var knowledge = title + topic + author + desc + createdAt + purpose + contributors;
+                var subtopics = "";
+                for(var c in data.subtopics){
+                    subtopics += "<p> Subtopic - "+data.subtopics[c].value+"</p>" + "<p> Contributions - </p>";
+                    var selected_c = data.selected_contributions[data.subtopics[c].value];
+                    var selected_contributions_keys = Object.keys(selected_c);
+                    for(var s_c in selected_contributions_keys){
+                        subtopics += "<li>"+selected_contributions_keys[s_c]+"</li>";
+                    }
+                    subtopics += "<br/>";
+                }
+                knowledge += subtopics;
                 if(quizData){
-                    var knowledge = "";
+                    
                     if(quizData.mcq){
                         var mcq = quizData.mcq;
                         var mcqContent = "<h4>Multiple Choice Stats</h4>";
@@ -1117,8 +1141,9 @@ function brainTableFunctionality(){
                         }
                         knowledge = knowledge +tfContent;
                     }
-                    knowledgeArea.html(knowledge);
+                 
                 }
+                knowledgeArea.html(knowledge);
             }, self);
         }, self2);
     });
