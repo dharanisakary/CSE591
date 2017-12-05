@@ -359,7 +359,10 @@
                                             </div>
                                             <button id="btn-start-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-play fa-2x"></i>  Start</button>
                                             <button id="btn-enroll-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Enroll</button>
-                                            <button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>
+                                            <button id="btn-error-branch"  ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>
+                                            <!--<button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>-->
+
+
                                             <!--<button id="btn-download-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-download fa-2x"></i>  Download PDF</button>-->
                                         </div>
                                     </script>
@@ -459,7 +462,7 @@
                                         <div class="testimonial testimonial-success-filled testimonial-editable">
                                             <div class="testimonial-section">
                                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                    <textarea class="mdl-textfield__input" type="text" id="comment-area">Comment Here</textarea>
+                                                    <textarea class="mdl-textfield__input" type="text" id="comment-area" placeholder="Comment here"></textarea>
                                                 </div>
                                             </div>
                                             <div class="testimonial-desc">
@@ -630,9 +633,11 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="brainfeed-menu">
+            <div class="brainfeed-menu  block-center">
                 <button id="btn-create-branch" class="btn btn-md btn-default" data-toggle="modal" data-target="#modal-branches"><i class="fa fa-plus fa-5x"></i>New Branch</button>
+                <div>.</div>
             </div>
+
         </div>
 
         <div class="row" id="contributors">
@@ -640,18 +645,22 @@
 
         <script id="contribution" type="x-tmpl-mustache">
              <div class="row timer">
-                <h4>Contribution Time Left</h4>
-                <h6><div id="countdowntimer" class="timer"></div></h6>
+
+                <h4></h4>
+
+                <h6 class="contribition-time-left">Contribution Time Remaining</h6>
+                <span id="countdowntimer" class="timer">.</span>
+
              </div>
              <div class="row brainstorming-topic">
-                <h5 id="brainstorming-subtopic">Start brainstorming about: {{value}}</h5>
+                <h5 id="brainstorming-subtopic">Start brainstorming about:<span class='brainstorm-about'> {{value}}</span></h5>
              </div>
              <div class="row">
                 <div class="col-sm-6">
                     <div class="testimonial testimonial-warning-filled testimonial-editable">
                         <div class="testimonial-section">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <textarea class="mdl-textfield__input" type="text" id="brainstorming-area">Brainstorm Here</textarea>
+                                <textarea class="mdl-textfield__input" type="text" id="brainstorming-area" placeholder="Brainstorm Here"></textarea>
                             </div>
                         </div>
                         <div class="testimonial-desc">

@@ -1115,7 +1115,7 @@ function brainTableFunctionality(){
                         var mcq = quizData.mcq;
                         var mcqContent = "<div class='assessment-topic'>Multiple Choice Stats</div>";
                         for(var ques in mcq){
-                            mcqContent = mcqContent + "<p class='question-result> Question : "+ques+"</p>";
+                            mcqContent = mcqContent + "<p class='question-result'> Question : "+ques+"</p>";
                             for (var op in mcq[ques].stats) {
                                 if (mcq[ques].stats.hasOwnProperty(op)) {
                                     mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
@@ -1130,7 +1130,7 @@ function brainTableFunctionality(){
                         var sq = quizData.sq;
                         var sqContent = "<div class='assessment-topic>Short Answers stats</div>";
                         for(var ques in sq){
-                            sqContent = sqContent + "<p class='question-result> Question : "+ques+"</p>";
+                            sqContent = sqContent + "<p class='question-result'> Question : "+ques+"</p>";
                             var answers = sq[ques].answers.split(",");
                             for(ans in answers)
                                 if(ans != ""){
