@@ -357,7 +357,8 @@ h4 {
 /*****************************************/
 /******   Brainfeed Information   *******/
 .brainfeed-menu{
-    margin-left: 630px;
+
+    margin-left: 42%;
 }
 #brain-feed{
     margin-left: 15%;
@@ -709,10 +710,26 @@ h4 {
     margin-bottom: 20px;
 }
 #btn-error-branch{
+    padding: 10px;
     display: none;
-    margin-left: 7%;
+    /*margin-left: 7%;*/
+    /*margin-right: 7%;*/
     margin-bottom: 20px;
+    background-color: paleturquoise;
+    color: black;
+    cursor: text;
+    border: none;
 }
+#btn-error-branch:hover{
+    display: none;
+    /*margin-left: 7%;*/
+    /*margin-right: 7%;*/
+    margin-bottom: 20px;
+    background-color: paleturquoise;
+    color: black;
+}
+
+
 #delete-branch{
     cursor: pointer;
     color: rgb(217, 83, 79);
@@ -942,7 +959,8 @@ button:focus {
     background: #2BBBAD;
 }
 .btn-default:hover, .btn-default:focus {
-    background-color: #30cfc0 !important;
+    background-color: #30cfc0 !important;*/
+
 }
 .btn-default.active {
     background-color: #186860 !important;
@@ -1098,6 +1116,7 @@ button:focus {
     position: relative;
     border: 1px solid #fff;
     word-wrap: break-word;
+
 }
 .testimonial-section:after {
     top: 100%;
@@ -1114,6 +1133,7 @@ button:focus {
     margin-top: 20px;
     text-align:left;
     padding-left: 15px;
+    margin-left: -20px;
 }
 .testimonial-desc img {
     border: 1px solid #f5f5f5;
@@ -1242,9 +1262,9 @@ button:focus {
 
 }
 .testimonial.testimonial-warning .testimonial-section{
-    border-color: #F0AD4E;
-    color: #d58512;
-    background-color: rgba(240, 173, 78, 0.1);
+    /*border-color: #F0AD4E;*/
+    /*color: #d58512;*/
+    /*background-color: rgba(240, 173, 78, 0.1);*/
 }
 
 .testimonial.testimonial-warning .testimonial-section:after{
@@ -1353,8 +1373,11 @@ button:focus {
 }
 .testimonial.testimonial-warning-filled .testimonial-section{
     color: #fff;
-    background-color: #f0ad4e;
+    background-color: white;
     border-color: #eea236;
+    margin-left: -40px;
+    padding-top: -20px;
+    padding-bottom: -20px;
 }
 .testimonial.testimonial-warning-filled .testimonial-section:after{
     border-top-color: #F0AD4E;
@@ -1399,9 +1422,13 @@ button:focus {
     margin-top: -20px;
 }
 #countdowntimer{
+
+    font-size: 12px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
      margin-left: 12.5%;
-     margin-top: -40px;
+     /*margin-top: -40px;*/
      color: #D9534F;
+    font-size: 30px;
  }
 #countdowntimer-review{
     margin-left: 22.5%;
@@ -1420,6 +1447,13 @@ button:focus {
     height: 100px;
     width: 750px;
     border: none;
+    padding: 20px;
+    color: black;
+    margin-left: 10px;
+
+}
+#brainstorming-area:focus, input:focus{
+    outline: none;
 }
 #comment-area{
     height: 100px;
@@ -1427,7 +1461,8 @@ button:focus {
     border: none;
 }
 .brainstorming-topic{
-    margin-left: 2.5%;
+    margin-left:-20px;
+    margin-top: -20px;
 }
 #contributors{
     display: none;
@@ -1535,4 +1570,99 @@ hr {
 #review-sentences{
     display: inline-block;
     width: 950px;
+}
+
+#result-wrapper{
+    padding: 20px;
+    background-color: white;
+
+}
+#result-info{
+    padding: 20px;
+    padding-bottom: 10px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: black;
+    background-color: oldlace;
+    margin-bottom: 30px;
+}
+
+.contribution-make-bold{
+    font-weight: bold;
+    color:gray;
+}
+.subtopic-make-bold{
+    font-size: large;
+    font-weight: bold;
+    font-size: medium;
+
+}
+
+.bold{
+    font-size:25px;
+    color: black;
+}
+
+.result-subtopic{
+    margin-bottom: 30px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #dbf1ff;
+
+}
+
+.assessment-result{
+    font-weight: bold;
+    color: dimgray;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.assessment-result-card{
+    background-color: skyblue;
+    padding: 20px;
+}
+.assessment-topic{
+    /*font-weight: bold;*/
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    /*text-decoration: underline;*/
+
+}
+
+.question-result{
+
+    font-weight: bold;
+    margin-bottom: -5px;
+}
+.bg-info{
+    color: black;
+    font-size: large;
+}
+.progress-bar{
+    background-color: steelblue;
+}
+#btn-create-branch{
+    margin-bottom: 50px;
+    margin-left: 0px;
+
+}
+#review-message{
+    margin-left: -40px;
+}
+
+.contribition-time-left{
+    margin-top: -40px;
+    margin-left: 10px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 600;
+    color: darkgray;
+}
+.brainstorm-about{
+    background-color: darkslategray;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    padding-left: 3px;
+    margin-left: 3px;
 }

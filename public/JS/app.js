@@ -400,10 +400,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == -2){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -418,10 +418,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == -1){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -467,10 +467,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 0){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     var contributorCount = 0;
@@ -524,10 +524,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 2){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -543,6 +543,7 @@ function brainTableFunctionality(){
                     $('#btn-assess-branch').show();
                     $('#btn-review-branch').show();
                     $('#btn-review-branch').addClass(snapshot.val()["id"]);
+                    $('#btn-show-results').addClass(snapshot.val()["id"]);
                     $('#btn-assess-branch').addClass(snapshot.val()["id"]);
                     $('#btn-review-author-branch').addClass(snapshot.val()["id"]);
                     $('#btn-confirm-comment').addClass(snapshot.val()["id"]);
@@ -555,10 +556,10 @@ function brainTableFunctionality(){
                 }
 
                 if(pendingCheck == 3){
-                    $('#catalog-body').empty();
+                    $('#catalog-body-placeholder').empty();
                     var template = $('#catalog-information').html();
                     var html = Mustache.render(template, snapshot.val());
-                    var output = $('#catalog-body');
+                    var output = $('#catalog-body-placeholder');
                     output.append(html);
 
                     $('#brain-feed #catalog-body').removeClass('hidden');
@@ -591,7 +592,7 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
             $('#brain-feed #all-author-knowledge').addClass('hidden')
         }
-        $('#catalog-body').empty()
+        $('#catalog-body-placeholder').empty()
         if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
             $('#brain-feed #brain-feed-branch').addClass('hidden');
         }
@@ -608,6 +609,73 @@ function brainTableFunctionality(){
 
         $('#branch-table-container').empty();
         retrieveBranches();
+    });
+
+    $(document).on('click', '#go-back-assess', function(){
+        if($('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').removeClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        $('#post-completion-message').show();
+        $('#post-completion-message2').show();
+        $('#separator').show();
+    });
+
+    $(document).on('click', '#go-back-from-res', function(){
+        if($('#brain-feed #catalog').hasClass('hidden')){
+            $('#brain-feed #catalog').removeClass('hidden');
+        }
+        if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').addClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        $('#post-completion-message').hide();
+        $('#post-completion-message2').hide();
+        $('#separator').hide();
+
+    });
+
+    $(document).on('click', '#go-back-assess', function(){
+        if($('#brain-feed #catalog-body').hasClass('hidden')){
+            $('#brain-feed #catalog-body').removeClass('hidden');
+        }
+        if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-author-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+            $('#brain-feed #branch-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+            $('#brain-feed #all-knowledge').addClass('hidden')
+        }
+        if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+            $('#brain-feed #assess-knowledge').addClass('hidden')
+        }
+        $('#post-completion-message').show();
+        $('#post-completion-message2').show();
+        $('#separator').show();
     });
 
     $(document).on('click', '#btn-assess-branch', function(){
@@ -682,6 +750,9 @@ function brainTableFunctionality(){
                 if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-author-knowledge').removeClass('hidden')
                 }
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
 
                 $('#post-completion-message').hide();
                 $('#post-completion-message2').hide();
@@ -691,7 +762,6 @@ function brainTableFunctionality(){
             }
         });
     });
-
 
     $(document).on('click',"#btn-review-branch",function(){
         var key = $(this).attr("class").split("default")[1].split('/')[0].trim();
@@ -730,8 +800,8 @@ function brainTableFunctionality(){
                 if($('#brain-feed #all-knowledge').hasClass('hidden')){
                     $('#brain-feed #all-knowledge').removeClass('hidden')
                 }
-                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
-                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').addClass('hidden')
                 }
 
                 $('#post-completion-message').hide();
@@ -969,6 +1039,128 @@ function brainTableFunctionality(){
                 pdf.save(title);
             }
         });
+    });
+
+    $(document).on('click', '#btn-show-results', function(e){
+        var branchkey = $(this).attr("class").split("default")[1].split('/')[0].trim();
+        var ref = firebase.database().ref('branches/'+branchkey+'/');
+        var contributors = 0;
+        var contributorsRef = firebase.database().ref('branches/'+branchkey+"/numberOfContributors");
+        var self2 = this;
+        contributorsRef.once('value').then(function(snapshot){
+            var self = this;
+            this.contributors = snapshot.val();
+            console.log("con ", this.contributors);
+            ref.on('value', function(snapshot){
+                var knowledgeArea = $('#branch-knowledge #branch-knowledge-container');
+                knowledgeArea.empty();
+                var data = snapshot.val();
+                debugger;
+                var quizData = data.quizzes;
+                if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
+                    $('#brain-feed #assess-knowledge').addClass('hidden')
+                }
+                if(!$('#brain-feed #all-knowledge').hasClass('hidden')){
+                    $('#brain-feed #all-knowledge').addClass('hidden')
+                }
+                if($('#brain-feed #branch-knowledge').hasClass('hidden')){
+                    $('#brain-feed #branch-knowledge').removeClass('hidden')
+                }
+                $('#catalog-body-placeholder').empty()
+                if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
+                    $('#brain-feed #brain-feed-branch').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog-body').hasClass('hidden')){
+                    $('#brain-feed #catalog-body').addClass('hidden');
+                }
+                if(!$('#brain-feed #catalog').hasClass('hidden')){
+                    $('#brain-feed #catalog').addClass('hidden');
+                }
+
+                var result_start = "<div id='result-wrapper'>";
+                var result_end = "</div>";
+                var result_info_start = "<div id='result-info'>";
+                var result_info_end = "</div>";
+
+                var title = "<div class='text-center'><h5> Title :  "+ data.title+"</h5></div>";
+                var topic = "<div class='bold'> <p> Topic : "+ data.topic+"</p></div>";
+                var author = "<div class='bold'><p> Creator : "+data.creator+"</p></div>";
+                var desc = "<div class='bold'><p> Description : "+data.description+"</p></div>";
+                var createdAt = "<div class='bold'><p> Time stamp : "+data.id.replace("/","")+"</p></div>";
+                var purpose = "<div class='bold'><p> Purpose : "+data.purpose+"</p></div>";
+                var contributors = "<div class='bold'><p> Contributors : "+data.numberOfContributors+"</p></div>";
+
+                var knowledge = result_start+title + result_info_start+topic + author + desc + createdAt + purpose + contributors+result_info_end;
+
+                var contribution_header = "<div class='assessment-result text-center'>Contribution Section</div>";
+                var subtopics = contribution_header;
+
+                for(var c in data.subtopics){
+                    subtopics += "<div class='card result-subtopic'><h6'><span class='subtopic-make-bold'> Subtopic - "+data.subtopics[c].value+"</span></h6><br/>" + "<span class='contribution-make-bold'> Contributions </span>";
+                    var selected_c = data.selected_contributions[data.subtopics[c].value];
+                    var selected_contributions_keys = Object.keys(selected_c);
+                    for(var s_c in selected_contributions_keys){
+                        subtopics += "<li>"+selected_contributions_keys[s_c]+"</li>";
+                    }
+                    subtopics += "<br/></div>";
+                }
+                knowledge += subtopics;
+                var assessment_header = "<div class='assessment-result text-center'>Assessment Section</div>";
+                var assessment_card_start = "<div class='card assessment-result-card'>";
+                var assessment_card_end = "</div>";
+                knowledge+=assessment_header+assessment_card_start;
+                if(quizData){
+                    
+                    if(quizData.mcq){
+                        var mcq = quizData.mcq;
+                        var mcqContent = "<div class='assessment-topic'>Multiple Choice Stats</div>";
+                        for(var ques in mcq){
+                            mcqContent = mcqContent + "<p class='question-result'> Question : "+ques+"</p>";
+                            for (var op in mcq[ques].stats) {
+                                if (mcq[ques].stats.hasOwnProperty(op)) {
+                                    mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
+                                    var percentContributions =  (parseInt(mcq[ques].stats[op])/parseInt(this.contributors))*100;
+                                    mcqContent = mcqContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
+                            }
+                        }
+                        knowledge = knowledge +mcqContent;
+                    }
+                    if(quizData.sq){
+                        var sq = quizData.sq;
+                        var sqContent = "<div class='assessment-topic>Short Answers stats</div>";
+                        for(var ques in sq){
+                            sqContent = sqContent + "<p class='question-result'> Question : "+ques+"</p>";
+                            var answers = sq[ques].answers.split(",");
+                            for(ans in answers)
+                                if(ans != ""){
+                                    sqContent = sqContent + "<p>"+answers[ans]+"</p>";
+                                }
+                        }
+                        knowledge = knowledge + sqContent;
+                    }
+                    if(quizData.tf){
+                        var tf = quizData.tf;
+                        var tfContent = "<div class='assessment-topic'>True False Stats</div>";
+                        for(var ques in tf){
+                            tfContent = tfContent + "<p class='question-result'> Question : "+ques+"</p>";
+                            for (var op in tf[ques].stats) {
+                                if (tf[ques].stats.hasOwnProperty(op)) {
+                                    tfContent = tfContent + "<p>"+ tf[ques].options[op] +"</p>";
+                                    percentContributions =  (parseInt(tf[ques].stats[op])/parseInt(this.contributors))*100;
+                                    tfContent = tfContent + '<div class="progress"> <div class="progress-bar bg-info" role="progressbar" style="width: '+percentContributions+'%" aria-valuenow="'+percentContributions+'" aria-valuemin="0" aria-valuemax="'+parseInt(this.contributors)+'">'+percentContributions+'%</div></div>';
+                                }
+                            }
+                            tfContent = tfContent + "<br/>";
+                        }
+                        knowledge = knowledge +tfContent;
+                    }
+                 
+                }
+                knowledge=knowledge+assessment_card_end+result_end;
+                knowledgeArea.html(knowledge);
+            }, self);
+        }, self2);
     });
 }
 
@@ -1323,6 +1515,9 @@ function menuChoiceHndler(){
             if(!$('#brain-feed #all-author-knowledge').hasClass('hidden')){
                 $('#brain-feed #all-author-knowledge').addClass('hidden')
             }
+            if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
+                $('#brain-feed #branch-knowledge').addClass('hidden')
+            }
             $('#btn-create-branch').show();
             $('#btn-assess-branch').hide();
             $('#btn-review-branch').hide();
@@ -1345,7 +1540,7 @@ function menuChoiceHndler(){
             $('#social-search').hide();
         }
 
-        $('#catalog-body').empty();
+        $('#catalog-body-placeholder').empty();
         $('#brain-feed-branch-content').empty();
 
         $('#branch-table-container').empty();
@@ -1631,12 +1826,12 @@ function branchCreationModelhandler(){
 }
 
 function assessmentHandler(branchkey){
-    $('#add-mcq-option').on('click', function(){
+
+    $('#add-mcq-option').off('click').on('click', function(){
         var html = '<input class="mdl-textfield__input" type="text" >';
         $('#mcq-options').append(html);
     })
-    $('#add-quiz button[type=submit]').on('click', function(){
-
+    $('#add-quiz button[type=submit]').off('click').on('click', function(){
         var questionText = $('#quiz-question')[0].value;
         var options = $('#mcq-options input[type=text]');
         var optionsText = {};
@@ -1649,16 +1844,19 @@ function assessmentHandler(branchkey){
         var mcqRef = quizRef.child('mcq');
         mcqRef.child(questionText).set({
             options: optionsText,
-            stats : statsText
+            stats : statsText,
+            answeredBy: ''
         });
-
         $('#add-quiz').modal('hide');
+        $('#quiz-question')[0].value = '';
+        $('#mcq-options').empty();
     });
     $('#add-quiz2 button[type=submit]').on('click', function(){
         var questionText = $('#sa-quiz-question')[0].value;
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
-        var mcqRef = quizRef.child('sq').child(questionText).set({answers : ''});
+        quizRef.child('sq').child(questionText).set({answers : '', answeredBy : ''});
         $('#add-quiz2').modal('hide');
+        $('#sa-quiz-question')[0].value = '';
     });
     $('#add-quiz3 button[type=submit]').on('click', function(){
         var questionText = $('#tf-quiz-question')[0].value;
@@ -1666,52 +1864,51 @@ function assessmentHandler(branchkey){
 
         var optionsText = {option0 : "true", option1: "false"};
         var statsText = {option0 : 0, option1: 0};
-        var mcqRef = quizRef.child('tf').child(questionText).set({
+        quizRef.child('tf').child(questionText).set({
             options: optionsText,
-            stats : statsText
+            stats : statsText,
+            answeredBy: ''
         });
         $('#add-quiz3').modal('hide');
+        $('#tf-quiz-question')[0].value = '';
     });
     $('#view-quiz button[type=submit]').on('click', function(){
         var selected_option = $("input[name='view-quiz-quesion-modal']:checked").attr('value');
-        var optionRef = null;
-        var questionText = $("#mcq-view-quiz-question").text();
-        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
-        var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("options");
-        quizRef.on('value', function(snapshot){
-            for (var key in snapshot.val()){
-                //alert(snapshot.val()[key]);
-                if(snapshot.val()[key] === selected_option){
-                    optionRef =key;
+        if(selected_option){
+            var optionRef = null;
+            var questionText = $("#mcq-view-quiz-question").text();
+            // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+            var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("options");
+            quizRef.on('value', function(snapshot){
+                for (var key in snapshot.val()){
+                    //alert(snapshot.val()[key]);
+                    if(snapshot.val()[key] === selected_option){
+                        optionRef =key;
+                    }
                 }
-            }
-        });
-        //quizRef.update(option{Update);
-        var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("stats").child(optionRef);
-        quizStatRef.transaction(function(count){
-            count = count +1;
-            return count;
-        });
-        
-        /*
-        var v = $('#all-mcqs div p');
-        for(var x in v){
-            if(v.hasOwnProperty(x) && Number.isInteger(parseInt(x))){
-                var quizTest = v[x].textContent.replace("list","")
-                if(quizTest === questionText){
-                    v[x].parentElement.style.display='none';
-                }
-            }
-        }*/
-
-        $('#view-quiz').modal('hide');
+            });
+            //quizRef.update(option{Update);
+            var quizStatRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("stats").child(optionRef);
+            quizStatRef.transaction(function(count){
+                count = count +1;
+                return count;
+            });
+            var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("answeredBy");
+            var answeredBy = null;
+            quizAnsweredByRef.on('value', function(snapshot){
+                answeredBy = snapshot.val();
+            });
+            answeredBy = answeredBy+","+  $.cookie("user");
+            firebase.database().ref('branches/'+branchkey+'/quizzes/mcq/').child(questionText).child("answeredBy").set(answeredBy);
+            $('#view-quiz').modal('hide');
+        }
     });
 
     $('#view-quiz3 button[type=submit]').on('click', function(){
         var selected_option = $("#tf-view-options input[name='view-quiz-tf-modal']:checked").attr('value');
         var optionRef = null;
         var questionText = $("#tf-view-quiz-question").text();
-        // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
+        var quizStatRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("options");
         quizRef.on('value', function(snapshot){
             for (var key in snapshot.val()){
@@ -1727,7 +1924,13 @@ function assessmentHandler(branchkey){
             count = count +1;
             return count;
         });
-
+        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("answeredBy");
+        var answeredBy = null;
+        quizAnsweredByRef.on('value', function(snapshot){
+            answeredBy = snapshot.val();
+        });
+        answeredBy = answeredBy+","+  $.cookie("user");
+        firebase.database().ref('branches/'+branchkey+'/quizzes/tf/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz3').modal('hide');
     });
 
@@ -1744,90 +1947,15 @@ function assessmentHandler(branchkey){
         });
         answers = answers + "," + selected_option;
         firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answers").set(answers);
-
+        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/sa/').child(questionText).child("answeredBy");
+        var answeredBy = null;
+        quizAnsweredByRef.on('value', function(snapshot){
+            answeredBy = snapshot.val();
+        });
+        answeredBy = answeredBy+","+  $.cookie("user");
+        firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answeredBy").set(answeredBy);
         $('#view-quiz2').modal('hide');
     });
-    $('#quiz-stats').on('click', function(){
-        console.log(branchkey);
-        var ref = firebase.database().ref('branches/'+branchkey+'/quizzes/');
-        ref.on('value', function(snapshot){
-            var knowledgeArea = $('#all-knowledge #quiz-knowledge');
-            knowledgeArea.empty();
-            var data = snapshot.val();
-            quizData = data;
-            $('#brain-feed #catalog').removeClass('hidden');
-            if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
-                $('#brain-feed #assess-knowledge').addClass('hidden')
-            }
-            if($('#brain-feed #all-knowledge').hasClass('hidden')){
-                $('#brain-feed #all-knowledge').removeClass('hidden')
-            }
-            if($('#brain-feed #all-author-knowledge').hasClass('hidden')){
-                $('#brain-feed #all-author-knowledge').removeClass('hidden')
-            }
-            if($('#brain-feed #quiz-knowledge').hasClass('hidden')){
-                $('#brain-feed #quiz-knowledge').removeClass('hidden')
-            }
-            if(!$('#brain-feed #branch-knowledge').hasClass('hidden')){
-                $('#brain-feed #branch-knowledge').addClass('hidden')
-            }
-            $('#catalog-body').empty()
-            if(!$('#brain-feed #brain-feed-branch').hasClass('hidden')){
-                $('#brain-feed #brain-feed-branch').addClass('hidden');
-            }
-            if(!$('#brain-feed #catalog-body').hasClass('hidden')){
-                $('#brain-feed #catalog-body').addClass('hidden');
-            }
-            if(!$('#brain-feed #catalog').hasClass('hidden')){
-                $('#brain-feed #catalog').addClass('hidden');
-            }
-            if(quizData){
-                var knowledge = "";
-                if(quizData.mcq){
-                    var mcq = quizData.mcq;
-                    var mcqContent = "<h4>Multiple Choice Stats</h4>";
-                    for(var ques in mcq){
-                        mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
-                        for (var op in mcq[ques].stats) {
-                            if (mcq[ques].stats.hasOwnProperty(op)) {
-                                mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +" : "+ mcq[ques].stats[op]+"</p>";
-                            }
-                        }
-                    }
-                    knowledge = knowledge +mcqContent;
-                }
-                if(quizData.sq){
-                    var sq = quizData.sq;
-                    var sqContent = "<h4>Short Answers</h4>";
-                    for(var ques in sq){
-                        sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
-                        var answers = sq[ques].answers.split(",");
-                        for(ans in answers)
-                            if(ans != ""){
-                                sqContent = sqContent + "<p>"+answers[ans]+"</p>";
-                            }
-                    }
-                    knowledge = knowledge + sqContent;
-                }
-                if(quizData.tf){
-                    var tf = quizData.tf;
-                    var tfContent = "<h4>Multiple Choice Stats</h4>";
-                    for(var ques in tf){
-                        tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
-                        for (var op in tf[ques].stats) {
-                            if (tf[ques].stats.hasOwnProperty(op)) {
-                                tfContent = tfContent + "<p>"+ tf[ques].options[op] +" : "+ tf[ques].stats[op]+"</p>";
-                            }
-                        }
-                        tfContent = tfContent + "<br/>";
-                    }
-                    knowledge = knowledge +tfContent;
-                }
-                knowledgeArea.html(knowledge);
-            }
-        })
-    });
-
 }
 
 function getAssessments(branchkey){
@@ -1839,21 +1967,28 @@ function getAssessments(branchkey){
         $('#all-mcqs').empty();
         $('#all-shortAns').empty();
         $('#all-tfs').empty();
+        var self = this;
         if(data && data.mcq){
             // TODO : Add Empty case
-            Object.keys(data.mcq).forEach(function(key) {
-                $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
-            });
+            Object.keys(data.mcq).forEach(function(key, quizData) {
+                if( this.mcq[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-mcqs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz" ><p class="question-item"><i class="material-icons">list</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         if(data && data.tf){
             Object.keys(data.tf).forEach(function(key) {
-                $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
-            });
+                if(this.tf[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-tfs').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz3" ><p class="question-item"><i class="material-icons">radio_button_checked</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         if(data && data.sq){
             Object.keys(data.sq).forEach(function(key) {
-                $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
-            });
+                if(this.sq[key].answeredBy.indexOf($.cookie('user')) < 0){
+                    $('#all-shortAns').append('<div class="text-center" data-toggle="modal" data-target="#view-quiz2" ><p class="question-item"><i class="material-icons">menu</i>'+key+'</p></div>');
+                }
+            }, data);
         }
         $('#view-quiz').on('show.bs.modal', function(e){
             $('#mcq-view-quiz-question').text(e.relatedTarget.textContent.replace('list',''));
