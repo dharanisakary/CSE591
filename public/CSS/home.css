@@ -1536,3 +1536,67 @@ hr {
     display: inline-block;
     width: 950px;
 }
+
+#result-wrapper{
+    padding: 20px;
+    background-color: white;
+
+}
+#result-info{
+    padding: 20px;
+    padding-bottom: 10px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: black;
+    background-color: oldlace;
+    margin-bottom: 30px;
+}
+
+.contribution-make-bold{
+    font-weight: bold;
+    color:gray;
+}
+.subtopic-make-bold{
+    font-size: large;
+    font-weight: bold;
+    font-size: medium;
+
+}
+
+.bold{
+    font-size:25px;
+    color: black;
+}
+
+.result-subtopic{
+    margin-bottom: 30px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #dbf1ff;
+
+}
+
+.assessment-result{
+    font-weight: bold;
+    color: dimgray;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.assessment-result-card{
+    background-color: skyblue;
+    padding: 20px;
+}
+.assessment-topic{
+    /*font-weight: bold;*/
+    color: white;
+    font-size: 18px;
+    margin-bottom: 15px;
+    /*text-decoration: underline;*/
+
+}
+
+.question-result{
+
+    font-weight: bold;
+    margin-bottom: -5px;
+}

@@ -1076,32 +1076,46 @@ function brainTableFunctionality(){
                 if(!$('#brain-feed #catalog').hasClass('hidden')){
                     $('#brain-feed #catalog').addClass('hidden');
                 }
-                var title = "<h4> Title - "+ data.title+"</h4>";
-                var topic = "<p> Topic - "+ data.topic+"</p>";
-                var author = "<p> Creator - "+data.creator+"</p>";
-                var desc = "<p> Description - "+data.description+"</p>";
-                var createdAt = "<p> Time stamp - "+data.id.replace("/","")+"</p>";
-                var purpose = "<p> Purpose - "+data.purpose+"</p>";
-                var contributors = "<p> Contributors - "+data.numberOfContributors+"</p>";
-                var knowledge = title + topic + author + desc + createdAt + purpose + contributors;
-                var subtopics = "";
+
+                var result_start = "<div id='result-wrapper'>";
+                var result_end = "</div>";
+                var result_info_start = "<div id='result-info'>";
+                var result_info_end = "</div>";
+
+                var title = "<div class='text-center'><h5> Title :  "+ data.title+"</h5></div>";
+                var topic = "<div class='bold'> <p> Topic : "+ data.topic+"</p></div>";
+                var author = "<div class='bold'><p> Creator : "+data.creator+"</p></div>";
+                var desc = "<div class='bold'><p> Description : "+data.description+"</p></div>";
+                var createdAt = "<div class='bold'><p> Time stamp : "+data.id.replace("/","")+"</p></div>";
+                var purpose = "<div class='bold'><p> Purpose : "+data.purpose+"</p></div>";
+                var contributors = "<div class='bold'><p> Contributors : "+data.numberOfContributors+"</p></div>";
+
+                var knowledge = result_start+title + result_info_start+topic + author + desc + createdAt + purpose + contributors+result_info_end;
+
+                var contribution_header = "<div class='assessment-result text-center'>Contribution Section</div>";
+                var subtopics = contribution_header;
+
                 for(var c in data.subtopics){
-                    subtopics += "<p> Subtopic - "+data.subtopics[c].value+"</p>" + "<p> Contributions - </p>";
+                    subtopics += "<div class='card result-subtopic'><h6'><span class='subtopic-make-bold'> Subtopic - "+data.subtopics[c].value+"</span></h6><br/>" + "<span class='contribution-make-bold'> Contributions </span>";
                     var selected_c = data.selected_contributions[data.subtopics[c].value];
                     var selected_contributions_keys = Object.keys(selected_c);
                     for(var s_c in selected_contributions_keys){
                         subtopics += "<li>"+selected_contributions_keys[s_c]+"</li>";
                     }
-                    subtopics += "<br/>";
+                    subtopics += "<br/></div>";
                 }
                 knowledge += subtopics;
+                var assessment_header = "<div class='assessment-result text-center'>Assessment Section</div>";
+                var assessment_card_start = "<div class='card assessment-result-card'>";
+                var assessment_card_end = "</div>";
+                knowledge+=assessment_header+assessment_card_start;
                 if(quizData){
                     
                     if(quizData.mcq){
                         var mcq = quizData.mcq;
-                        var mcqContent = "<h4>Multiple Choice Stats</h4>";
+                        var mcqContent = "<div class='assessment-topic'>Multiple Choice Stats</div>";
                         for(var ques in mcq){
-                            mcqContent = mcqContent + "<h5> Question : "+ques+"</h5>";
+                            mcqContent = mcqContent + "<p class='question-result> Question : "+ques+"</p>";
                             for (var op in mcq[ques].stats) {
                                 if (mcq[ques].stats.hasOwnProperty(op)) {
                                     mcqContent = mcqContent + "<p>"+ mcq[ques].options[op] +"</p>";
@@ -1114,9 +1128,9 @@ function brainTableFunctionality(){
                     }
                     if(quizData.sq){
                         var sq = quizData.sq;
-                        var sqContent = "<h4>Short Answers stats</h4>";
+                        var sqContent = "<div class='assessment-topic>Short Answers stats</div>";
                         for(var ques in sq){
-                            sqContent = sqContent + "<h5> Question : "+ques+"</h5>";
+                            sqContent = sqContent + "<p class='question-result> Question : "+ques+"</p>";
                             var answers = sq[ques].answers.split(",");
                             for(ans in answers)
                                 if(ans != ""){
@@ -1127,9 +1141,9 @@ function brainTableFunctionality(){
                     }
                     if(quizData.tf){
                         var tf = quizData.tf;
-                        var tfContent = "<h4>True False Stats</h4>";
+                        var tfContent = "<div class='assessment-topic'>True False Stats</div>";
                         for(var ques in tf){
-                            tfContent = tfContent + "<h5> Question : "+ques+"</h5>";
+                            tfContent = tfContent + "<p class='question-result'> Question : "+ques+"</p>";
                             for (var op in tf[ques].stats) {
                                 if (tf[ques].stats.hasOwnProperty(op)) {
                                     tfContent = tfContent + "<p>"+ tf[ques].options[op] +"</p>";
@@ -1143,6 +1157,7 @@ function brainTableFunctionality(){
                     }
                  
                 }
+                knowledge=knowledge+assessment_card_end+result_end;
                 knowledgeArea.html(knowledge);
             }, self);
         }, self2);
