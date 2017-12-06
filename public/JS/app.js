@@ -627,9 +627,9 @@ function brainTableFunctionality(){
         if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
             $('#brain-feed #assess-knowledge').addClass('hidden')
         }
-        $('#post-completion-message').show();
-        $('#post-completion-message2').show();
-        $('#separator').show();
+        $('#post-completion-message').hide();
+        $('#post-completion-message2').hide();
+        $('#separator').hide();
     });
 
     $(document).on('click', '#go-back-from-res', function(){
@@ -1055,7 +1055,6 @@ function brainTableFunctionality(){
                 var knowledgeArea = $('#branch-knowledge #branch-knowledge-container');
                 knowledgeArea.empty();
                 var data = snapshot.val();
-                debugger;
                 var quizData = data.quizzes;
                 if(!$('#brain-feed #assess-knowledge').hasClass('hidden')){
                     $('#brain-feed #assess-knowledge').addClass('hidden')
@@ -1851,14 +1850,14 @@ function assessmentHandler(branchkey){
         $('#quiz-question')[0].value = '';
         $('#mcq-options').empty();
     });
-    $('#add-quiz2 button[type=submit]').on('click', function(){
+    $('#add-quiz2 button[type=submit]').off('click').on('click', function(){
         var questionText = $('#sa-quiz-question')[0].value;
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
         quizRef.child('sq').child(questionText).set({answers : '', answeredBy : ''});
         $('#add-quiz2').modal('hide');
         $('#sa-quiz-question')[0].value = '';
     });
-    $('#add-quiz3 button[type=submit]').on('click', function(){
+    $('#add-quiz3 button[type=submit]').off('click').on('click', function(){
         var questionText = $('#tf-quiz-question')[0].value;
         var quizRef = firebase.database().ref('branches/'+branchkey+'/quizzes/');
 
@@ -1872,7 +1871,7 @@ function assessmentHandler(branchkey){
         $('#add-quiz3').modal('hide');
         $('#tf-quiz-question')[0].value = '';
     });
-    $('#view-quiz button[type=submit]').on('click', function(){
+    $('#view-quiz button[type=submit]').off('click').on('click', function(){
         var selected_option = $("input[name='view-quiz-quesion-modal']:checked").attr('value');
         if(selected_option){
             var optionRef = null;
@@ -1904,7 +1903,7 @@ function assessmentHandler(branchkey){
         }
     });
 
-    $('#view-quiz3 button[type=submit]').on('click', function(){
+    $('#view-quiz3 button[type=submit]').off('click').on('click', function(){
         var selected_option = $("#tf-view-options input[name='view-quiz-tf-modal']:checked").attr('value');
         var optionRef = null;
         var questionText = $("#tf-view-quiz-question").text();
@@ -1934,7 +1933,7 @@ function assessmentHandler(branchkey){
         $('#view-quiz3').modal('hide');
     });
 
-    $('#view-quiz2 button[type=submit]').on('click', function(){
+    $('#view-quiz2 button[type=submit]').off('click').on('click', function(){
         var selected_option = $("#sa-view-quiz-answer").val();
         var questionText = $("#sa-view-quiz-question").text();
         // var quizRef = firebase.database().ref('quizzes/mcq/').child(questionText).child('stats').child(selected_option);
@@ -1947,7 +1946,7 @@ function assessmentHandler(branchkey){
         });
         answers = answers + "," + selected_option;
         firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answers").set(answers);
-        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/sa/').child(questionText).child("answeredBy");
+        var quizAnsweredByRef = firebase.database().ref('branches/'+branchkey+'/quizzes/sq/').child(questionText).child("answeredBy");
         var answeredBy = null;
         quizAnsweredByRef.on('value', function(snapshot){
             answeredBy = snapshot.val();
