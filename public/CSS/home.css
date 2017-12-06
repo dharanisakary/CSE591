@@ -141,8 +141,11 @@ body.modal-open .background-container {
     margin-top: 3%;
 }
 #me-card{
-    margin-top: 3%;
-    margin-left: 26%;
+    margin-top: -33.8%;
+    margin-left: 50%;
+}
+#intro-card{
+    margin-top: 10%;
 }
 /**********************************************************/
 /****************   Profile Information   ****************/
