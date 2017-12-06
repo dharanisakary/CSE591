@@ -41,13 +41,13 @@
                     <!--</div>-->
                 <!--</div>-->
                 <img src="Assets/logo-color.png" height="100%">
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-                    <i class="material-icons">more_vert</i>
-                </button>
-                <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                    <li class="mdl-menu__item">About</li>
-                    <li class="mdl-menu__item">Contact</li>
-                </ul>
+                <!--<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button&#45;&#45;icon" id="hdrbtn">-->
+                    <!--<i class="material-icons">more_vert</i>-->
+                <!--</button>-->
+                <!--<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu&#45;&#45;bottom-right" for="hdrbtn">-->
+                    <!--<li class="mdl-menu__item">About</li>-->
+                    <!--<li class="mdl-menu__item">Contact</li>-->
+                <!--</ul>-->
             </div>
         </header>
         <div id="main-drawer" class="main-drawer mdl-layout__drawer mdl-color--green-500 mdl-color-text--blue-grey-50">
@@ -96,27 +96,27 @@
                     </div>
                 </div>
             </div>
-            <div id="video-card" class="intro-card-wide mdl-card mdl-shadow--2dp">
-                <div class="video-title mdl-card__title">
-                    <h2 class="mdl-card__title-text">Need Guidance?</h2>
-                </div>
-                <div class="intro-welcome-text mdl-card__supporting-text">
-                    We can walk you through the basic steps of using our tool, during our short and awesome tutorial, that you can access at any time, for your convenience!
-                </div>
-                <div class="mdl-card__actions mdl-card--border">
-                    <a id="watch-video" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        Watch video
-                    </a>
-                </div>
-                <div class="mdl-card__menu">
-                    <button id="tt3" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        <i class="card-share material-icons">share</i>
-                    </button>
-                    <div class="mdl-tooltip" for="tt3">
-                        Brag about us<br>on social media
-                    </div>
-                </div>
-            </div>
+            <!--<div id="video-card" class="intro-card-wide mdl-card mdl-shadow&#45;&#45;2dp">-->
+                <!--<div class="video-title mdl-card__title">-->
+                    <!--<h2 class="mdl-card__title-text">Need Guidance?</h2>-->
+                <!--</div>-->
+                <!--<div class="intro-welcome-text mdl-card__supporting-text">-->
+                    <!--We can walk you through the basic steps of using our tool, during our short and awesome tutorial, that you can access at any time, for your convenience!-->
+                <!--</div>-->
+                <!--<div class="mdl-card__actions mdl-card&#45;&#45;border">-->
+                    <!--<a id="watch-video" class="mdl-button mdl-button&#45;&#45;colored mdl-js-button mdl-js-ripple-effect">-->
+                        <!--Watch video-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="mdl-card__menu">-->
+                    <!--<button id="tt3" class="mdl-button mdl-button&#45;&#45;icon mdl-js-button mdl-js-ripple-effect">-->
+                        <!--<i class="card-share material-icons">share</i>-->
+                    <!--</button>-->
+                    <!--<div class="mdl-tooltip" for="tt3">-->
+                        <!--Brag about us<br>on social media-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <!--<div id="social-card" class="intro-card-wide mdl-card mdl-shadow&#45;&#45;2dp">-->
                 <!--<div class="social-title mdl-card__title">-->
                 <!--</div>-->
@@ -324,7 +324,6 @@
                                             <!--<div id="delete-branch">-->
                                                 <!--<h3 class="glyphicon glyphicon-trash"></h3>-->
                                             <!--</div>-->
-
                                             <div class="clearfix"></div>
                                             <div class="form-group">
                                                 <h4> Branch Information </h4>
@@ -342,7 +341,7 @@
                                                 <label class="mdl-textfield__label branch-label" for="branch-feed-structure">Branch Structure</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label left-panel-branch">
-                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="need to code in" readonly>
+                                                <input class="mdl-textfield__input" type="text" id="branch-feed-sub" value="{{numberOfContributors}}" readonly>
                                                 <label class="mdl-textfield__label branch-label" for="branch-feed-sub">Branch Leaves</label>
                                             </div>
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -361,8 +360,6 @@
                                             <button id="btn-enroll-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-comment fa-2x"></i>  Enroll</button>
                                             <button id="btn-error-branch"  ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>
                                             <!--<button id="btn-error-branch" class="btn btn-md btn-default" ><i class="fa fa-exclamation-triangle fa-2x"></i>  </button>-->
-
-
                                             <!--<button id="btn-download-branch" class="btn btn-md btn-default {{id}}" ><i class="fa fa-download fa-2x"></i>  Download PDF</button>-->
                                         </div>
                                     </script>
@@ -666,6 +663,22 @@
                         <div class="testimonial-desc">
                             <button id="btn-confirm-brainstorming" class="btn btn-md btn-default" ><i class="fa fa-cloud fa-2x"></i> Confirm</button>
                         </div>
+                        <span class="mdl-chip mdl-chip--contact">
+                             <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">SG</span>
+                             <span class="mdl-chip__text">"In my opinion"</span>
+                        </span>
+                        <span class="mdl-chip mdl-chip--contact">
+                             <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">SG</span>
+                             <span class="mdl-chip__text">"I believe that"</span>
+                        </span>
+                        <span class="mdl-chip mdl-chip--contact">
+                             <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">SG</span>
+                             <span class="mdl-chip__text">"I agree, but"</span>
+                        </span>
+                        <span class="mdl-chip mdl-chip--contact">
+                             <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">SG</span>
+                             <span class="mdl-chip__text">"I want to contradict you by saying that"</span>
+                        </span>
                     </div>
                 </div>
              </div>
@@ -700,13 +713,10 @@
                                 <button id="topic-button" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Type of Branch
                                     <span class="caret"></span></button>
                                 <ul id="dropdown-topic" class="dropdown-menu">
-                                    <li class="dropdown-header">Select an topic from the ones available below</li>
+                                    <li class="dropdown-header">Select a topic from the ones available below</li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Chemistry</a></li>
                                     <li><a href="#">C++</a></li>
                                     <li><a href="#">JavaScript</a></li>
-                                    <li><a href="#">Java</a></li>
-                                    <li><a href="#">NodeJS</a></li>
                                 </ul>
                             </div>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="branch-name">
