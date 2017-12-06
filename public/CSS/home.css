@@ -141,11 +141,11 @@ body.modal-open .background-container {
     margin-top: 3%;
 }
 #me-card{
-    margin-top: -33.8%;
+    margin-top: -44.5%;
     margin-left: 50%;
 }
 #intro-card{
-    margin-top: 10%;
+    margin-top: 2%;
 }
 /**********************************************************/
 /****************   Profile Information   ****************/
@@ -1518,7 +1518,7 @@ hr {
 .chip-sentence{
     display: inline-block;
     text-overflow: ellipsis;
-    width: 830px;
+    width: 690px;
     overflow:hidden;
 }
 .sentence-chip:hover{
